@@ -1,0 +1,32 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "glider_dvl_analysis"
+version = "0.0.1"
+description = "OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyis of NES shelf currents"
+authors = [
+  { name = "Andrew Reed" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License"
+]
+requires-python = "~=3.10"
+
+
+[tool.ruff]
+line-length = 99
+src = ["glider_dvl_analysis"]
+include = ["pyproject.toml", "glider_dvl_analysis/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["glider_dvl_analysis"]
+force-sort-within-sections = true
+
