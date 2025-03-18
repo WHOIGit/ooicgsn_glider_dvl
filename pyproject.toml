@@ -7,7 +7,7 @@ name = "glider_dvl_analysis"
 version = "0.0.1"
 description = "OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyis of NES shelf currents"
 authors = [
-  { name = "Andrew Reed" },
+  { name = "Andrew Reed" , email = "areed@whoi.edu" },
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
