@@ -21,6 +21,8 @@ dependencies:
   - plotly
   - ruff
   - pip:
+    - cartopy
+    - erddapy
     - python-dotenv
     - mkdocs
     - -e .
