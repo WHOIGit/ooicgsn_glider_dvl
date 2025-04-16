@@ -117,7 +117,10 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
             # Now rename the variables to have the source sensor
             # in the name
             for v in sensor_data.variables:
-                sensor_data = sensor_data.rename_vars({v: '_'.join((sensor, v))})
+                if v in sensor_data.coords:
+                    pass
+                else:
+                    sensor_data = sensor_data.rename_vars({v: '_'.join((sensor, v))})
             
             # Now interpolate the sensor data to the dvl time base
             interp_sensor = sensor_data.interp_like(dvl['time'], method='linear', kwargs={'fill_value':'extrapolate'})

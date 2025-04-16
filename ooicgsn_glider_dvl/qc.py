@@ -6,6 +6,7 @@
 """
 
 import numpy as np
+import numpy.typing as npt
 import xarray as xr
 
 def sidelobe_depth(ds: xr.Dataset, theta: int = 20) -> xr.DataArray:
@@ -323,7 +324,7 @@ def correlation_magnitude_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt
     return qc_flags
 
 
-def percent_good_qc(ds: xarray.Dataset, suspect: float, fail: float) -> npt.NDArray[int]:
+def percent_good_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[int]:
     """
     Determine ADCP QC based on the percent good returned for each
     beam and assign QARTOD-style flags. This algorithm uses thresholds
