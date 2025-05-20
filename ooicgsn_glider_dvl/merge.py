@@ -5,6 +5,8 @@
 @brief Provides methods for merging datasets from IOOS GDAC with GLider DVL/ADcP datasets from OOINet
 """
 
+import numpy as np
+import pandas as pd
 import xarray as xr
 
 def sensor_variables(gdac: xr.Dataset) -> dict[list]:
@@ -133,3 +135,74 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
             dvl = xr.merge([dvl, interp_sensor])
 
     return dvl
+
+
+def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
+    """Merge the waypoint data into the glider DVL dataset
+    
+    Take the waypoint target lat/lon ("c_wpt_lat/lon") from the
+    glider engineering dataset and map it to the glider DVL 
+    dataset.
+    
+    Parameters
+    ----------
+    dvl: xarray.Dataset
+        The OOI glider DVL dataset downloaded from OOI
+    waypoints: pandas.DataFrame
+        The associated glider engineering data downloaded from OOI
+        as a csv file and loaded into a pandas DataFrame
+
+    Returns
+    -------
+    dvl: xarray.Dataset
+        The OOI glider DVL dataset with the waypoint lat/lons 
+        mapped and broadcasted to the DVL timebase
+    """"
+
+    # First, clean up and select just the relevant waypoints
+    waypoints = waypoints[['time','c_wpt_lat','c_wpt_lon']].dropna()
+    waypoints['time'] = waypoints['time'].map(pd.to_datetime)
+
+    # Take the difference and find where either the latitude or longitude changes
+    d_wpt = waypoints.diff()
+    mask = (d_wpt['c_wpt_lat'] == 0) & (d_wpt['c_wpt_lon'] == 0)
+    waypoints = waypoints[~mask]
+
+    # Now add waypoints tot he tie base of the DVL dataset
+    # First, create empty arrays to hold the data
+    wpt_lat = np.zeros(dvl['time'].shape)
+    wpt_lon = np.zeros(dvl['time'].shape)
+    wpt_time = dvl['time'].values
+
+    # Iterate through the waypoints and find the appropriate times that they
+    # apply to
+    for n, (t, lat, lon) in enumerate(waypoints.itertuples(index=False)):
+        if n == 0:
+            # At the start of the deployment, only have first time
+            idx, = np.where(wpt_time <= t)
+            # Now add in the waypoint lat
+            wpt_lat[idx] = lat
+            wpt_lon[idx] = lon
+        else:
+            t0 = waypoints['time'].iloc[n-1]
+            idx, = np.where((wpt_time > t0) & (wpt_time <= t))
+            wpt_lat[idx] = lat
+            wpt_lon[idx] = lon
+
+    # Add the waypoints to the merged dataset
+    dvl['waypoint_lat'] = (['time'], wpt_lat)
+    dvl['waypoint_lat'].attrs = {
+        'long_name': 'Glider Waypoint Latitude',
+        'comment': ('The target waypoint latitude for the glider.'),
+        'units': 'degrees'
+        }
+    
+    dvl['waypoint_lon'] = (['time'], wpt_lon)
+    dvl['waypoint_lon'].attrs = {
+        'long_name': 'Glider Waypoint Longitude',
+        'comment': ('The target waypoint longitude for the glider.'),
+        'units': 'degrees'
+    }
+
+    return dvl
+    
