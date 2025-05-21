@@ -1,10 +1,12 @@
 # Glider DVL Analysis
 
-<a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
-</a>
-
 OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyis of NES shelf currents
+
+## Overview
+The Ocean Observatories Initiative (OOI) is a NSF-funded project for long-term infrastructure for ocean observations. The Coastal & Global Scale (CGSN) nodes group based at WHOI builds, deploys, and maintains moored and mobile autonomous platforms equipped with sensors that measure physical, meteorological, biogeochemical, and biological properties. CGSN is also responsible for quality controlling the data via the use of automated algorithms, validation against discrete ship-based samples, and cross-comparison between co-located instruments.
+
+This project will use autonomous glider DVL (doppler velocity log) water velocity data from the OOI Pioneer-New England Shelf array. The DVL data will be used to derive estimates of the along-shelf currents for comparison with geostrophic calculations. The first part of the project will involve quality-controlling the DVL data using vendor supplied algorithms as well as developing their own methods. The quality-controlled DVL data will then be validated against moored velocity data when the gliders are near the moorings. This validated dataset will then be ready to construct cross-shelf transects of water velocities and compare against calculated geostrophic velocities.
+
 
 ## Project Organization
 
