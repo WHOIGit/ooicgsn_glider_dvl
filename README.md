@@ -1,6 +1,9 @@
 # Glider DVL Analysis
-
 OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyis of NES shelf currents
+
+##### Authors
+Andrew Reed: [profile](https://github.com/reedan88), areed@whoi.edu
+Brayden Mikulski: [link to gitHub profile], brayden.mikulski@whoi.edu
 
 ## Overview
 The Ocean Observatories Initiative (OOI) is a NSF-funded project for long-term infrastructure for ocean observations. The Coastal & Global Scale (CGSN) nodes group based at WHOI builds, deploys, and maintains moored and mobile autonomous platforms equipped with sensors that measure physical, meteorological, biogeochemical, and biological properties. CGSN is also responsible for quality controlling the data via the use of automated algorithms, validation against discrete ship-based samples, and cross-comparison between co-located instruments.
@@ -17,12 +20,10 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
+│   ├── processed      <- The final, canonical data sets.
 │   └── raw            <- The original, immutable data dump.
 │
 ├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
 │
 ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
 │                         the creator's initials, and a short `-` delimited description, e.g.
@@ -45,18 +46,15 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
     │
     ├── __init__.py             <- Makes glider_dvl_analysis a Python module
     │
-    ├── config.py               <- Store useful variables and configuration
+    ├── merge.py                <- Methods for merging datasets from IOOS GDAC with GLider DVL/ADcP datasets from OOINet
     │
-    ├── dataset.py              <- Scripts to download or generate data
+    ├── mapping.py              <- Methods for mapping glider datasets
     │
-    ├── features.py             <- Code to create features for modeling
+    ├── profiles.py             <- Methods for splitting glider ADCP datasets into separate profiles
     │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
+    ├── qc.py                   <- Methods for quality control of ADCP data based on TRDI recommendations
     │
-    └── plots.py                <- Code to create visualizations
+    └── utils.py                <- Shared methods across modules
 ```
 
 --------

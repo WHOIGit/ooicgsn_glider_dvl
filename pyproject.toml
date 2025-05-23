@@ -5,9 +5,10 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "ooicgsn_glider_dvl"
 version = "0.0.1"
-description = "OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyis of NES shelf currents"
+description = "OOI Pioneer-array glider DVL quality control, validation, and analyis"
 authors = [
   { name = "Andrew Reed" , email = "areed@whoi.edu" },
+  { name = "Brayden Mikulski", email = "brayden.mikulski@whoi.edu"}
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
