@@ -3,7 +3,7 @@ OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyi
 
 ##### Authors
 Andrew Reed: [profile](https://github.com/reedan88), areed@whoi.edu
-Brayden Mikulski: [link to gitHub profile], braymik19@gmail.com
+Brayden Mikulski: [link to gitHub profile], brayden.mikulski@whoi.edu
 
 ## Overview
 The Ocean Observatories Initiative (OOI) is a NSF-funded project for long-term infrastructure for ocean observations. The Coastal & Global Scale (CGSN) nodes group based at WHOI builds, deploys, and maintains moored and mobile autonomous platforms equipped with sensors that measure physical, meteorological, biogeochemical, and biological properties. CGSN is also responsible for quality controlling the data via the use of automated algorithms, validation against discrete ship-based samples, and cross-comparison between co-located instruments.
