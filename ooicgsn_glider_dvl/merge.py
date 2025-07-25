@@ -157,7 +157,7 @@ def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
     dvl: xarray.Dataset
         The OOI glider DVL dataset with the waypoint lat/lons 
         mapped and broadcasted to the DVL timebase
-    """"
+    """
 
     # First, clean up and select just the relevant waypoints
     waypoints = waypoints[['time','c_wpt_lat','c_wpt_lon']].dropna()
