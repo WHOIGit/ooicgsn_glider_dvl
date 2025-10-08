@@ -17,6 +17,7 @@ dependencies:
   - xarray
   - scipy
   - h5netcdf
+  - netCDF4
   - matplotlib
   - plotly
   - ruff
