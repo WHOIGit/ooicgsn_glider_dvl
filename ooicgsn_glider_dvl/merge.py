@@ -72,6 +72,12 @@ def sensor_variables(gdac: xr.Dataset) -> dict[list]:
         'profile': profile_vars
     }
 
+    # Remove any variables containing "platform"
+    sensor_vars = {
+        k: [v for v in vals if "platform" not in v.lower()]
+        for k, vals in sensor_vars.items()
+    }
+
     return sensor_vars
 
 
