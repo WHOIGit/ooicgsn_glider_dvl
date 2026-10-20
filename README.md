@@ -14,48 +14,48 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets.
-│   └── raw            <- The original, immutable data dump.
+├── LICENSE
+├── Makefile             <- Convenience commands (`make create_environment`, `make lint`, ...)
+├── README.md
+├── environment.yml      <- Conda environment; installs this package in editable mode
+├── pyproject.toml       <- Package metadata and ruff configuration
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── data                 <- Not tracked by git (see .gitignore)
+│   ├── external         <- Third-party data, e.g. mooring_locations.csv
+│   ├── raw              <- Data downloaded from OOINet / IOOS Glider DAC
+│   └── processed        <- Merged and quality-controlled datasets
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── docs                 <- mkdocs project; see www.mkdocs.org
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         glider_dvl_analysis and configuration for tools like black
+├── notebooks            <- Analysis notebooks, numbered in run order
+│   ├── 1-data-access-and-download.ipynb
+│   ├── 2-Process-and-merge-datasets.ipynb
+│   ├── 3-Data-analysis.ipynb
+│   └── 4-Remove-bottom-track.ipynb
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── references           <- Papers and other explanatory materials
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── results
+│   └── figures          <- Generated figures
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── glider_dvl_analysis   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes glider_dvl_analysis a Python module
-    │
-    ├── merge.py                <- Methods for merging datasets from IOOS GDAC with GLider DVL/ADcP datasets from OOINet
-    │
-    ├── mapping.py              <- Methods for mapping glider datasets
-    │
-    ├── profiles.py             <- Methods for splitting glider ADCP datasets into separate profiles
-    │
-    ├── qc.py                   <- Methods for quality control of ADCP data based on TRDI recommendations
-    │
+└── ooicgsn_glider_dvl   <- Source code for this project
+    ├── __init__.py
+    ├── mapping.py              <- Cartopy maps of glider tracks and mooring locations
+    ├── merge.py                <- Merge IOOS Glider DAC datasets with glider DVL/ADCP data from OOINet
+    ├── objective_mapping.py    <- Objective mapping (optimal interpolation) of glider sections
+    ├── profiles.py             <- Split glider ADCP datasets into individual profiles
+    ├── qc.py                   <- Quality control of ADCP data based on TRDI recommendations
     └── utils.py                <- Shared methods across modules
 ```
+
+## Getting Started
+
+```
+make create_environment
+conda activate ooicgsn_glider_dvl
+```
+
+Modules are then importable from the notebooks, e.g. `from ooicgsn_glider_dvl import qc`.
 
 --------
 

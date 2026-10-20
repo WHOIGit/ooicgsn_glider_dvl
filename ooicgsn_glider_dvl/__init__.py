@@ -1,1 +1,1 @@
-from glider_dvl_analysis import config  # noqa: F401
+"""OOI Pioneer-NES glider DVL quality control, validation, and analysis."""

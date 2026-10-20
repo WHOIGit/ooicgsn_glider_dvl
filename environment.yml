@@ -1,4 +1,4 @@
-name: glider_dvl_analysis
+name: ooicgsn_glider_dvl
 channels:
   - conda-forge
 dependencies:
@@ -9,21 +9,24 @@ dependencies:
   - tqdm
   - ipython
   - jupyterlab
-  - matplotlib
   - notebook
+  - matplotlib
+  - cartopy
+  - cmocean
+  - plotly
   - numpy
   - pandas
   - scikit-learn
-  - xarray
   - scipy
+  - xarray
   - h5netcdf
   - netCDF4
-  - matplotlib
-  - plotly
+  - beautifulsoup4
   - ruff
   - pip:
-    - cartopy
     - erddapy
     - python-dotenv
     - mkdocs
     - -e .
+# Notebook 1 also uses the OOI data-access packages `ooinet` and
+# `ooi_data_explorations`, which are installed separately from GitHub.
