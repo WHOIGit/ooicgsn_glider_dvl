@@ -69,7 +69,7 @@ def sidelobe_qc(ds: xr.Dataset) -> xr.Dataset:
         1 = Pass
         3 = Suspect or of High Interest
         4 = Fail
-        9 = Missing
+        9 = Missing (the bin depth or the sidelobe contamination depth is missing)
 
     Parameters
     ----------
@@ -88,8 +88,13 @@ def sidelobe_qc(ds: xr.Dataset) -> xr.Dataset:
 
     # Next, create a qc_flag for each bin measurement and
     # identify the bins which are shallower than z_ic
-    mask = (ds["bin_depths"] < z_ic).transpose(*ds["bin_depths"].dims)
-    qc_flag = xr.where(mask, 4, 1).astype(np.int8)
+    dims = ds["bin_depths"].dims
+    mask = (ds["bin_depths"] < z_ic).transpose(*dims)
+    qc_flag = xr.where(mask, 4, 1)
+
+    # Flag as missing where either the bin depth or z_ic is missing
+    missing = (ds["bin_depths"].isnull() | z_ic.isnull()).transpose(*dims)
+    qc_flag = xr.where(missing, 9, qc_flag).astype(np.int8)
 
     # Add the qc_flags, on the same dimensions as the bin depths
     qc_name = "bin_depths_qc_summary_flag"
