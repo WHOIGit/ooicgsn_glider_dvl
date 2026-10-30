@@ -1,4 +1,5 @@
 site_name: Glider DVL Analysis
-# 
 site_author: Andrew Reed
-# 
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md

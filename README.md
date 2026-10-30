@@ -1,5 +1,5 @@
 # Glider DVL Analysis
-OOI Pioneer-New England Shelf glider DVL quality control, validation, and analyis of NES shelf currents
+OOI Pioneer-New England Shelf glider DVL quality control, validation, and analysis of NES shelf currents
 
 ##### Authors
 Andrew Reed: [profile](https://github.com/reedan88), areed@whoi.edu
@@ -40,6 +40,7 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
 │
 └── ooicgsn_glider_dvl   <- Source code for this project
     ├── __init__.py
+    ├── bottom_track.py         <- Remove glider motion from DVL velocities using bottom tracking
     ├── mapping.py              <- Cartopy maps of glider tracks and mooring locations
     ├── merge.py                <- Merge IOOS Glider DAC datasets with glider DVL/ADCP data from OOINet
     ├── objective_mapping.py    <- Objective mapping (optimal interpolation) of glider sections

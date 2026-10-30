@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "ooicgsn_glider_dvl"
 version = "0.0.1"
-description = "OOI Pioneer-array glider DVL quality control, validation, and analyis"
+description = "OOI Pioneer-array glider DVL quality control, validation, and analysis"
 authors = [
   { name = "Andrew Reed" , email = "areed@whoi.edu" },
   { name = "Brayden Mikulski", email = "brayden.mikulski@whoi.edu"}
