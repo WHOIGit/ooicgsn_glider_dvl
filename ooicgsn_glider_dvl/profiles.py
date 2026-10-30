@@ -9,7 +9,7 @@ import xarray as xr
 from ooicgsn_glider_dvl.utils import unix_time
 
 
-def identify_profiles(ds: xr.Dataset) -> np.ndarray:
+def identify_profiles(ds: xr.Dataset) -> list[np.ndarray]:
     """Identify the start of each profile dive.
 
     The glider ADCP is only on during the dive portion
@@ -25,33 +25,31 @@ def identify_profiles(ds: xr.Dataset) -> np.ndarray:
 
     Returns
     -------
-    inflection_idx: numpy.array[int]
-        The indices indicating the start of a new profile dive
+    inflection_idx: list[numpy.array[int]]
+        The indices of the data points in each profile dive
     """
-    # Take the absolute different in pressure
-    dz_dt = np.abs(ds["depth_from_pressure"].diff(dim="time"))
+    # Take the absolute difference in depth
+    dz = np.abs(np.diff(ds["depth_from_pressure"].values))
 
     # Get the time id
-    dt = ds["time"].values
-    time_ = unix_time(dt)
+    time_ = unix_time(ds["time"].values)
 
     # Identify where the difference is greater than 2 meters
     # and get the associated times with those inflection points
-    idx = np.flatnonzero(dz_dt > 2)
-    inflection_times = time_[idx]
-    inflection_times = np.insert(
-        inflection_times, [0, len(inflection_times)], [time_[0], time_[-1]]
-    )
+    inflection_times = np.concatenate([time_[:1], time_[:-1][dz > 2], time_[-1:]])
 
-    # Use the time range to get the indices for each profile
-    inflection_idx = []
-    for idx in range(len(inflection_times) - 1):
-        pstart = inflection_times[idx]
-        pend = inflection_times[idx + 1]
-        profile_idx = np.flatnonzero(np.logical_and(time_ > pstart, time_ <= pend))
-        if len(profile_idx) == 0:
-            continue
-        inflection_idx.append(profile_idx)
+    # Each profile spans (inflection_times[n], inflection_times[n+1]], so the
+    # profile of each point is the inflection interval it falls in
+    interval = np.searchsorted(inflection_times, time_, side="left") - 1
+    valid = np.flatnonzero(interval >= 0)
+    if valid.size == 0:
+        return []
+
+    # Group the indices by profile, dropping empty intervals
+    order = np.argsort(interval[valid], kind="stable")
+    sorted_interval = interval[valid][order]
+    starts = np.flatnonzero(np.diff(sorted_interval)) + 1
+    inflection_idx = np.split(valid[order], starts)
 
     return inflection_idx
 
@@ -75,12 +73,11 @@ def get_profile_ids(ds: xr.Dataset) -> np.ndarray[int]:
     # First, get the inflection indices
     profile_idx = identify_profiles(ds)
 
-    # Next, iterate through the
-    profiles = np.zeros(ds["time"].shape)
+    # Next, number each profile sequentially
+    profiles = np.zeros(ds["time"].shape, dtype=np.int32)
     for n, idx in enumerate(profile_idx):
         profiles[idx] = n
 
-    profiles = profiles.astype("int")
     return profiles
 
 
