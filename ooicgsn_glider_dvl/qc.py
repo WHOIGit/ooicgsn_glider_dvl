@@ -88,13 +88,12 @@ def sidelobe_qc(ds: xr.Dataset) -> xr.Dataset:
 
     # Next, create a qc_flag for each bin measurement and
     # identify the bins which are shallower than z_ic
-    qc_flag = np.ones(ds["bin_depths"].shape, dtype=np.int8)
-    mask = ds["bin_depths"] < z_ic
-    qc_flag[mask] = 4
+    mask = (ds["bin_depths"] < z_ic).transpose(*ds["bin_depths"].dims)
+    qc_flag = xr.where(mask, 4, 1).astype(np.int8)
 
-    # Add the qc_flags
+    # Add the qc_flags, on the same dimensions as the bin depths
     qc_name = "bin_depths_qc_summary_flag"
-    ds[qc_name] = (["time", "bins"], qc_flag)
+    ds[qc_name] = qc_flag
 
     # set up the attributes for the new variable
     ds[qc_name].attrs = {
@@ -105,7 +104,7 @@ def sidelobe_qc(ds: xr.Dataset) -> xr.Dataset:
             "4 == fail, and 9 == missing. The QC tests, as applied by OOI, only yield pass or "
             "fail values. Sidelobe contamination depth is determined following Lentz et al (2022)."
         ),
-        "flag_values": np.array([1, 2, 3, 4, 9]),
+        "flag_values": np.array([1, 2, 3, 4, 9], dtype=np.int8),
         "flag_meanings": "pass not_evaluated suspect_or_of_high_interest fail missing",
     }
 
