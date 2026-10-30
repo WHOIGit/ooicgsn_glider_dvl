@@ -22,6 +22,7 @@ dependencies:
   - h5netcdf
   - netCDF4
   - beautifulsoup4
+  - httpx
   - ruff
   - pip:
     - erddapy

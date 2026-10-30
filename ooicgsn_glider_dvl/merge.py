@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 @author Andrew Reed
 @brief Provides methods for merging datasets from IOOS GDAC with GLider DVL/ADcP datasets from OOINet
@@ -9,20 +7,21 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
+
 def sensor_variables(gdac: xr.Dataset) -> dict[list]:
     """Match IOOS GDAC dataset variables to science sensor source
-    
+
     Iterate throu an OOI IOOS GDAC glider dataset and split out
     the dataset variables into separate lists based on what sensor
     they originate from. This is a necessary preprocessing step before
     interpolation because the different sensor sample at different rates,
     such that the GDAC dataset is populated with NaNs.
-    
+
     Parameters
     ----------
     gdac: xarray.Dataset
         The loaded OOI GDAC glider dataset with science data
-        
+
     Returns
     -------
     sensor_vars: dict[lists]
@@ -37,26 +36,26 @@ def sensor_variables(gdac: xr.Dataset) -> dict[list]:
     par_vars = []
     glider_vars = []
     profile_vars = []
-    
+
     # Iterate through the dataset variables and look for the source
     # sensor attribute and match to appropriate list
     for var in gdac.variables:
-        if gdac[var].dims[0] == 'profile':
+        if gdac[var].dims[0] == "profile":
             profile_vars.append(var)
-        elif 'instrument' in gdac[var].attrs:
-            if var == 'platform_meta':
+        elif "instrument" in gdac[var].attrs:
+            if var == "platform_meta":
                 continue
-            elif 'ctd' in gdac[var].attrs['instrument']:
+            elif "ctd" in gdac[var].attrs["instrument"]:
                 ctd_vars.append(var)
-            elif 'oxy' in gdac[var].attrs['instrument']:
+            elif "oxy" in gdac[var].attrs["instrument"]:
                 oxy_vars.append(var)
-            elif 'par' in gdac[var].attrs['instrument']:
+            elif "par" in gdac[var].attrs["instrument"]:
                 par_vars.append(var)
-            elif 'flbbcd' in gdac[var].attrs['instrument']:
+            elif "flbbcd" in gdac[var].attrs["instrument"]:
                 flbbcd_vars.append(var)
             else:
                 pass
-        elif 'source_sensor' in gdac[var].attrs and 'instrument' not in gdac[var].attrs:
+        elif "source_sensor" in gdac[var].attrs and "instrument" not in gdac[var].attrs:
             glider_vars.append(var)
         else:
             pass
@@ -64,12 +63,12 @@ def sensor_variables(gdac: xr.Dataset) -> dict[list]:
     # Create a dictionary of each possible instrument with
     # associated GDAC dataset variables
     sensor_vars = {
-        'ctd': ctd_vars,
-        'oxy': oxy_vars,
-        'flbbcd': flbbcd_vars,
-        'par': par_vars,
-        'glider': glider_vars,
-        'profile': profile_vars
+        "ctd": ctd_vars,
+        "oxy": oxy_vars,
+        "flbbcd": flbbcd_vars,
+        "par": par_vars,
+        "glider": glider_vars,
+        "profile": profile_vars,
     }
 
     return sensor_vars
@@ -77,20 +76,20 @@ def sensor_variables(gdac: xr.Dataset) -> dict[list]:
 
 def split_data(gdac: xr.Dataset, sensor_vars: list) -> xr.Dataset:
     """Splits off the given science variables"""
-    sensor_data = gdac[sensor_vars].dropna(dim='time')
+    sensor_data = gdac[sensor_vars].dropna(dim="time")
     return sensor_data
 
 
 def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
     """Merge the DVL and GDAC glider datasets
-    
+
     Select and interpolate the science and glider sensor
     data from the OOI GDAC glider dataset to the associated
-    OOI DVL glider dataset. First, the science and glider 
+    OOI DVL glider dataset. First, the science and glider
     sensor data are separately split into separate datasets.
     Then they are interpolated to the DVL timebase. Finally
     they are merged into the DVL datasets.
-    
+
     Parameters
     ----------
     dvl: xarray.Dataset
@@ -98,7 +97,7 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
     gdac: xarray.Dataset
         The associated OOI glider data downloaded from the
         IOOS GDAC server
-        
+
     Returns
     -------
     dvl: xarray.Dataset
@@ -112,7 +111,7 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
     # Next, get the data for each variable set, interpret
     # it to the dvl time base, and merge into the dvl dataset
     for sensor in sensor_vars:
-        if sensor == 'profile':
+        if sensor == "profile":
             continue
         else:
             sensor_data = split_data(gdac, sensor_vars[sensor])
@@ -122,15 +121,17 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
                 if v in sensor_data.coords:
                     pass
                 else:
-                    sensor_data = sensor_data.rename_vars({v: '_'.join((sensor, v))})
-            
+                    sensor_data = sensor_data.rename_vars({v: f"{sensor}_{v}"})
+
             # Now interpolate the sensor data to the dvl time base
-            interp_sensor = sensor_data.interp_like(dvl['time'], method='linear', kwargs={'fill_value':'extrapolate'})
-    
+            interp_sensor = sensor_data.interp_like(
+                dvl["time"], method="linear", kwargs={"fill_value": "extrapolate"}
+            )
+
             # Check if depth is a coordinate, and if so, drop it
-            if 'depth' in interp_sensor.coords:
-                interp_sensor = interp_sensor.drop_vars('depth')
-    
+            if "depth" in interp_sensor.coords:
+                interp_sensor = interp_sensor.drop_vars("depth")
+
             # Merge the interpolated sensor data with the dvl data
             dvl = xr.merge([dvl, interp_sensor])
 
@@ -139,11 +140,11 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
 
 def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
     """Merge the waypoint data into the glider DVL dataset
-    
+
     Take the waypoint target lat/lon ("c_wpt_lat/lon") from the
-    glider engineering dataset and map it to the glider DVL 
+    glider engineering dataset and map it to the glider DVL
     dataset.
-    
+
     Parameters
     ----------
     dvl: xarray.Dataset
@@ -155,54 +156,53 @@ def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
     Returns
     -------
     dvl: xarray.Dataset
-        The OOI glider DVL dataset with the waypoint lat/lons 
+        The OOI glider DVL dataset with the waypoint lat/lons
         mapped and broadcasted to the DVL timebase
     """
 
     # First, clean up and select just the relevant waypoints
-    waypoints = waypoints[['time','c_wpt_lat','c_wpt_lon']].dropna()
-    waypoints['time'] = waypoints['time'].map(pd.to_datetime)
+    waypoints = waypoints[["time", "c_wpt_lat", "c_wpt_lon"]].dropna()
+    waypoints["time"] = waypoints["time"].map(pd.to_datetime)
 
     # Take the difference and find where either the latitude or longitude changes
     d_wpt = waypoints.diff()
-    mask = (d_wpt['c_wpt_lat'] == 0) & (d_wpt['c_wpt_lon'] == 0)
+    mask = (d_wpt["c_wpt_lat"] == 0) & (d_wpt["c_wpt_lon"] == 0)
     waypoints = waypoints[~mask]
 
     # Now add waypoints tot he tie base of the DVL dataset
     # First, create empty arrays to hold the data
-    wpt_lat = np.zeros(dvl['time'].shape)
-    wpt_lon = np.zeros(dvl['time'].shape)
-    wpt_time = dvl['time'].values
+    wpt_lat = np.zeros(dvl["time"].shape)
+    wpt_lon = np.zeros(dvl["time"].shape)
+    wpt_time = dvl["time"].values
 
     # Iterate through the waypoints and find the appropriate times that they
     # apply to
     for n, (t, lat, lon) in enumerate(waypoints.itertuples(index=False)):
         if n == 0:
             # At the start of the deployment, only have first time
-            idx, = np.where(wpt_time <= t)
+            (idx,) = np.where(wpt_time <= t)
             # Now add in the waypoint lat
             wpt_lat[idx] = lat
             wpt_lon[idx] = lon
         else:
-            t0 = waypoints['time'].iloc[n-1]
-            idx, = np.where((wpt_time > t0) & (wpt_time <= t))
+            t0 = waypoints["time"].iloc[n - 1]
+            (idx,) = np.where((wpt_time > t0) & (wpt_time <= t))
             wpt_lat[idx] = lat
             wpt_lon[idx] = lon
 
     # Add the waypoints to the merged dataset
-    dvl['waypoint_lat'] = (['time'], wpt_lat)
-    dvl['waypoint_lat'].attrs = {
-        'long_name': 'Glider Waypoint Latitude',
-        'comment': ('The target waypoint latitude for the glider.'),
-        'units': 'degrees'
-        }
-    
-    dvl['waypoint_lon'] = (['time'], wpt_lon)
-    dvl['waypoint_lon'].attrs = {
-        'long_name': 'Glider Waypoint Longitude',
-        'comment': ('The target waypoint longitude for the glider.'),
-        'units': 'degrees'
+    dvl["waypoint_lat"] = (["time"], wpt_lat)
+    dvl["waypoint_lat"].attrs = {
+        "long_name": "Glider Waypoint Latitude",
+        "comment": ("The target waypoint latitude for the glider."),
+        "units": "degrees",
+    }
+
+    dvl["waypoint_lon"] = (["time"], wpt_lon)
+    dvl["waypoint_lon"].attrs = {
+        "long_name": "Glider Waypoint Longitude",
+        "comment": ("The target waypoint longitude for the glider."),
+        "units": "degrees",
     }
 
     return dvl
-    
