@@ -37,9 +37,9 @@ def surfacing_currents(eng: pd.DataFrame) -> pd.DataFrame:
 
     The positions are the glider's own dead-reckoned surfacing position
     (m_dr_surf_x/y_lmc) and first GPS fix (m_gps_fix_x/y_lmc), in meters
-    east and north in the glider's local mission coordinates. The m_lat
-    and m_lon in the OOI engineering data are not used, because they are
-    interpolated between the dead-reckoned position and the GPS fix.
+    east and north in the glider's local mission coordinates. The glider's
+    m_lat and m_lon are not used, because after surfacing they ramp from
+    the dead-reckoned position to the GPS fix.
 
     Parameters
     ----------
