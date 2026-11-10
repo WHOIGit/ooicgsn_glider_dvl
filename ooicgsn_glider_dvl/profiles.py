@@ -9,19 +9,27 @@ import xarray as xr
 from ooicgsn_glider_dvl.utils import unix_time
 
 
-def identify_profiles(ds: xr.Dataset) -> list[np.ndarray]:
+def identify_profiles(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4) -> list[np.ndarray]:
     """Identify the start of each profile dive.
 
     The glider ADCP is only on during the dive portion
-    of each glider profile. We identify where the change
-    in depth between each measurement (~4 seconds) is greater
-    than 2 meters, indicating the start of a new dive.
+    of each glider profile, sampling every ~2 seconds. We
+    identify where the change in depth between consecutive
+    measurements is greater than min_depth_change and the
+    time between them is greater than min_time_gap, indicating
+    the ADCP was off between them and a new dive has started.
 
     Parameters
     ----------
     ds: xarray.Dataset
         A dataset of the glider ADCP data with the parameter
         'depth_from_pressure'
+    min_depth_change: float, Default = 2
+        The change in depth, in meters, between consecutive
+        measurements that starts a new dive
+    min_time_gap: float, Default = 4
+        The time, in seconds, between consecutive measurements
+        that starts a new dive
 
     Returns
     -------
@@ -31,12 +39,14 @@ def identify_profiles(ds: xr.Dataset) -> list[np.ndarray]:
     # Take the absolute difference in depth
     dz = np.abs(np.diff(ds["depth_from_pressure"].values))
 
-    # Get the time id
+    # Get the time id and the time between measurements
     time_ = unix_time(ds["time"].values)
+    dt = np.diff(time_)
 
-    # Identify where the difference is greater than 2 meters
-    # and get the associated times with those inflection points
-    inflection_times = np.concatenate([time_[:1], time_[:-1][dz > 2], time_[-1:]])
+    # Identify where the depth and time both jump and get
+    # the associated times with those inflection points
+    new_dive = (dz > min_depth_change) & (dt > min_time_gap)
+    inflection_times = np.concatenate([time_[:1], time_[:-1][new_dive], time_[-1:]])
 
     # Each profile spans (inflection_times[n], inflection_times[n+1]], so the
     # profile of each point is the inflection interval it falls in
@@ -54,14 +64,20 @@ def identify_profiles(ds: xr.Dataset) -> list[np.ndarray]:
     return inflection_idx
 
 
-def get_profile_ids(ds: xr.Dataset) -> np.ndarray[int]:
+def get_profile_ids(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4) -> np.ndarray[int]:
     """Create profile ids for the glider ADCP dataset
 
-     Parameters
+    Parameters
     ----------
     ds: xarray.Dataset
         A dataset of the glider ADCP data with the parameter
         'depth_from_pressure'
+    min_depth_change: float, Default = 2
+        The change in depth, in meters, between consecutive
+        measurements that starts a new dive
+    min_time_gap: float, Default = 4
+        The time, in seconds, between consecutive measurements
+        that starts a new dive
 
     Returns
     -------
@@ -71,7 +87,7 @@ def get_profile_ids(ds: xr.Dataset) -> np.ndarray[int]:
     """
 
     # First, get the inflection indices
-    profile_idx = identify_profiles(ds)
+    profile_idx = identify_profiles(ds, min_depth_change, min_time_gap)
 
     # Next, number each profile sequentially
     profiles = np.zeros(ds["time"].shape, dtype=np.int32)
@@ -81,13 +97,15 @@ def get_profile_ids(ds: xr.Dataset) -> np.ndarray[int]:
     return profiles
 
 
-def add_profiles(ds: xr.Dataset) -> xr.Dataset:
+def add_profiles(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4) -> xr.Dataset:
     """Add a sequential id to each glider profile dive
 
     The glider ADCP is only on during the dive portion
-    of each glider profile. We identify where the change
-    in depth between each measurement (~4 seconds) is greater
-    than 2 meters, indicating the start of a new dive. Each
+    of each glider profile, sampling every ~2 seconds. We
+    identify where the change in depth between consecutive
+    measurements is greater than min_depth_change (2 meters)
+    and the time between them is greater than min_time_gap
+    (4 seconds), indicating the start of a new dive. Each
     sampling point is then matched with the start and stop times
     of an individual profile, and the profile id is added to
     the dataset.
@@ -97,6 +115,12 @@ def add_profiles(ds: xr.Dataset) -> xr.Dataset:
     ds: xarray.Dataset
         A dataset of the glider ADCP data with the parameter
         'depth_from_pressure'
+    min_depth_change: float, Default = 2
+        The change in depth, in meters, between consecutive
+        measurements that starts a new dive
+    min_time_gap: float, Default = 4
+        The time, in seconds, between consecutive measurements
+        that starts a new dive
 
     Returns
     -------
@@ -106,7 +130,7 @@ def add_profiles(ds: xr.Dataset) -> xr.Dataset:
 
     """
     # Get the profiles
-    profiles = get_profile_ids(ds)
+    profiles = get_profile_ids(ds, min_depth_change, min_time_gap)
 
     # Add to the dataset
     ds["profile_id"] = (["time"], profiles)

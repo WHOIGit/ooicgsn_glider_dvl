@@ -12,8 +12,8 @@ def sidelobe_depth(ds: xr.Dataset, theta: int = 20) -> xr.DataArray:
     """
     Calculate the sidelobe contamination depth for the given ADCP.
 
-    The sidelobe intereference depth
-    is caluclated following Lentz et al. (2022) where:
+    The sidelobe interference depth
+    is calculated following Lentz et al. (2022) where:
 
         z_ic = ha*[1 - cos(theta)] + 3*delta_Z/2
 
@@ -32,7 +32,8 @@ def sidelobe_depth(ds: xr.Dataset, theta: int = 20) -> xr.DataArray:
 
     Returns
     -------
-    z_ic:
+    z_ic: xarray.DataArray
+        The depth, in meters, above which there is sidelobe interference
     """
     # First, get the transducer depth
     depth = ds["depth_from_pressure"]
@@ -55,7 +56,7 @@ def sidelobe_qc(ds: xr.Dataset) -> xr.Dataset:
     Add sidelobe interference QARTOD-style flags to the ADCP dataset
 
     Assignment of QARTOD style quality flags to the ADCP velocity data based
-    on estimation of sidelobe contamination. The sidelobe intereference depth
+    on estimation of sidelobe contamination. The sidelobe interference depth
     is calculated following Lentz et al. (2022) where:
 
         z_ic = ha*[1 - cos(theta)] + 3*delta_Z/2
@@ -120,17 +121,19 @@ def error_velocity_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArra
     """
     Determine ADCP QC based on Error velocity and assign
     QARTOD-style flags. This algorithm uses thresholds computed
-    using the TRDI ADCP Data AQ-QC Model rev12-1. The assigned
+    using the TRDI ADCP Data QA-QC Model rev12-1. The assigned
     flag values are:
 
         1 = Pass
         3 = Suspect or of High Interest
         4 = Fail
+        9 = Missing
 
     The pass, suspect, fail flags are defined as follows:
         pass: error velocity is less than the suspect threshold
         suspect: error velocity is between the suspect and fail thresholds
         fail: error velocity exceeds the fail threshold
+        missing: error velocity is missing, e.g. for a 3-beam solution
 
     Parameters
     ----------
@@ -139,7 +142,7 @@ def error_velocity_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArra
         OOINet in .netcdf format
     suspect: float
         The suspect threshold computed from the TRDI QA-QC Model
-    fail: flot
+    fail: float
         The fail threshold computed from the TRDI QA-QC Model
 
     Returns
@@ -159,6 +162,9 @@ def error_velocity_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArra
     # Now find the "fail" values
     qc_flags[velocity > fail] = 4
 
+    # Now find the "missing" values
+    qc_flags[np.isnan(velocity)] = 9
+
     return qc_flags
 
 
@@ -166,17 +172,19 @@ def vertical_velocity_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDA
     """
     Determine ADCP QC based on vertical velocity and assign
     QARTOD-style flags. This algorithm uses thresholds computed
-    using the TRDI ADCP Data AQ-QC Model rev12-1. The assigned
+    using the TRDI ADCP Data QA-QC Model rev12-1. The assigned
     flag values are:
 
         1 = Pass
         3 = Suspect or of High Interest
         4 = Fail
+        9 = Missing
 
     The pass, suspect, fail flags are defined as follows:
         pass: vertical velocity is less than the suspect threshold
         suspect: vertical velocity is between the suspect and fail thresholds
         fail: vertical velocity exceeds the fail threshold
+        missing: vertical velocity is missing
 
     Parameters
     ----------
@@ -185,7 +193,7 @@ def vertical_velocity_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDA
         OOINet in .netcdf format
     suspect: float
         The suspect threshold computed from the TRDI QA-QC Model
-    fail: flot
+    fail: float
         The fail threshold computed from the TRDI QA-QC Model
 
     Returns
@@ -204,25 +212,30 @@ def vertical_velocity_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDA
     # Now find the "fail" values
     qc_flags[velocity > fail] = 4
 
+    # Now find the "missing" values
+    qc_flags[np.isnan(velocity)] = 9
+
     return qc_flags
 
 
 def horizontal_speed_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[np.int8]:
     """
-    Determine ADCP QC based on vertical velocity and assign
+    Determine ADCP QC based on horizontal speed and assign
     QARTOD-style flags. This algorithm uses thresholds computed
-    using the TRDI ADCP Data AQ-QC Model rev12-1. The assigned
+    using the TRDI ADCP Data QA-QC Model rev12-1. The assigned
     flag values are:
 
         1 = Pass
         3 = Suspect or of High Interest
         4 = Fail
+        9 = Missing
 
     The pass, suspect, fail flags are defined as follows:
         pass: both east and north velocities are good OR one is suspect
               and the other is good
         suspect: both east and north velocities are suspect
         fail: either east or north velocities fail
+        missing: either east or north velocity is missing
 
     Parameters
     ----------
@@ -231,7 +244,7 @@ def horizontal_speed_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDAr
         OOINet in .netcdf format
     suspect: float
         The suspect threshold computed from the TRDI QA-QC Model
-    fail: flot
+    fail: float
         The fail threshold computed from the TRDI QA-QC Model
 
     Returns
@@ -266,6 +279,9 @@ def horizontal_speed_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDAr
     bad_flags = (qc_flags_east == 4) | (qc_flags_north == 4)
     qc_flags[bad_flags] = 4
 
+    # Missing flags when either direction is missing
+    qc_flags[np.isnan(east) | np.isnan(north)] = 9
+
     return qc_flags
 
 
@@ -273,20 +289,23 @@ def correlation_magnitude_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt
     """
     Determine ADCP QC based on correlation magnitude and assign
     QARTOD-style flags. This algorithm uses thresholds computed
-    using the TRDI ADCP Data AQ-QC Model rev12-1. The assigned
+    using the TRDI ADCP Data QA-QC Model rev12-1. The assigned
     flag values are:
 
         1 = Pass
         3 = Suspect or of High Interest
         4 = Fail
+        9 = Missing
 
     Each beam is good if its correlation magnitude is at least the suspect
-    threshold and bad if it is below the fail threshold. The pass, suspect,
-    fail flags are defined as follows:
+    threshold and bad if it is below the fail threshold. A beam with a missing
+    correlation magnitude is neither good nor bad. The pass, suspect, fail
+    flags are defined as follows:
         pass: at least 3 of the 4 beams are good
         suspect: only two of the beams are good
         fail: one or none of the beams are good, or two or more beams are bad,
               which leaves no valid 3-beam solution
+        missing: all four beams are missing
 
     Parameters
     ----------
@@ -295,7 +314,7 @@ def correlation_magnitude_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt
         OOINet in .netcdf format
     suspect: float
         The suspect threshold computed from the TRDI QA-QC Model
-    fail: flot
+    fail: float
         The fail threshold computed from the TRDI QA-QC Model
 
     Returns
@@ -318,6 +337,9 @@ def correlation_magnitude_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt
     # Fail values have 0 or 1 good beams, or 2 or more bad beams
     qc_flags[(n_good < 2) | (n_bad >= 2)] = 4
 
+    # Missing values have no beams
+    qc_flags[np.all([np.isnan(beam) for beam in beams], axis=0)] = 9
+
     # Return the qc_flags
     return qc_flags
 
@@ -326,15 +348,17 @@ def percent_good_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[
     """
     Determine ADCP QC based on the percent good returned for each
     beam and assign QARTOD-style flags. This algorithm uses thresholds
-    computed using the TRDI ADCP Data AQ-QC Model rev12-1. The assigned
+    computed using the TRDI ADCP Data QA-QC Model rev12-1. The assigned
     flag values are:
 
         1 = Pass
         3 = Suspect or of High Interest
-        4 = Fail. This algorithm
+        4 = Fail
+        9 = Missing
 
     Percent good is calculated from the best returns of either 3 and 4 beam
     solutions, since either may be used to calculate the seawater velocities.
+    It is missing only if both are missing.
 
     Parameters
     ----------
@@ -343,7 +367,7 @@ def percent_good_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[
         OOINet in .netcdf format
     suspect: float
         The suspect threshold computed from the TRDI QA-QC Model
-    fail: flot
+    fail: float
         The fail threshold computed from the TRDI QA-QC Model
 
     Returns
@@ -352,8 +376,8 @@ def percent_good_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[
         An array of QARTOD-style flags indicating the results of the QC
         test for each given datum
     """
-    # Merge the 3 and 4 beam solutions along a new axis and take the maximum
-    percent_good = np.maximum(ds["percent_good_3beam"].values, ds["percent_good_4beam"].values)
+    # Take the better of the 3 and 4 beam solutions, ignoring a missing one
+    percent_good = np.fmax(ds["percent_good_3beam"].values, ds["percent_good_4beam"].values)
 
     # Create a qc_flags array
     qc_flags = np.ones(percent_good.shape, dtype=np.int8)
@@ -362,9 +386,12 @@ def percent_good_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[
     mask = percent_good < suspect
     qc_flags[mask] = 3
 
-    # Find where the correlation magnitude is bad
+    # Find where the percent good fails
     mask = percent_good < fail
     qc_flags[mask] = 4
+
+    # Find where the percent good is missing
+    qc_flags[np.isnan(percent_good)] = 9
 
     # Return the results
     return qc_flags
@@ -373,16 +400,20 @@ def percent_good_qc(ds: xr.Dataset, suspect: float, fail: float) -> npt.NDArray[
 def merge_qc(test_results: list[npt.NDArray[np.int8]]) -> npt.NDArray[np.int8]:
     """
     Merge the results of the different QC tests into a single
-    output. The results for the entire ensemble are:
+    output. Tests flagged as missing (9) are left out, so that
+    e.g. a 3-beam solution with no error velocity is judged on
+    the other tests. The results for the entire ensemble are:
 
-        Pass:    100% of qc tests pass
-        Suspect: At least 50% of tests pass or are suspect
-        Fail:    Less than 50% of tests pass or are suspect
+        Pass:    100% of the other qc tests pass
+        Suspect: At least 50% of the other tests pass or are suspect
+        Fail:    Less than 50% of the other tests pass or are suspect
+        Missing: All of the qc tests are missing
 
     The assigned QARTOD-style flag values are:
         1 = Pass
         3 = Suspect
         4 = Fail
+        9 = Missing
 
     Parameters
     ----------
@@ -397,14 +428,19 @@ def merge_qc(test_results: list[npt.NDArray[np.int8]]) -> npt.NDArray[np.int8]:
         of the individual QC tests passed in test_results
     """
     tests = np.stack(test_results)
+    evaluated = tests != 9
+    n_evaluated = evaluated.sum(axis=0)
 
-    # Calculate the fraction of tests that pass OR are suspect, and
-    # mark as fail where fewer than half do, otherwise suspect
-    total_suspect = np.isin(tests, (1, 3)).mean(axis=0)
+    # Calculate the fraction of the evaluated tests that pass OR are
+    # suspect, and mark as fail where fewer than half do, otherwise suspect
+    total_suspect = np.isin(tests, (1, 3)).sum(axis=0) / np.maximum(n_evaluated, 1)
     qc_flags = np.where(total_suspect < 0.5, 4, 3).astype(np.int8)
 
-    # Mark as pass where all of the tests pass
-    qc_flags[(tests == 1).all(axis=0)] = 1
+    # Mark as pass where all of the evaluated tests pass
+    qc_flags[((tests == 1) | ~evaluated).all(axis=0)] = 1
+
+    # Mark as missing where none of the tests were evaluated
+    qc_flags[n_evaluated == 0] = 9
 
     # Return the result
     return qc_flags

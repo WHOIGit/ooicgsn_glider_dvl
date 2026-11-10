@@ -1,6 +1,6 @@
 """
 @author Andrew Reed
-@brief Provides methods for merging datasets from IOOS GDAC with GLider DVL/ADcP datasets from OOINet
+@brief Provides methods for merging datasets from IOOS GDAC with glider DVL/ADCP datasets from OOINet
 """
 
 import numpy as np
@@ -11,10 +11,10 @@ import xarray as xr
 def sensor_variables(gdac: xr.Dataset) -> dict[list]:
     """Match IOOS GDAC dataset variables to science sensor source
 
-    Iterate throu an OOI IOOS GDAC glider dataset and split out
+    Iterate through an OOI IOOS GDAC glider dataset and split out
     the dataset variables into separate lists based on what sensor
     they originate from. This is a necessary preprocessing step before
-    interpolation because the different sensor sample at different rates,
+    interpolation because the different sensors sample at different rates,
     such that the GDAC dataset is populated with NaNs.
 
     Parameters
@@ -75,24 +75,51 @@ def sensor_variables(gdac: xr.Dataset) -> dict[list]:
 
 
 def split_data(gdac: xr.Dataset, sensor_vars: list) -> xr.Dataset:
-    """Splits off the given science variables"""
-    sensor_data = gdac[sensor_vars].dropna(dim="time")
+    """Splits off the given science variables, dropping the times where all of them are missing"""
+    sensor_data = gdac[sensor_vars].dropna(dim="time", how="all")
     return sensor_data
 
 
-def interp_to_time(data: xr.Dataset, time: np.ndarray) -> dict[str, xr.Variable]:
+def interp_1d(xi: np.ndarray, x: np.ndarray, y: np.ndarray, max_gap: float | None) -> np.ndarray:
+    """Linearly interpolate y(x) to xi using only the non-NaN values of y
+
+    Points outside of the range of the valid data, or inside a gap between
+    valid data points longer than max_gap (in the units of x), are NaN.
+    """
+    valid = ~np.isnan(y)
+    x, y = x[valid], y[valid]
+    if x.size == 0:
+        return np.full(xi.shape, np.nan)
+    yi = np.interp(xi, x, y, left=np.nan, right=np.nan)
+
+    if max_gap is not None:
+        # Find the valid data points on either side of each new point. Points that
+        # land exactly on a data point keep its value, whatever the gap around it.
+        right = np.clip(np.searchsorted(x, xi, side="right"), 1, x.size - 1)
+        gap = x[right] - x[right - 1]
+        exact = x[np.clip(np.searchsorted(x, xi), 0, x.size - 1)] == xi
+        yi[(gap > max_gap) & ~exact] = np.nan
+
+    return yi
+
+
+def interp_to_time(data: xr.Dataset, time: np.ndarray, max_gap: float | None = 60) -> dict[str, xr.Variable]:
     """Linearly interpolate the 1-D data variables of a dataset to a new time base
 
-    Times outside of the time range of the data are filled with NaN rather
-    than extrapolated. Variables that are neither numeric nor datetimes are
-    skipped.
+    Each variable is interpolated from its own non-missing values. Times outside
+    of the time range of a variable, or inside a gap in a variable longer than
+    max_gap, are filled with NaN rather than extrapolated or interpolated across
+    the gap. Variables that are neither numeric nor datetimes are skipped.
 
     Parameters
     ----------
     data: xarray.Dataset
-        Dataset with a "time" dimension and no missing values
+        Dataset with a "time" dimension
     time: numpy.ndarray
         The datetime64 time base to interpolate to
+    max_gap: float or None, Default = 60
+        The longest gap between data points, in seconds, to interpolate
+        across. None interpolates across all gaps.
 
     Returns
     -------
@@ -100,20 +127,22 @@ def interp_to_time(data: xr.Dataset, time: np.ndarray) -> dict[str, xr.Variable]
         The interpolated variables, keyed by variable name, with their attributes
     """
     data = data.sortby("time")
-    x = data["time"].values.astype("datetime64[ns]").astype("int64")
-    xi = np.asarray(time).astype("datetime64[ns]").astype("int64")
+    x = data["time"].values.astype("datetime64[ns]").astype("int64").astype(float)
+    xi = np.asarray(time).astype("datetime64[ns]").astype("int64").astype(float)
+    max_gap_ns = None if max_gap is None else max_gap * 1e9
 
     interp = {}
     for v in data.data_vars:
         values = data[v].values
         if np.issubdtype(values.dtype, np.datetime64):
-            ns = values.astype("datetime64[ns]").astype("int64").astype(float)
-            yi = np.interp(xi, x, ns, left=np.nan, right=np.nan)
+            ns = values.astype("datetime64[ns]")
+            ns = np.where(np.isnat(ns), np.nan, ns.astype("int64").astype(float))
+            yi = interp_1d(xi, x, ns, max_gap_ns)
             values = np.full(yi.shape, np.datetime64("NaT"), dtype="datetime64[ns]")
             valid = ~np.isnan(yi)
             values[valid] = yi[valid].astype("int64").astype("datetime64[ns]")
         elif np.issubdtype(values.dtype, np.number):
-            values = np.interp(xi, x, values, left=np.nan, right=np.nan)
+            values = interp_1d(xi, x, values.astype(float), max_gap_ns)
         else:
             continue
         interp[v] = xr.Variable("time", values, data[v].attrs)
@@ -121,16 +150,18 @@ def interp_to_time(data: xr.Dataset, time: np.ndarray) -> dict[str, xr.Variable]
     return interp
 
 
-def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
+def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset, max_gap: float | None = 60) -> xr.Dataset:
     """Merge the DVL and GDAC glider datasets
 
     Select and interpolate the science and glider sensor
     data from the OOI GDAC glider dataset to the associated
     OOI DVL glider dataset. First, the science and glider
     sensor data are separately split into separate datasets.
-    Then they are interpolated to the DVL timebase. Finally
-    they are merged into the DVL datasets. DVL times outside
-    of a sensor's time range are filled with NaN.
+    Then each variable is interpolated to the DVL timebase
+    from its own non-missing values. Finally they are merged
+    into the DVL datasets. DVL times outside of a variable's
+    time range, or inside a gap in the variable longer than
+    max_gap, are filled with NaN.
 
     Parameters
     ----------
@@ -139,6 +170,10 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
     gdac: xarray.Dataset
         The associated OOI glider data downloaded from the
         IOOS GDAC server
+    max_gap: float or None, Default = 60
+        The longest gap between data points, in seconds, to
+        interpolate across, e.g. while a sensor is off. None
+        interpolates across all gaps.
 
     Returns
     -------
@@ -158,7 +193,7 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset) -> xr.Dataset:
         if sensor == "profile" or not variables:
             continue
         sensor_data = split_data(gdac, variables)
-        interp_sensor = interp_to_time(sensor_data, dvl["time"].values)
+        interp_sensor = interp_to_time(sensor_data, dvl["time"].values, max_gap)
         merged_vars.update({f"{sensor}_{v}": var for v, var in interp_sensor.items()})
 
     # Add all of the interpolated variables to the dvl dataset at once
@@ -172,7 +207,9 @@ def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
     glider engineering dataset and map it to the glider DVL
     dataset. Each waypoint applies from the time it is set until
     the next waypoint is set; DVL times before the first waypoint
-    are filled with NaN.
+    are filled with NaN. A waypoint of (0, 0) is the glider's
+    placeholder before a waypoint is set, e.g. after a reboot,
+    so DVL times while it applies are also filled with NaN.
 
     Parameters
     ----------
@@ -193,6 +230,11 @@ def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
     # First, clean up and select just the relevant waypoints
     waypoints = waypoints[["time", "c_wpt_lat", "c_wpt_lon"]].dropna()
     waypoints = waypoints.assign(time=pd.to_datetime(waypoints["time"])).sort_values("time")
+
+    # Replace the (0, 0) placeholder waypoints with NaN, so the DVL times
+    # while one applies don't get a waypoint
+    unset = (waypoints["c_wpt_lat"] == 0) & (waypoints["c_wpt_lon"] == 0)
+    waypoints.loc[unset, ["c_wpt_lat", "c_wpt_lon"]] = np.nan
 
     # Keep only the times where either the latitude or longitude changes
     d_wpt = waypoints[["c_wpt_lat", "c_wpt_lon"]].diff()
