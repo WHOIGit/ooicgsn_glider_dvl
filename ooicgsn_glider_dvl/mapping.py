@@ -246,8 +246,13 @@ def get_bathymetry(
     Returns:
         Elevation (m), negative below sea level, on latitude/longitude
     """
+    # Pad the region by two grid cells so the shading reaches the edges of the map
+    grid_pad = 2 / 60
     lon_min, lon_max, lat_min, lat_max = extent
+    lon_min, lon_max = lon_min - grid_pad, lon_max + grid_pad
+    lat_min, lat_max = lat_min - grid_pad, lat_max + grid_pad
 
+    # Name the saved file by the padded region, so files saved without the padding aren't reused
     cache_file = None
     if cache_dir is not None:
         name = f"etopo1_{lon_min:.3f}_{lon_max:.3f}_{lat_min:.3f}_{lat_max:.3f}_s{stride}.nc"
@@ -255,12 +260,10 @@ def get_bathymetry(
         if cache_file.exists() and not overwrite:
             return xr.load_dataarray(cache_file)
 
-    # Pad the region by two grid cells so the shading reaches the edges of the map
-    grid_pad = 2 / 60
     with xr.open_dataset(BATHYMETRY_URL) as ds:
         bathymetry = ds["altitude"].sel(
-            latitude=slice(lat_min - grid_pad, lat_max + grid_pad),
-            longitude=slice(lon_min - grid_pad, lon_max + grid_pad),
+            latitude=slice(lat_min, lat_max),
+            longitude=slice(lon_min, lon_max),
         )
         bathymetry = bathymetry[::stride, ::stride].load()
 
