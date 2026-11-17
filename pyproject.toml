@@ -16,7 +16,51 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: BSD License"
 ]
-requires-python = "~=3.10"
+requires-python = ">=3.10"
+
+# Packages imported by the ooicgsn_glider_dvl modules
+dependencies = [
+    "cartopy>=0.23",
+    "cmocean>=4.0",
+    "h5netcdf>=1.3",
+    "h5py>=3.10",
+    "matplotlib>=3.8",
+    "netcdf4>=1.6",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scipy>=1.11",
+    "xarray>=2024.6",
+]
+
+[dependency-groups]
+# Linting and formatting
+dev = ["ruff>=0.6"]
+# Running the notebooks
+notebooks = [
+    "beautifulsoup4>=4.12",
+    "erddapy>=2.2",
+    "gsw>=3.6",
+    "httpx>=0.27",
+    "ipykernel>=6.29",
+    "jupyterlab>=4.2",
+]
+# OOI data access (OOINet M2M API and the OOI JupyterHub kdata), used by notebooks 1 and 3.1
+ooi = [
+    "ooi-data-explorations>=0.3",
+    "ooinet",
+]
+# Project documentation
+docs = ["mkdocs>=1.6"]
+
+[tool.uv]
+# `uv sync` installs these groups by default; add the others with e.g. `uv sync --group ooi`
+default-groups = ["dev", "notebooks"]
+# Without a floor, resolving ooi-data-explorations backtracks to s3fs releases from 2019 that
+# no longer build
+constraint-dependencies = ["s3fs>=2024.1"]
+
+[tool.uv.sources]
+ooinet = { git = "https://github.com/reedan88/OOINet" }
 
 
 [tool.ruff]
@@ -30,4 +74,3 @@ extend-select = ["I"]  # Add import sorting
 [tool.ruff.lint.isort]
 known-first-party = ["ooicgsn_glider_dvl"]
 force-sort-within-sections = true
-

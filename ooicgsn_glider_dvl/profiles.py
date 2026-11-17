@@ -9,7 +9,9 @@ import xarray as xr
 from ooicgsn_glider_dvl.utils import unix_time
 
 
-def identify_profiles(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4) -> list[np.ndarray]:
+def identify_profiles(
+    ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4
+) -> list[np.ndarray]:
     """Identify the start of each profile dive.
 
     The glider ADCP is only on during the dive portion
@@ -64,7 +66,9 @@ def identify_profiles(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap:
     return inflection_idx
 
 
-def get_profile_ids(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4) -> np.ndarray[int]:
+def get_profile_ids(
+    ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4
+) -> np.ndarray[int]:
     """Create profile ids for the glider ADCP dataset
 
     Parameters
@@ -97,7 +101,9 @@ def get_profile_ids(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: f
     return profiles
 
 
-def add_profiles(ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4) -> xr.Dataset:
+def add_profiles(
+    ds: xr.Dataset, min_depth_change: float = 2, min_time_gap: float = 4
+) -> xr.Dataset:
     """Add a sequential id to each glider profile dive
 
     The glider ADCP is only on during the dive portion

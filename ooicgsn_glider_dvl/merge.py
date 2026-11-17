@@ -103,7 +103,9 @@ def interp_1d(xi: np.ndarray, x: np.ndarray, y: np.ndarray, max_gap: float | Non
     return yi
 
 
-def interp_to_time(data: xr.Dataset, time: np.ndarray, max_gap: float | None = 60) -> dict[str, xr.Variable]:
+def interp_to_time(
+    data: xr.Dataset, time: np.ndarray, max_gap: float | None = 60
+) -> dict[str, xr.Variable]:
     """Linearly interpolate the 1-D data variables of a dataset to a new time base
 
     Each variable is interpolated from its own non-missing values. Times outside

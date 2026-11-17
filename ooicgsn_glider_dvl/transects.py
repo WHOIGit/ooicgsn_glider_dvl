@@ -17,14 +17,16 @@ EAST_LON = -70.375000
 
 # The edges of the Pioneer-NES survey box, each a straight line between two corners. The
 # glider can fly an edge in either direction, so the order of the corners does not matter.
-PIONEER_NES_TRANSECTS = pd.DataFrame({
-    "transect_id": [1, 2, 3, 4],
-    "transect_name": ["North_Edge", "West_Edge", "South_Edge", "East_Edge"],
-    "start_lat": [NORTH_LAT, NORTH_LAT, SOUTH_LAT, SOUTH_LAT],
-    "start_lon": [EAST_LON, WEST_LON, WEST_LON, EAST_LON],
-    "end_lat": [NORTH_LAT, SOUTH_LAT, SOUTH_LAT, NORTH_LAT],
-    "end_lon": [WEST_LON, WEST_LON, EAST_LON, EAST_LON],
-})
+PIONEER_NES_TRANSECTS = pd.DataFrame(
+    {
+        "transect_id": [1, 2, 3, 4],
+        "transect_name": ["North_Edge", "West_Edge", "South_Edge", "East_Edge"],
+        "start_lat": [NORTH_LAT, NORTH_LAT, SOUTH_LAT, SOUTH_LAT],
+        "start_lon": [EAST_LON, WEST_LON, WEST_LON, EAST_LON],
+        "end_lat": [NORTH_LAT, SOUTH_LAT, SOUTH_LAT, NORTH_LAT],
+        "end_lon": [WEST_LON, WEST_LON, EAST_LON, EAST_LON],
+    }
+)
 
 # 4-point cardinal directions, in order of increasing bearing
 CARDINAL_POINTS = np.array(["North", "East", "South", "West"])
@@ -102,12 +104,14 @@ def profile_positions(ds: xr.Dataset, lat: str = "lat", lon: str = "lon") -> pd.
             - waypoint_lat, waypoint_lon: if available, the waypoint the glider was
               heading to at the end of the profile. Missing and (0, 0) waypoints are NaN.
     """
-    df = pd.DataFrame({
-        "profile_id": ds["profile_id"].values,
-        "lat": ds[lat].values,
-        "lon": ds[lon].values,
-        "time": ds["time"].values,
-    })
+    df = pd.DataFrame(
+        {
+            "profile_id": ds["profile_id"].values,
+            "lat": ds[lat].values,
+            "lon": ds[lon].values,
+            "time": ds["time"].values,
+        }
+    )
     aggregations = {
         "time_first": ("time", "first"),
         "lat_start": ("lat", "first"),
@@ -417,38 +421,63 @@ def identify_glider_transects(
         waypoint_tolerance=waypoint_tolerance,
     )
 
-    ds = _add_profile_variables(ds, profiles, {
-        "transect_id": (-1, {
-            "long_name": "Transect ID",
-            "comment": "Number of the survey box edge the profile is on (0 = off transect)",
-        }),
-        "transect_name": ("Unknown", {
-            "long_name": "Transect Name",
-            "comment": "Name of the survey box edge the profile is on, or Off_Transect",
-        }),
-        "principal_direction": ("Unknown", {
-            "long_name": "Principal Direction",
-            "comment": "Direction along the transect toward the glider's waypoint",
-        }),
-        "transect_pass": (-1, {
-            "long_name": "Transect Pass",
-            "comment": "Number of the full-length pass, in time order (0 = off transect)",
-        }),
-        "profile_identifier": ("Unknown", {
-            "long_name": "Profile Identifier",
-            "comment": "Transect number, principal direction, and profile number on the transect",
-        }),
-        "along_distance": (np.nan, {
-            "long_name": "Distance Along Transect",
-            "units": "km",
-            "comment": "Distance along the transect from its start corner, at the profile start",
-        }),
-        "cross_distance": (np.nan, {
-            "long_name": "Distance From Transect",
-            "units": "km",
-            "comment": "Perpendicular distance from the transect's line, at the profile start",
-        }),
-    })
+    ds = _add_profile_variables(
+        ds,
+        profiles,
+        {
+            "transect_id": (
+                -1,
+                {
+                    "long_name": "Transect ID",
+                    "comment": "Number of the survey box edge the profile is on (0 = off transect)",
+                },
+            ),
+            "transect_name": (
+                "Unknown",
+                {
+                    "long_name": "Transect Name",
+                    "comment": "Name of the survey box edge the profile is on, or Off_Transect",
+                },
+            ),
+            "principal_direction": (
+                "Unknown",
+                {
+                    "long_name": "Principal Direction",
+                    "comment": "Direction along the transect toward the glider's waypoint",
+                },
+            ),
+            "transect_pass": (
+                -1,
+                {
+                    "long_name": "Transect Pass",
+                    "comment": "Number of the full-length pass, in time order (0 = off transect)",
+                },
+            ),
+            "profile_identifier": (
+                "Unknown",
+                {
+                    "long_name": "Profile Identifier",
+                    "comment": "Transect number, principal direction, and profile number on the transect",
+                },
+            ),
+            "along_distance": (
+                np.nan,
+                {
+                    "long_name": "Distance Along Transect",
+                    "units": "km",
+                    "comment": "Distance along the transect from its start corner, at the profile start",
+                },
+            ),
+            "cross_distance": (
+                np.nan,
+                {
+                    "long_name": "Distance From Transect",
+                    "units": "km",
+                    "comment": "Perpendicular distance from the transect's line, at the profile start",
+                },
+            ),
+        },
+    )
     return ds, profiles
 
 
@@ -611,28 +640,47 @@ def add_deviations_to_dataset(ds: xr.Dataset, profiles: pd.DataFrame) -> xr.Data
         A copy of the dataset with off_edge, overshoot, backtrack, is_deviation, and
         deviation_segment on the time dimension
     """
-    return _add_profile_variables(ds, profiles, {
-        "off_edge": (False, {
-            "long_name": "Off Edge",
-            "comment": "True where the profile start is too far from the transect's line",
-        }),
-        "overshoot": (False, {
-            "long_name": "Overshoot",
-            "comment": "True where the profile start is beyond a corner of the transect",
-        }),
-        "backtrack": (False, {
-            "long_name": "Backtrack",
-            "comment": "True where the profile start is behind the farthest point of the pass",
-        }),
-        "is_deviation": (False, {
-            "long_name": "Is Deviation",
-            "comment": "True where the profile is off_edge, overshoot, or backtrack",
-        }),
-        "deviation_segment": (0, {
-            "long_name": "Deviation Segment",
-            "comment": "Number of the run of consecutive deviating profiles (0 = no deviation)",
-        }),
-    })
+    return _add_profile_variables(
+        ds,
+        profiles,
+        {
+            "off_edge": (
+                False,
+                {
+                    "long_name": "Off Edge",
+                    "comment": "True where the profile start is too far from the transect's line",
+                },
+            ),
+            "overshoot": (
+                False,
+                {
+                    "long_name": "Overshoot",
+                    "comment": "True where the profile start is beyond a corner of the transect",
+                },
+            ),
+            "backtrack": (
+                False,
+                {
+                    "long_name": "Backtrack",
+                    "comment": "True where the profile start is behind the farthest point of the pass",
+                },
+            ),
+            "is_deviation": (
+                False,
+                {
+                    "long_name": "Is Deviation",
+                    "comment": "True where the profile is off_edge, overshoot, or backtrack",
+                },
+            ),
+            "deviation_segment": (
+                0,
+                {
+                    "long_name": "Deviation Segment",
+                    "comment": "Number of the run of consecutive deviating profiles (0 = no deviation)",
+                },
+            ),
+        },
+    )
 
 
 def _add_profile_variables(ds: xr.Dataset, profiles: pd.DataFrame, variables: dict) -> xr.Dataset:

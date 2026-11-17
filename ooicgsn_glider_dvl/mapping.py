@@ -167,10 +167,12 @@ def get_waypoints(glider: xr.Dataset) -> pd.DataFrame:
     if "waypoint_lat" not in glider or "waypoint_lon" not in glider:
         return pd.DataFrame(columns=["lat", "lon"])
 
-    wpts = pd.DataFrame({
-        "lat": np.ravel(glider["waypoint_lat"].values),
-        "lon": np.ravel(glider["waypoint_lon"].values),
-    }).dropna()
+    wpts = pd.DataFrame(
+        {
+            "lat": np.ravel(glider["waypoint_lat"].values),
+            "lon": np.ravel(glider["waypoint_lon"].values),
+        }
+    ).dropna()
     wpts = wpts[(wpts["lat"] != 0) | (wpts["lon"] != 0)]
     return wpts.drop_duplicates().reset_index(drop=True)
 

@@ -1,12 +1,15 @@
 Generating the docs
 ----------
 
-Use [mkdocs](http://www.mkdocs.org/) structure to update the documentation. 
+Use [mkdocs](http://www.mkdocs.org/) structure to update the documentation. mkdocs is in the
+`docs` dependency group, so run it with uv from this directory.
 
 Build locally with:
 
-    mkdocs build
+    uv run --group docs mkdocs build
 
 Serve locally with:
 
-    mkdocs serve
+    uv run --group docs mkdocs serve
+
+or `make docs` from the repository root.

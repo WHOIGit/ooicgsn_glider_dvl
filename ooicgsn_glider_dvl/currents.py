@@ -63,8 +63,12 @@ def surfacing_currents(eng: pd.DataFrame) -> pd.DataFrame:
     # later) are on separate rows. Take the first report of each.
     dr = eng.dropna(subset=["m_dr_time", "m_dr_surf_x_lmc", "m_dr_surf_y_lmc"])
     dr = dr[dr["m_dr_time"] > 0]
-    dr = dr.drop_duplicates(subset=["m_dr_time", "m_dr_surf_x_lmc", "m_dr_surf_y_lmc"], keep="first")
-    dr = dr[["time", "m_dr_time", "m_dr_surf_x_lmc", "m_dr_surf_y_lmc"]].rename(columns={"time": "surface_time"})
+    dr = dr.drop_duplicates(
+        subset=["m_dr_time", "m_dr_surf_x_lmc", "m_dr_surf_y_lmc"], keep="first"
+    )
+    dr = dr[["time", "m_dr_time", "m_dr_surf_x_lmc", "m_dr_surf_y_lmc"]].rename(
+        columns={"time": "surface_time"}
+    )
 
     fix = eng.dropna(subset=["m_gps_fix_x_lmc", "m_gps_fix_y_lmc"])
     fix = fix[(fix["m_gps_fix_x_lmc"] != 0) | (fix["m_gps_fix_y_lmc"] != 0)]
@@ -81,7 +85,11 @@ def surfacing_currents(eng: pd.DataFrame) -> pd.DataFrame:
     # The current used in the dead reckoning is the glider's estimate before it surfaced
     water_v = eng[["time", "m_water_vx", "m_water_vy"]].dropna()
     used = pd.merge_asof(
-        surf[["surface_time"]], water_v, left_on="surface_time", right_on="time", direction="backward"
+        surf[["surface_time"]],
+        water_v,
+        left_on="surface_time",
+        right_on="time",
+        direction="backward",
     )
 
     # The latitude and longitude of the GPS fix, for the location of the current
@@ -92,18 +100,20 @@ def surfacing_currents(eng: pd.DataFrame) -> pd.DataFrame:
     )
 
     dt = surf["m_dr_time"].values
-    out = pd.DataFrame({
-        "dive_start_time": surf["dive_start_time"],
-        "surface_time": surf["surface_time"],
-        "time_underwater": dt,
-        "gps_fix_time": surf["fix_time"],
-        "gps_fix_lat": gps_fix["m_gps_lat"].values,
-        "gps_fix_lon": gps_fix["m_gps_lon"].values,
-        "displacement_east": (surf["m_gps_fix_x_lmc"] - surf["m_dr_surf_x_lmc"]).values,
-        "displacement_north": (surf["m_gps_fix_y_lmc"] - surf["m_dr_surf_y_lmc"]).values,
-        "dr_current_east": used["m_water_vx"].fillna(0).values,
-        "dr_current_north": used["m_water_vy"].fillna(0).values,
-    })
+    out = pd.DataFrame(
+        {
+            "dive_start_time": surf["dive_start_time"],
+            "surface_time": surf["surface_time"],
+            "time_underwater": dt,
+            "gps_fix_time": surf["fix_time"],
+            "gps_fix_lat": gps_fix["m_gps_lat"].values,
+            "gps_fix_lon": gps_fix["m_gps_lon"].values,
+            "displacement_east": (surf["m_gps_fix_x_lmc"] - surf["m_dr_surf_x_lmc"]).values,
+            "displacement_north": (surf["m_gps_fix_y_lmc"] - surf["m_dr_surf_y_lmc"]).values,
+            "dr_current_east": used["m_water_vx"].fillna(0).values,
+            "dr_current_north": used["m_water_vy"].fillna(0).values,
+        }
+    )
     out["correction_east"] = out["displacement_east"] / dt
     out["correction_north"] = out["displacement_north"] / dt
     out["current_east"] = out["dr_current_east"] + out["correction_east"]

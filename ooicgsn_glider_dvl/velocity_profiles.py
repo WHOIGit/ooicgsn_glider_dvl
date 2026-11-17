@@ -141,13 +141,17 @@ def bin_velocity_profiles(
     profiles = xr.Dataset(
         coords={
             "profile_id": ("profile", profile_ids),
-            "depth": ("depth", edges[:-1] + bin_size / 2, {
-                "long_name": "Depth",
-                "units": "m",
-                "positive": "down",
-                "comment": "Center depth of the depth bin",
-                "bounds": "depth_bounds",
-            }),
+            "depth": (
+                "depth",
+                edges[:-1] + bin_size / 2,
+                {
+                    "long_name": "Depth",
+                    "units": "m",
+                    "positive": "down",
+                    "comment": "Center depth of the depth bin",
+                    "bounds": "depth_bounds",
+                },
+            ),
         }
     )
     profiles["depth_bounds"] = (("depth", "nv"), np.column_stack([edges[:-1], edges[1:]]))
@@ -171,29 +175,51 @@ def bin_velocity_profiles(
         shape = (n_profiles, n_bins)
         attrs = ds[name].attrs
         long_name = attrs.get("long_name", name)
-        profiles[f"{name}_mean"] = (("profile", "depth"), mean.reshape(shape), {
-            "long_name": f"Mean {long_name}",
-            "units": attrs.get("units", ""),
-            "comment": f"Mean of the {name} measurements in the depth bin",
-        })
-        profiles[f"{name}_std"] = (("profile", "depth"), std.reshape(shape), {
-            "long_name": f"Standard Deviation of {long_name}",
-            "units": attrs.get("units", ""),
-            "comment": f"Sample standard deviation of the {name} measurements in the depth bin",
-        })
-        profiles[f"{name}_count"] = (("profile", "depth"), count.reshape(shape), {
-            "long_name": f"Number of {long_name} Measurements",
-            "comment": f"Number of {name} measurements in the depth bin",
-        })
+        profiles[f"{name}_mean"] = (
+            ("profile", "depth"),
+            mean.reshape(shape),
+            {
+                "long_name": f"Mean {long_name}",
+                "units": attrs.get("units", ""),
+                "comment": f"Mean of the {name} measurements in the depth bin",
+            },
+        )
+        profiles[f"{name}_std"] = (
+            ("profile", "depth"),
+            std.reshape(shape),
+            {
+                "long_name": f"Standard Deviation of {long_name}",
+                "units": attrs.get("units", ""),
+                "comment": f"Sample standard deviation of the {name} measurements in the depth bin",
+            },
+        )
+        profiles[f"{name}_count"] = (
+            ("profile", "depth"),
+            count.reshape(shape),
+            {
+                "long_name": f"Number of {long_name} Measurements",
+                "comment": f"Number of {name} measurements in the depth bin",
+            },
+        )
 
     # Position each profile at its start, with the per-profile variables
-    profiles["time"] = ("profile", ds["time"].values[order][first], {
-        "long_name": "Time", "comment": "Time of the profile's first measurement",
-    })
+    profiles["time"] = (
+        "profile",
+        ds["time"].values[order][first],
+        {
+            "long_name": "Time",
+            "comment": "Time of the profile's first measurement",
+        },
+    )
     for name, source in [("lat", lat), ("lon", lon)]:
-        profiles[name] = ("profile", ds[source].values[order][first], {
-            **ds[source].attrs, "comment": "Position at the profile's first measurement",
-        })
+        profiles[name] = (
+            "profile",
+            ds[source].values[order][first],
+            {
+                **ds[source].attrs,
+                "comment": "Position at the profile's first measurement",
+            },
+        )
     for name in PROFILE_VARIABLES:
         if name in ds and ds[name].dims == ("time",):
             profiles[name] = ("profile", ds[name].values[order][first], ds[name].attrs)

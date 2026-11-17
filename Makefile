@@ -3,44 +3,53 @@
 #################################################################################
 
 PROJECT_NAME = ooicgsn_glider_dvl
-PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
-## Install Python dependencies
+## Create the uv environment (.venv) and register its Jupyter kernel
+.PHONY: create_environment
+create_environment: requirements kernel
+
+## Install the locked Python dependencies into .venv
 .PHONY: requirements
 requirements:
-	conda env update --name $(PROJECT_NAME) --file environment.yml --prune
-	
+	uv sync
+
+## Also install the OOI data-access packages (needed by notebooks 1 and 3.1)
+.PHONY: ooi
+ooi:
+	uv sync --group ooi
+
+## Register the .venv as the Jupyter kernel used by the notebooks
+.PHONY: kernel
+kernel:
+	uv run python -m ipykernel install --user --name $(PROJECT_NAME) --display-name "Python ($(PROJECT_NAME))"
 
 ## Delete all compiled Python files
 .PHONY: clean
 clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
+	find . -path ./.venv -prune -o -type f -name "*.py[co]" -exec rm -f {} +
+	find . -path ./.venv -prune -o -type d -name "__pycache__" -exec rm -rf {} +
 
 ## Lint using ruff (use `make format` to do formatting)
 .PHONY: lint
 lint:
-	ruff format --check
-	ruff check
+	uv run ruff format --check
+	uv run ruff check
 
 ## Format source code with ruff
 .PHONY: format
 format:
-	ruff check --fix
-	ruff format
+	uv run ruff check --fix
+	uv run ruff format
 
-## Set up Python interpreter environment
-.PHONY: create_environment
-create_environment:
-	conda env create --name $(PROJECT_NAME) -f environment.yml
-	
-	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-	
+## Serve the documentation locally
+.PHONY: docs
+docs:
+	cd docs && uv run --group docs mkdocs serve
 
 #################################################################################
 # Self Documenting Commands                                                     #
