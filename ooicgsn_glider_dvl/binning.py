@@ -136,10 +136,9 @@ def bin_profiles(
     if science_variables is None:
         science_variables = tuple(name for name in SCIENCE_VARIABLES if name in ds)
 
-    # Order the measurements by profile, so each profile's first measurement comes first
+    # Order the measurements by profile and time
     order = np.lexsort((ds["time"].values, ds["profile_id"].values))
     profile_ids, profile_idx = np.unique(ds["profile_id"].values[order], return_inverse=True)
-    first = np.flatnonzero(np.r_[True, profile_idx[1:] != profile_idx[:-1]])
     n_profiles = profile_ids.size
 
     # Depths of the ADCP cells and of the glider, and the depth bins covering both
@@ -177,17 +176,12 @@ def bin_profiles(
     # ADCP velocities, binned by the depth of each cell
     if velocity_variables:
         cell, in_range = _bin_index(cell_depths, profile_idx[:, None], bin_size, n_bins)
-        good = in_range.copy()
-        if qc_variable is not None:
-            flags = ds[qc_variable].transpose("time", "bin").values[order]
-            good &= ~np.isin(flags, bad_flags)
-
-        # Exclude every cell from the first bad cell (failed QC or missing velocity) onward
-        if remove_bottom_hits:
-            complete = good.copy()
-            for name in velocity_variables:
-                complete &= np.isfinite(ds[name].transpose("time", "bin").values[order])
-            good &= np.cumsum(~complete, axis=1) == 0
+        good = (
+            in_range
+            & good_velocity_cells(
+                ds, velocity_variables, qc_variable, bad_flags, remove_bottom_hits
+            )[order]
+        )
 
         for name in velocity_variables:
             values = ds[name].transpose("time", "bin").values[order].astype(float)
@@ -202,22 +196,7 @@ def bin_profiles(
             stats = _bin_statistics(cell, values, in_range, n_profiles, n_bins)
             _add_statistics(profiles, name, ds[name].attrs, *stats)
 
-    # Position each profile at its start, with the per-profile variables
-    profiles["time"] = (
-        "profile",
-        ds["time"].values[order][first],
-        {"long_name": "Time", "comment": "Time of the profile's first measurement"},
-    )
-    for name, source in [("lat", lat), ("lon", lon)]:
-        profiles[name] = (
-            "profile",
-            ds[source].values[order][first],
-            {**ds[source].attrs, "comment": "Position at the profile's first measurement"},
-        )
-    for name in PROFILE_VARIABLES:
-        if name in ds and ds[name].dims == ("time",):
-            profiles[name] = ("profile", ds[name].values[order][first], ds[name].attrs)
-
+    profiles = add_profile_start(profiles, ds, lat, lon)
     profiles.attrs = {
         "comment": (
             f"Glider ADCP velocity and science data binned by depth into {bin_size} m bins "
@@ -230,6 +209,99 @@ def bin_profiles(
         "bottom_hits_removed": str(remove_bottom_hits),
     }
     return profiles
+
+
+def add_profile_start(
+    profiles: xr.Dataset, ds: xr.Dataset, lat: str = "lat", lon: str = "lon"
+) -> xr.Dataset:
+    """Position each profile at its start, with the per-profile variables
+
+    Adds the time, latitude, and longitude of each profile's first measurement, and
+    the per-profile variables in PROFILE_VARIABLES that are in the dataset (such as
+    the transect, along_distance, the deviation flags, and the depth-averaged current)
+    as their value at the profile's first measurement.
+
+    Parameters
+    ----------
+    profiles: xarray.Dataset
+        A dataset with profile_id on the profile dimension
+    ds: xarray.Dataset
+        The glider DVL dataset the profiles were made from, with profile_id on the time
+        dimension
+    lat, lon: str
+        The names of the latitude and longitude variables
+
+    Returns
+    -------
+    profiles: xarray.Dataset
+        The profiles with time, lat, lon, and the per-profile variables on the profile
+        dimension
+    """
+    order = np.lexsort((ds["time"].values, ds["profile_id"].values))
+    ids = ds["profile_id"].values[order]
+    first = order[np.r_[True, ids[1:] != ids[:-1]]]
+    position = np.searchsorted(ds["profile_id"].values[first], profiles["profile_id"].values)
+    start = first[position]
+
+    profiles["time"] = (
+        "profile",
+        ds["time"].values[start],
+        {"long_name": "Time", "comment": "Time of the profile's first measurement"},
+    )
+    for name, source in [("lat", lat), ("lon", lon)]:
+        profiles[name] = (
+            "profile",
+            ds[source].values[start],
+            {**ds[source].attrs, "comment": "Position at the profile's first measurement"},
+        )
+    for name in PROFILE_VARIABLES:
+        if name in ds and ds[name].dims == ("time",):
+            profiles[name] = ("profile", ds[name].values[start], ds[name].attrs)
+    return profiles
+
+
+def good_velocity_cells(
+    ds: xr.Dataset,
+    velocity_variables: tuple[str, ...] = VELOCITY_VARIABLES,
+    qc_variable: str | None = "vendor_qc_flag",
+    bad_flags: tuple[int, ...] = (4, 9),
+    remove_bottom_hits: bool = True,
+) -> np.ndarray:
+    """Find the ADCP cells with good velocities
+
+    A cell is bad if its QC flag (qc_variable) is one of bad_flags or any of the
+    velocity variables is missing. With remove_bottom_hits, every cell of an ensemble
+    from its first bad cell onward is also bad: the ADCP looks down, so the cells
+    farther from the glider are deeper, and the good cells beyond a bad cell are likely
+    to be reflections off the bottom rather than water velocities.
+
+    Parameters
+    ----------
+    ds: xarray.Dataset
+        The glider DVL dataset with the velocity and QC variables on the time and bin
+        dimensions
+    velocity_variables: tuple[str], Default = VELOCITY_VARIABLES
+        The velocity variables that must all be present for a cell to be good
+    qc_variable: str, Default = "vendor_qc_flag"
+        The QC flag variable. Set to None to only exclude missing velocities.
+    bad_flags: tuple[int], Default = (4, 9)
+        The QC flag values of the bad cells
+    remove_bottom_hits: bool, Default = True
+        Exclude every cell of an ensemble from its first bad cell onward
+
+    Returns
+    -------
+    good: numpy.ndarray[bool]
+        Whether each cell is good, on the (time, bin) dimensions
+    """
+    good = np.ones((ds.sizes["time"], ds.sizes["bin"]), dtype=bool)
+    if qc_variable is not None:
+        good &= ~np.isin(ds[qc_variable].transpose("time", "bin").values, bad_flags)
+    for name in velocity_variables:
+        good &= np.isfinite(ds[name].transpose("time", "bin").values)
+    if remove_bottom_hits:
+        good &= np.cumsum(~good, axis=1) == 0
+    return good
 
 
 def _bin_index(depths, profile_idx, bin_size, n_bins):

@@ -43,8 +43,10 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
 └── ooicgsn_glider_dvl   <- Source code for this project
     ├── __init__.py
     ├── binning.py              <- Bin the ADCP velocities and science data of each profile by depth
-    ├── bottom_track.py         <- Remove glider motion from DVL velocities using bottom tracking
+    ├── bottom_track.py         <- Remove glider motion using bottom tracking, and check the inversion with it
     ├── currents.py             <- Depth-averaged currents from the glider's dead-reckoned and GPS positions
+    ├── flight.py               <- Glider velocity through the water from the gliderflight flight model
+    ├── inversion.py            <- Absolute velocity profiles from the DVL, flight model, and depth-averaged current
     ├── mapping.py              <- Cartopy maps of glider tracks and mooring locations
     ├── merge.py                <- Merge IOOS Glider DAC datasets with glider DVL/ADCP data from OOINet
     ├── objective_mapping.py    <- Objective mapping (optimal interpolation) of glider sections

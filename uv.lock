@@ -1563,6 +1563,32 @@ complete = [
 ]
 
 [[package]]
+name = "dbdreader"
+version = "0.6.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "lz4" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "numpy", version = "2.5.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/95/f7/a7fecfa27af43f3a43812c86f5810e6d4ae18b3f76634b1b0fbf6ca524cb/dbdreader-0.6.3.tar.gz", hash = "sha256:3b5a42601d8ce78f60f8a1497e4ffeef41f1d1b9260998b2f3c6df577b9ab3d5", size = 1988635, upload-time = "2026-07-14T20:28:28.574Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4b/f1/7c5217b4c6ca2b16cab67acb9b44ac355e934fec5439d1f74a7b70846a35/dbdreader-0.6.3-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:89d193a5653fd84d20bd43139b31e07383f0c2b2585f3bc01d105a49788ea971", size = 1812475, upload-time = "2026-07-14T20:28:11.361Z" },
+    { url = "https://files.pythonhosted.org/packages/de/0b/a4e609c13a0921afcfc27d15440285168bd06ea39c5c7b618fcc26abc73e/dbdreader-0.6.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:023eca77d269cdc2ff8c4b62e3e2d7ed665f157803712223cbacc94d4198a5d0", size = 2048963, upload-time = "2026-07-14T20:28:13.505Z" },
+    { url = "https://files.pythonhosted.org/packages/21/52/3356383191fcfe3736e9c2b287143e63084f2c9f817f358f9cb3f594cf6c/dbdreader-0.6.3-cp310-cp310-win_amd64.whl", hash = "sha256:e594d94fcda86794f4dffceaba1ff71464b2391da012425233098e9c469bc4a7", size = 1776318, upload-time = "2026-07-14T20:28:14.899Z" },
+    { url = "https://files.pythonhosted.org/packages/ec/4b/1d48ee6de1c681b42ea58e1a9826f40b851ead0811a3e23b53e6a8c6070b/dbdreader-0.6.3-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:6d6e33aa238382f4d992af0a68a743b369d1d18dce123ea8ca2b74c2630964dc", size = 1812475, upload-time = "2026-07-14T20:28:16.43Z" },
+    { url = "https://files.pythonhosted.org/packages/2c/78/4c965d73c15a5bddb2396bd359203e7ba082cce15ae0fcc0fd0088749627/dbdreader-0.6.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1817c3b5b326488a9d39cf6812d14122509211343c9f8fb5f59c7f9c63a5f33a", size = 2049008, upload-time = "2026-07-14T20:28:17.918Z" },
+    { url = "https://files.pythonhosted.org/packages/35/eb/6b12bcb6fa6c5e170595939c78b1a71896924be4c0f4e4f42770925a7aa7/dbdreader-0.6.3-cp311-cp311-win_amd64.whl", hash = "sha256:e3e5af5debb69a89856b755c06d070840024e0ffe4a0193953b5af26cd5416a0", size = 1776317, upload-time = "2026-07-14T20:28:19.562Z" },
+    { url = "https://files.pythonhosted.org/packages/d0/b4/2826299e92b58a38042d7779280501e1f275331c5ed368d077f2e7daae34/dbdreader-0.6.3-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:a8371ce0cec7c2feb0bcd72baf74d96a4c305be63ba4a816480f9907c7cea019", size = 1809731, upload-time = "2026-07-14T20:28:20.867Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/27/94bbe8b44c97d8e9c29ec6fdba8807f5c78b84966efdc0f3a8fc7bc05eb3/dbdreader-0.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e086e0c9e14a67f0d83a5e8f9841245283d7759b9cb0c95b0ede2ac7a367a8d4", size = 2049169, upload-time = "2026-07-14T20:28:22.234Z" },
+    { url = "https://files.pythonhosted.org/packages/a7/99/d8342c8cd24ab27df85a414a09699c25d1f9f468760855c6d9e2e2609e5c/dbdreader-0.6.3-cp312-cp312-win_amd64.whl", hash = "sha256:58017bdb9bcf34041667f7a6604d71325e2e59f5c28ffe34ac7ff998ccc74d42", size = 1776321, upload-time = "2026-07-14T20:28:23.404Z" },
+    { url = "https://files.pythonhosted.org/packages/83/32/f4e441405d399f26f1ca402ec65431da23a07f7dc39e6b761b1111933ef6/dbdreader-0.6.3-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:e8204fa73f6a772f5ed4418fe6fff50ca9932ff8fc109837a998c1c63fb64878", size = 1809733, upload-time = "2026-07-14T20:28:24.676Z" },
+    { url = "https://files.pythonhosted.org/packages/34/2f/65cb6ec318ed327e9e05d0c50f3dffa2ed0e11ff7cb9084022deae316f0c/dbdreader-0.6.3-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4b841112e0d3036d0c4306fb8525e79e2ce073384b8633c82affdf3e9cbfcb9d", size = 2049201, upload-time = "2026-07-14T20:28:26.043Z" },
+    { url = "https://files.pythonhosted.org/packages/d5/b1/47475f2d82ea4410448e32d42781bf212d2160165896e7885ce03ac69e20/dbdreader-0.6.3-cp313-cp313-win_amd64.whl", hash = "sha256:2c5d44fea4b8afddc3cd78df3a8c9f19d09920083863b5432b38ae5714349398", size = 1776320, upload-time = "2026-07-14T20:28:27.404Z" },
+]
+
+[[package]]
 name = "debugpy"
 version = "1.8.22"
 source = { registry = "https://pypi.org/simple" }
@@ -2137,6 +2163,28 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d9/29/d40217cbe2f6b1359e00c6c307bb3fc876ba74068cbab3dde77f03ca0dc4/ghp-import-2.1.0.tar.gz", hash = "sha256:9c535c4c61193c2df8871222567d7fd7e5014d835f97dc7b7439069e2413d343", size = 10943, upload-time = "2022-05-02T15:47:16.11Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f7/ec/67fbef5d497f86283db54c22eec6f6140243aae73265799baaaa19cd17fb/ghp_import-2.1.0-py3-none-any.whl", hash = "sha256:8337dd7b50877f163d4c0289bc1f1c7f127550241988d568c1db512c4324a619", size = 11034, upload-time = "2022-05-02T15:47:14.552Z" },
+]
+
+[[package]]
+name = "gliderflight"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dbdreader" },
+    { name = "gsw", version = "3.6.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "gsw", version = "3.6.23", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "matplotlib", version = "3.10.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "matplotlib", version = "3.11.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "numpy", version = "2.5.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/aa/ab/3910f77b8e55ec8f0b091f510cba98d3dce1bd73c677ef4f3fce5832f306/gliderflight-1.2.1.tar.gz", hash = "sha256:1b697b1bca43f73c6fb33723b8a94ad08e8ca8c1245aadc47826ee7fbd0d862f", size = 365931, upload-time = "2026-07-21T09:41:56.606Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b1/58/ee5990b88237142c197ac8e9a90ecc46b07162909c12616aac757d3b0100/gliderflight-1.2.1-py3-none-any.whl", hash = "sha256:b60b2f049c3a61d7fa88dad80b128fa3842c2514e52da5c10492b10268f7591a", size = 21718, upload-time = "2026-07-21T09:41:55.38Z" },
 ]
 
 [[package]]
@@ -5062,6 +5110,7 @@ dependencies = [
     { name = "cartopy", version = "0.25.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "cartopy", version = "0.26.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "cmocean" },
+    { name = "gliderflight" },
     { name = "h5netcdf" },
     { name = "h5py" },
     { name = "matplotlib", version = "3.10.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
@@ -5107,6 +5156,7 @@ ooi = [
 requires-dist = [
     { name = "cartopy", specifier = ">=0.23" },
     { name = "cmocean", specifier = ">=4.0" },
+    { name = "gliderflight", specifier = ">=1.2" },
     { name = "h5netcdf", specifier = ">=1.3" },
     { name = "h5py", specifier = ">=3.10" },
     { name = "matplotlib", specifier = ">=3.8" },

@@ -74,6 +74,49 @@ def sensor_variables(gdac: xr.Dataset) -> dict[list]:
     return sensor_vars
 
 
+def adcp_attitude_to_degrees(
+    adcp: xr.Dataset, variables: tuple[str, ...] = ("heading", "pitch", "roll")
+) -> xr.Dataset:
+    """Convert the ADCP heading, pitch, and roll from hundredths of a degree to degrees
+
+    The TRDI ADCP reports its heading, pitch, and roll in hundredths of a degree
+    (e.g. a pitch of -2450 is -24.5 degrees). The OOINet glider ADCP datasets keep
+    these raw values but label them as degrees. This divides them by 100 and notes
+    the conversion in the comment attribute.
+
+    The conversion is only applied to a variable whose values are out of range for
+    degrees (a heading above 360 or a pitch or roll beyond +/-90 degrees), so it is
+    safe to apply to a dataset that has already been converted.
+
+    Parameters
+    ----------
+    adcp: xarray.Dataset
+        The OOI glider ADCP dataset, or a dataset merged from it
+    variables: tuple[str], Default = ("heading", "pitch", "roll")
+        The attitude variables to convert
+
+    Returns
+    -------
+    adcp: xarray.Dataset
+        The dataset with the attitude variables in degrees
+    """
+    limits = {"heading": 360, "pitch": 90, "roll": 90}
+    for name in variables:
+        if name not in adcp:
+            continue
+        if np.nanmax(np.abs(adcp[name].values)) <= limits.get(name, 360):
+            continue
+        attrs = dict(adcp[name].attrs)
+        comment = attrs.get("comment", "")
+        attrs["comment"] = (
+            f"{comment} Converted to degrees from the hundredths of a degree reported by the ADCP."
+        ).strip()
+        attrs["units"] = "degrees"
+        adcp[name] = adcp[name] / 100
+        adcp[name].attrs = attrs
+    return adcp
+
+
 def split_data(gdac: xr.Dataset, sensor_vars: list) -> xr.Dataset:
     """Splits off the given science variables, dropping the times where all of them are missing"""
     sensor_data = gdac[sensor_vars].dropna(dim="time", how="all")
