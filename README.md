@@ -42,6 +42,7 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
 │
 └── ooicgsn_glider_dvl   <- Source code for this project
     ├── __init__.py
+    ├── binning.py              <- Bin the ADCP velocities and science data of each profile by depth
     ├── bottom_track.py         <- Remove glider motion from DVL velocities using bottom tracking
     ├── currents.py             <- Depth-averaged currents from the glider's dead-reckoned and GPS positions
     ├── mapping.py              <- Cartopy maps of glider tracks and mooring locations
@@ -50,8 +51,7 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
     ├── profiles.py             <- Split glider ADCP datasets into individual profiles
     ├── qc.py                   <- Quality control of ADCP data based on TRDI recommendations
     ├── transects.py            <- Split the deployment into transects along the survey box edges
-    ├── utils.py                <- Shared methods across modules
-    └── velocity_profiles.py    <- Bin the ADCP velocities of each profile by depth
+    └── utils.py                <- Shared methods across modules
 ```
 
 ## Getting Started

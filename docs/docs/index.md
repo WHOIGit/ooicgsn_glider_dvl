@@ -9,6 +9,7 @@ currents.
 
 | Module | Description |
 | --- | --- |
+| `binning` | Bin the ADCP velocities and science data of each profile by depth |
 | `bottom_track` | Remove glider motion from DVL water velocities using bottom tracking |
 | `currents` | Depth-averaged currents from the glider's dead-reckoned and GPS positions |
 | `mapping` | Cartopy maps of glider tracks and mooring locations |
@@ -18,7 +19,6 @@ currents.
 | `qc` | Quality control of ADCP data based on TRDI recommendations |
 | `transects` | Split the deployment into transects along the survey box edges |
 | `utils` | Shared methods across modules |
-| `velocity_profiles` | Bin the ADCP velocities of each profile by depth |
 
 ## Commands
 

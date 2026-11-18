@@ -693,7 +693,8 @@ def _add_profile_variables(ds: xr.Dataset, profiles: pd.DataFrame, variables: di
     lookup = profiles.set_index("profile_id")
     profile_id = ds["profile_id"].values
     for name, (fill, attrs) in variables.items():
-        values = lookup[name].reindex(profile_id, fill_value=fill).values
+        # Convert to numpy: pandas 3 stores strings as Arrow arrays, which xarray can't index
+        values = lookup[name].reindex(profile_id, fill_value=fill).to_numpy()
         ds[name] = (["time"], values, attrs)
     return ds
 
