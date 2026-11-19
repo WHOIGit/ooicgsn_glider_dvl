@@ -49,9 +49,11 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
     ├── inversion.py            <- Absolute velocity profiles from the DVL and flight model, referenced to the
     │                              depth-averaged current or bottom tracking
     ├── mapping.py              <- Cartopy maps of glider tracks and mooring locations
-    ├── merge.py                <- Merge IOOS Glider DAC datasets with glider DVL/ADCP data from OOINet
+    ├── merge.py                <- Merge IOOS Glider DAC datasets with glider DVL/ADCP data from OOINet,
+    │                              and build a glider dataset through the dives, climbs, and surfacings
     ├── objective_mapping.py    <- Objective mapping (optimal interpolation) of glider sections
-    ├── profiles.py             <- Split glider ADCP datasets into individual profiles
+    ├── profiles.py             <- Split glider ADCP datasets into individual profiles, label the dives,
+    │                              climbs, and surfacings, and link the ADCP and science profiles
     ├── qc.py                   <- Quality control of ADCP data based on TRDI recommendations
     ├── transects.py            <- Split the deployment into transects along the survey box edges
     └── utils.py                <- Shared methods across modules

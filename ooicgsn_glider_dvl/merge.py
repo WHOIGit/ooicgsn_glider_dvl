@@ -318,6 +318,50 @@ def merge_datasets(dvl: xr.Dataset, gdac: xr.Dataset, max_gap: float | None = 60
     return dvl.assign(merged_vars)
 
 
+def glider_dataset(eng: pd.DataFrame, gdac: xr.Dataset, max_gap: float | None = 60) -> xr.Dataset:
+    """Build a glider dataset on the engineering time base, through the dives, climbs, and
+    surfacings
+
+    The ADCP is only on during the dives, so the ADCP dataset (see merge_datasets) doesn't
+    cover the climbs or the surfacings. This dataset is on the time base of the glider
+    engineering data instead, which the glider records throughout (about every 4 s). The
+    engineering variables are kept as they are, and the science variables of the IOOS
+    GDAC dataset are interpolated to the engineering times as in merge_datasets: each from
+    its own non-missing values, with the source sensor in the name (e.g. ctd_pressure),
+    and NaN outside of a variable's time range or inside a gap in it longer than max_gap.
+    The GDAC dataset only covers the dives and climbs, so the science variables are NaN
+    at the surface.
+
+    Parameters
+    ----------
+    eng: pandas.DataFrame
+        The glider engineering data downloaded from OOI as a csv file, with the time and
+        the engineering variables to keep (e.g. m_depth)
+    gdac: xarray.Dataset
+        The associated OOI glider data downloaded from the IOOS GDAC server
+    max_gap: float or None, Default = 60
+        The longest gap between science data points, in seconds, to interpolate across.
+        None interpolates across all gaps.
+
+    Returns
+    -------
+    glider: xarray.Dataset
+        The engineering variables and the interpolated science variables on the
+        engineering time base
+    """
+    eng = eng.assign(time=pd.to_datetime(eng["time"])).dropna(subset="time")
+    eng = eng.sort_values("time").drop_duplicates(subset="time")
+    glider = xr.Dataset(
+        {
+            v: ("time", eng[v].values, {"source_sensor": v, "comment": "Glider engineering data"})
+            for v in eng.columns
+            if v != "time"
+        },
+        coords={"time": eng["time"].values.astype("datetime64[ns]")},
+    )
+    return merge_datasets(glider, gdac, max_gap)
+
+
 def add_waypoints(dvl: xr.Dataset, waypoints: pd.DataFrame) -> xr.Dataset:
     """Merge the waypoint data into the glider DVL dataset
 
