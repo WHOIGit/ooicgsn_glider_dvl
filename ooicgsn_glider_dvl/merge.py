@@ -7,6 +7,8 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
+from ooicgsn_glider_dvl.utils import magnetic_declination
+
 
 def sensor_variables(gdac: xr.Dataset) -> dict[list]:
     """Match IOOS GDAC dataset variables to science sensor source
@@ -114,6 +116,77 @@ def adcp_attitude_to_degrees(
         attrs["units"] = "degrees"
         adcp[name] = adcp[name] / 100
         adcp[name].attrs = attrs
+    return adcp
+
+
+def true_north_velocities(adcp: xr.Dataset) -> xr.Dataset:
+    """Build the ADCP water velocities from the raw velocities, which are relative to true north
+
+    OOINet provides the glider ADCP water velocities twice: the raw earth coordinate
+    velocities reported by the ADCP (water_velocity_east/north, mm s-1), and those
+    rotated by the magnetic declination (eastward/northward_seawater_velocity, m s-1),
+    assuming the raw velocities are relative to magnetic north. The glider ADCP has no
+    compass of its own: it uses the glider's heading (m_heading), which the glider has
+    already corrected to relative to true north. The raw velocities are therefore
+    already relative to true north, and OOINet's rotation is a double correction (about
+    14 degrees at the Pioneer NES array).
+
+    This builds eastward_seawater_velocity and northward_seawater_velocity from the raw
+    velocities, converted to m s-1, and keeps OOINet's rotated velocities for reference
+    as ooi_eastward_seawater_velocity and ooi_northward_seawater_velocity, with the
+    rotation OOINet applied (see utils.magnetic_declination) in their attributes. The
+    upward velocity is not affected by the rotation, so it is unchanged. It is skipped
+    if the dataset already has the OOINet velocities kept for reference, so it is safe to
+    apply more than once.
+
+    Parameters
+    ----------
+    adcp: xarray.Dataset
+        The OOI glider ADCP dataset, or a dataset merged from it, with
+        water_velocity_east/north and eastward/northward_seawater_velocity
+
+    Returns
+    -------
+    adcp: xarray.Dataset
+        The dataset with eastward/northward_seawater_velocity relative to true north,
+        built from the raw velocities, and OOINet's rotated velocities as
+        ooi_eastward/northward_seawater_velocity
+    """
+    if "ooi_eastward_seawater_velocity" in adcp:
+        return adcp
+    declination = magnetic_declination(adcp)
+
+    for direction in ["eastward", "northward"]:
+        name = f"{direction}_seawater_velocity"
+        raw = f"water_velocity_{direction[:-4]}"
+
+        # Keep OOINet's rotated velocities for reference
+        ooi_attrs = dict(adcp[name].attrs)
+        ooi_attrs["comment"] = (
+            f"{ooi_attrs.get('comment', '')} Rotated by OOINet by a magnetic declination of "
+            f"{declination:.2f} degrees. The raw velocities are already relative to true "
+            f"north, so this is a double correction; use {name} instead."
+        ).strip()
+        ooi_attrs["magnetic_declination"] = declination
+        adcp[f"ooi_{name}"] = (adcp[name].dims, adcp[name].values, ooi_attrs)
+
+        # Build the velocities from the raw velocities
+        adcp[name] = (
+            adcp[raw].dims,
+            adcp[raw].values / 1000,
+            {
+                "long_name": f"{direction.capitalize()} Sea Water Velocity",
+                "standard_name": f"{direction}_sea_water_velocity",
+                "units": "m s-1",
+                "comment": (
+                    f"{direction.capitalize()} sea water velocity relative to the glider, in "
+                    f"Earth coordinates relative to true north: the raw ADCP velocity {raw} "
+                    "converted to m s-1. The ADCP uses the glider's heading, which is already "
+                    "relative to true north, so no magnetic declination correction is applied."
+                ),
+                "ancillary_variables": raw,
+            },
+        )
     return adcp
 
 

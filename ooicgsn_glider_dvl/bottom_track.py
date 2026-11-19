@@ -22,17 +22,17 @@ BOTTOM_TRACK_VELOCITY_VARIABLES = (
 def add_bottom_track(
     ds: xr.Dataset,
     bottom_track: xr.Dataset,
-    declination: float,
+    declination: float = 0,
     max_error_velocity: float | None = None,
 ) -> xr.Dataset:
     """Add the bottom-track velocities to the glider DVL dataset
 
     When the bottom is in range, the DVL measures the velocity of the bottom relative to
     the glider, which is the opposite of the glider's velocity over the ground. The
-    bottom-track velocities are in earth coordinates relative to magnetic north, and in
-    mm s-1. OOI rotates the DVL water velocities to relative to true north, but not the
-    bottom-track velocities, so they are rotated here by the same magnetic declination
-    (see utils.magnetic_declination) and converted to m s-1.
+    bottom-track velocities are in earth coordinates, using the glider's heading, which
+    is already relative to true north, and in mm s-1. They are converted to m s-1, and
+    only rotated by the declination, if one is given. They are then in the same frame as
+    the raw DVL water velocities (see merge.true_north_velocities).
 
     Parameters
     ----------
@@ -42,8 +42,9 @@ def add_bottom_track(
         The OOI glider ADCP bottom-track dataset, on the same times as the DVL dataset,
         with bt_eastward_velocity, bt_northward_velocity, bt_upward_velocity, and
         bt_error_velocity (mm s-1)
-    declination: float
-        The magnetic declination (degrees, positive east of north)
+    declination: float, Default = 0
+        A magnetic declination (degrees, positive east of north) to rotate the velocities
+        by, for an ADCP whose heading is relative to magnetic north
     max_error_velocity: float, Optional
         Exclude the bottom-track velocities with an error velocity (m s-1) larger than
         this, up or down
@@ -77,9 +78,8 @@ def add_bottom_track(
                     f"{name.capitalize()} velocity of the bottom relative to the glider, the "
                     "opposite of the glider's velocity over the ground"
                     + (
-                        f", rotated to relative to true north by the magnetic declination of "
-                        f"{declination:.2f} degrees"
-                        if name != "upward"
+                        f", rotated by a declination of {declination:.2f} degrees"
+                        if declination and name != "upward"
                         else ""
                     )
                 ),

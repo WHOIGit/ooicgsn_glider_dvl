@@ -14,35 +14,45 @@ def unix_time(dt, unit="s"):
 def magnetic_declination(
     ds,
     raw=("water_velocity_east", "water_velocity_north"),
-    corrected=("eastward_seawater_velocity", "northward_seawater_velocity"),
+    corrected=None,
 ) -> float:
     """Estimate the magnetic declination OOI applied to the ADCP water velocities
 
-    The glider ADCP measures its heading with a magnetic compass, so the raw earth
-    coordinate velocities it reports (water_velocity_east/north) are relative to
-    magnetic north. OOI rotates them by the magnetic declination to relative to true
-    north (eastward/northward_seawater_velocity). The bottom-track velocities and
-    the glider's heading (m_heading) are left relative to magnetic north, so they need
-    the same rotation to be combined with the water velocities.
-
+    OOI assumes the raw earth coordinate velocities the glider ADCP reports
+    (water_velocity_east/north) are relative to magnetic north, and rotates them by the
+    magnetic declination to relative to true north (eastward/northward_seawater_velocity).
     The declination is the median angle from the raw to the corrected velocities over
-    every valid measurement, which is the rotation OOI applied. It is positive east
-    of north, so a true direction is the magnetic direction plus the declination
-    (e.g. about -14 degrees at the Pioneer NES array, where magnetic north is west of
-    true north).
+    every valid measurement, which is the rotation OOI applied. It is positive east of
+    north (e.g. about -14 degrees at the Pioneer NES array, where magnetic north is west
+    of true north).
+
+    The glider ADCP has no compass of its own: it uses the glider's heading (m_heading),
+    which the glider has already corrected to relative to true north (its dead reckoning
+    uses m_heading directly in its true north local mission coordinates). The raw ADCP
+    velocities are then already relative to true north, and the OOI rotation is a double
+    correction; merge.true_north_velocities uses the raw velocities instead. For GL379
+    deployment 8, the depth-averaged currents from the GPS confirm this: the profiles
+    referenced to bottom tracking match them in direction without the rotation (to about
+    2 degrees), and are rotated by about 14 degrees with it.
 
     Parameters
     ----------
     ds: xarray.Dataset
         A dataset with both the raw and corrected ADCP water velocities
     raw, corrected: tuple[str, str]
-        The names of the raw and corrected eastward and northward velocities
+        The names of the raw and corrected eastward and northward velocities. The
+        default corrected velocities are OOINet's, ooi_eastward/northward_seawater_velocity
+        if merge.true_north_velocities has kept them, otherwise
+        eastward/northward_seawater_velocity.
 
     Returns
     -------
     declination: float
         The magnetic declination (degrees)
     """
+    if corrected is None:
+        prefix = "ooi_" if "ooi_eastward_seawater_velocity" in ds else ""
+        corrected = (f"{prefix}eastward_seawater_velocity", f"{prefix}northward_seawater_velocity")
     raw_angle = np.arctan2(ds[raw[0]].values, ds[raw[1]].values)
     corrected_angle = np.arctan2(ds[corrected[0]].values, ds[corrected[1]].values)
     rotation = np.angle(np.exp(1j * (corrected_angle - raw_angle)))
@@ -56,7 +66,7 @@ def rotate_vector(east, north, angle):
     """Rotate eastward and northward components clockwise by an angle (degrees)
 
     Rotating a vector relative to magnetic north by the magnetic declination gives the
-    vector relative to true north.
+    vector relative to true north, and rotating by minus the declination undoes it.
     """
     theta = np.deg2rad(angle)
     cos, sin = np.cos(theta), np.sin(theta)

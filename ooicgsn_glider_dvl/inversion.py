@@ -2,10 +2,12 @@
 @author Andrew Reed
 @brief Provides methods for constructing absolute water velocity profiles from the glider DVL by
     least squares, constrained by the glider's velocity through the water from the flight
-    model and referenced to the depth-averaged current
+    model and referenced to the depth-averaged current or bottom tracking, and for comparing
+    the profiles with the depth-averaged current
 """
 
 import numpy as np
+import pandas as pd
 from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 import xarray as xr
@@ -36,13 +38,16 @@ def invert_profiles(
     depth: str = "depth_from_pressure",
     flight_weight: float = 1,
     dac_weight: float = 1000,
+    bottom_track_variables: tuple[str, str] | None = None,
+    bottom_track_weight: float = 10,
+    use_bottom_track: np.ndarray | None = None,
     smoothness: float = 0.1,
     max_segments: int | None = 1,
     lat: str = "lat",
     lon: str = "lon",
     **good_cell_kwargs,
 ) -> tuple[xr.Dataset, xr.Dataset]:
-    """Construct absolute water velocity profiles from the DVL, flight model, and depth-averaged current
+    """Construct absolute water velocity profiles from the DVL, flight model, and a reference
 
     Without bottom tracking, the DVL measures the water velocity relative to the glider,
     which moves over the ground with an unknown velocity. For each glider profile, the
@@ -60,9 +65,22 @@ def invert_profiles(
           all of the profile's measurements equals the depth-averaged current measured
           from the glider's displacement, i.e. the current averaged over the time the
           glider was underwater. It has weight dac_weight, so it is effectively exact.
+          Set dac_weight to 0 to leave it out.
+        - the bottom-track equations (with bottom_track_variables), one for each ensemble
+          with bottom tracking during steady flight: the glider's velocity over the
+          ground is the opposite of the bottom-track velocity, g(t) = -v_bottom_track(t),
+          with weight bottom_track_weight relative to each ADCP equation
         - smoothness equations: a small penalty (smoothness) on the difference between
           adjacent depth bins, which regularizes the depth bins that the other equations
           don't constrain
+
+    The ADCP and flight model equations are unchanged by adding the same constant to v
+    and g, so they only determine the profile up to a constant. The absolute level comes
+    from the reference: the depth-averaged current (from the GPS), bottom tracking, or
+    both. Profiles without either are not solved. Referencing to bottom tracking and
+    leaving out the depth-averaged current gives profiles that are independent of the
+    depth-averaged current, to check it with (see compare_depth_averaged_current), and
+    use_bottom_track can hold some of the bottom tracking out to check the profiles with.
 
     The differences between the cells of each ensemble determine the vertical shear
     independently of the glider's velocity. The flight model equations link the shear
@@ -83,7 +101,8 @@ def invert_profiles(
     depth-averaged current, or a current that changes over that time, offset the whole
     profile. Bottom tracking measures the glider's velocity over the ground directly,
     independently of the flight model and the depth-averaged current, so it can be used
-    to check the profiles and the solved glider velocities (see bottom_track.py).
+    to check the profiles and the solved glider velocities (see bottom_track.py), or as
+    the reference.
 
     The eastward and northward components are solved separately.
 
@@ -112,7 +131,19 @@ def invert_profiles(
         The weight of each flight model equation relative to each ADCP equation, e.g.
         the ratio of the uncertainty of an ADCP cell to that of the flight model
     dac_weight: float, Default = 1000
-        The weight of the depth-averaged current equation relative to each ADCP equation
+        The weight of the depth-averaged current equation relative to each ADCP equation.
+        0 leaves it out.
+    bottom_track_variables: tuple[str, str], Optional
+        The eastward and northward bottom-track velocities, the velocity of the bottom
+        relative to the glider (time), e.g. ("bottom_track_eastward_velocity",
+        "bottom_track_northward_velocity") from bottom_track.add_bottom_track. Default is
+        not to use bottom tracking.
+    bottom_track_weight: float, Default = 10
+        The weight of each bottom-track equation relative to each ADCP equation.
+        Bottom-track velocities are much less noisy than those of a single ADCP cell.
+    use_bottom_track: numpy.ndarray[bool], Optional
+        The measurements whose bottom tracking to use, e.g. to hold the rest out to check
+        the profiles with. Default is all of them.
     smoothness: float, Default = 0.1
         The weight of the difference between adjacent depth bins relative to each ADCP
         equation
@@ -137,18 +168,36 @@ def invert_profiles(
               cells in the depth bin, a measure of the uncertainty
         with the number of ADCP cells in each depth bin (n_cells) and the number of
         segments the ADCP equations split each profile into (n_segments; 0 where there
-        are no equations). The velocities are NaN in depth bins without any ADCP cells,
-        and in profiles without steady flight or a depth-averaged current, or split into
-        more than max_segments segments.
+        are no equations) and the number of bottom-track equations of each profile
+        (n_bottom_track). The velocities are NaN in depth bins without any ADCP cells,
+        and in profiles without steady flight or a reference, or split into more than
+        max_segments segments.
     ground: xarray.Dataset
-        The solved glider velocity over the ground, glider_eastward_ground_velocity and
-        glider_northward_ground_velocity (m s-1), on the time dimension of the dataset,
-        which is NaN where the ensemble isn't in the equations
+        On the time dimension of the dataset:
+            - glider_eastward_ground_velocity, glider_northward_ground_velocity: the solved
+              glider velocity over the ground (m s-1), NaN where the ensemble isn't in the
+              equations
+            - eastward_velocity_at_glider, northward_velocity_at_glider: the water
+              velocity (m s-1) of the solved profile at the glider's depth, for every
+              measurement of the solved profiles (the velocity the depth-averaged current
+              equation averages)
     """
     if steady is None:
         from ooicgsn_glider_dvl.flight import calibration_mask
 
         steady = calibration_mask(ds)
+    reference = " and ".join(
+        name
+        for name, used in [
+            ("depth-averaged current", dac_weight > 0),
+            ("bottom tracking", bottom_track_variables is not None),
+        ]
+        if used
+    )
+    if not reference:
+        raise ValueError(
+            "Use the depth-averaged current, bottom tracking, or both as the reference"
+        )
 
     profile_id = ds["profile_id"].values
     glider_depth = ds[depth].values.astype(float)
@@ -172,31 +221,49 @@ def invert_profiles(
     )
     dac = np.column_stack([ds[v].values for v in depth_averaged_variables])
 
+    # The bottom-track equations: the ensembles with bottom tracking during steady flight
+    if bottom_track_variables is not None:
+        bottom_track = np.column_stack([ds[v].values for v in bottom_track_variables])
+        has_bottom_track = np.isfinite(bottom_track).all(axis=1)
+        has_bottom_track &= steady & np.isfinite(glider_velocity).all(axis=1) & in_range
+        if use_bottom_track is not None:
+            has_bottom_track &= use_bottom_track
+    else:
+        bottom_track = np.full((ds.sizes["time"], 2), np.nan)
+        has_bottom_track = np.zeros(ds.sizes["time"], dtype=bool)
+
     profile_ids = np.unique(profile_id)
     shape = (profile_ids.size, n_bins, 2)
     velocity = np.full(shape, np.nan)
     residual = np.full(shape, np.nan)
     count = np.zeros(shape[:2], dtype=int)
     segments = np.zeros(profile_ids.size, dtype=int)
+    n_bottom_track = np.zeros(profile_ids.size, dtype=int)
     ground = np.full((ds.sizes["time"], 2), np.nan)
+    at_glider_velocity = np.full((ds.sizes["time"], 2), np.nan)
 
     order = np.argsort(profile_id, kind="stable")
     splits = np.flatnonzero(np.diff(profile_id[order])) + 1
     for p, idx in enumerate(np.split(order, splits)):
         rows, cols = np.nonzero(good[idx])
-        if rows.size == 0 or not np.isfinite(dac[idx]).all(axis=1).any():
+        bt_rows = np.flatnonzero(has_bottom_track[idx])
+        use_dac = dac_weight > 0 and np.isfinite(dac[idx]).all(axis=1).any()
+        if rows.size == 0 or not (use_dac or bt_rows.size):
             continue
-        profile_dac = np.nanmean(dac[idx], axis=0)
+        profile_dac = np.nanmean(dac[idx], axis=0) if use_dac else np.zeros(2)
 
         # The unknowns are the velocities in the depth bins with ADCP cells, and the
-        # glider velocity of each ensemble with cells. A glider depth bin without cells
-        # takes the velocity of the nearest depth bin with cells.
+        # glider velocity of each ensemble with cells or bottom tracking. A glider depth
+        # bin without cells takes the velocity of the nearest depth bin with cells.
         k_cell = cell_bin[idx][rows, cols].astype(int)
         observed = np.unique(k_cell)
-        ensembles, e = np.unique(rows, return_inverse=True)
+        ensembles = np.union1d(rows, bt_rows)
+        e = np.searchsorted(ensembles, rows)
+        bt_e = np.searchsorted(ensembles, bt_rows)
         cell = np.searchsorted(observed, k_cell)
         at_glider = _nearest(observed, glider_bin[idx][ensembles])
-        mean = _nearest(observed, glider_bin[idx][in_range[idx]])
+        in_profile = np.flatnonzero(in_range[idx])
+        mean = _nearest(observed, glider_bin[idx][in_profile])
 
         # The segments of depth bins linked by the cells of the same ensembles
         n = observed.size
@@ -214,13 +281,18 @@ def invert_profiles(
             relative[idx][rows, cols],
             glider_velocity[idx][ensembles],
             profile_dac,
+            bt_e,
+            -bottom_track[idx][bt_rows],
             n,
             flight_weight,
-            dac_weight,
+            dac_weight if use_dac else 0,
+            bottom_track_weight,
             smoothness,
         )
         velocity[p, observed] = u
         ground[idx[ensembles]] = g
+        at_glider_velocity[idx[in_profile]] = u[mean]
+        n_bottom_track[p] = bt_rows.size
 
         # The rms residual and number of cells in each depth bin
         misfit = relative[idx][rows, cols] - (u[cell] - g[e])
@@ -257,8 +329,8 @@ def invert_profiles(
                 "units": "m s-1",
                 "comment": (
                     f"{long_name} from the DVL by least squares, constrained by the glider's "
-                    "velocity through the water from the flight model and referenced to the "
-                    "depth-averaged current"
+                    f"velocity through the water from the flight model and referenced to the "
+                    f"{reference}"
                 ),
             },
         )
@@ -287,16 +359,26 @@ def invert_profiles(
             ),
         },
     )
+    profiles["n_bottom_track"] = (
+        "profile",
+        n_bottom_track,
+        {
+            "long_name": "Number of Bottom-Track Equations",
+            "comment": "Number of ensembles with bottom tracking used in the profile",
+        },
+    )
     profiles = add_profile_start(profiles, ds, lat, lon)
     profiles.attrs = {
         "comment": (
             "Absolute water velocity profiles from the glider DVL by least squares, "
             "constrained by the glider's velocity through the water from the flight model "
-            f"and referenced to the depth-averaged current, on {bin_size} m depth bins"
+            f"and referenced to the {reference}, on {bin_size} m depth bins"
         ),
         "bin_size": bin_size,
         "flight_weight": flight_weight,
         "dac_weight": dac_weight,
+        "bottom_track_weight": bottom_track_weight if bottom_track_variables else 0,
+        "reference": reference,
         "smoothness": smoothness,
         "max_segments": "none" if max_segments is None else max_segments,
     }
@@ -312,7 +394,136 @@ def invert_profiles(
                 "comment": "Glider velocity over the ground solved for with the profiles",
             },
         )
+        ground_velocity[f"{direction}_velocity_at_glider"] = (
+            "time",
+            at_glider_velocity[:, c],
+            {
+                "long_name": f"{direction.capitalize()} Water Velocity at the Glider",
+                "units": "m s-1",
+                "comment": "Water velocity of the solved profile at the glider's depth",
+            },
+        )
+    ground_velocity.attrs = {"reference": profiles.attrs["reference"]}
     return profiles, ground_velocity
+
+
+def compare_depth_averaged_current(
+    ground: xr.Dataset,
+    surfacings: pd.DataFrame,
+    min_coverage: float = 0.9,
+    ds: xr.Dataset | None = None,
+    steady: np.ndarray | None = None,
+) -> pd.DataFrame:
+    """Compare the depth-averaged current with the time-mean of the profiles at the glider
+
+    The depth-averaged current from the glider's displacement (currents.py) is the
+    current averaged over the time the glider was underwater between two surfacings, at
+    the depths the glider was at. The same average of the solved profiles is the mean of
+    their water velocity at the glider's depth over every DVL measurement between the
+    surfacings. For profiles referenced to the depth-averaged current, the two agree by
+    construction. For profiles referenced only to bottom tracking (invert_profiles with
+    dac_weight=0), they are independent, so the difference checks the depth-averaged
+    current (and the profiles).
+
+    The ADCP is off during the climbs, so the mean of the profiles is only over the
+    dives. It is the time-mean over the whole time underwater if the current at each
+    depth is the same on the dive and the climb, and the glider spends the same time at
+    each depth on both.
+
+    The depth-averaged current also depends on the glider's own estimate of its speed
+    through the water (m_speed): it is the GPS displacement minus the dead-reckoned
+    displacement through the water, over the time underwater, so an error in m_speed
+    goes straight into it. With ds, the mean difference between the flight model's and
+    the glider's horizontal velocity through the water during steady flight is also
+    returned, and the depth-averaged current recalculated with the flight model's speed
+    instead of m_speed. Like the profiles, this is only over the dives.
+
+    Parameters
+    ----------
+    ground: xarray.Dataset
+        The ground velocity output of invert_profiles, with eastward_velocity_at_glider and
+        northward_velocity_at_glider on the time dimension
+    surfacings: pandas.DataFrame
+        The depth-averaged current at each surfacing from currents.surfacing_currents,
+        with dive_start_time, surface_time, current_east, and current_north
+    min_coverage: float, Default = 0.9
+        The smallest fraction of the DVL measurements between the surfacings that must
+        have a profile velocity at the glider for the surfacing to be compared
+    ds: xarray.Dataset, Optional
+        The glider DVL dataset (on the same times as ground) with vehicle_heading,
+        dead_reckoning_speed (flight.add_flight_variables), and the flight model glider
+        velocities (flight.solve_flight_model), to compare the speeds
+    steady: numpy.ndarray[bool], Optional
+        The measurements where the glider is in steady flight, to compare the speeds.
+        Default is flight.calibration_mask(ds).
+
+    Returns
+    -------
+    comparison: pandas.DataFrame
+        One row per surfacing with enough coverage, with the dive start and surfacing
+        times, the number of DVL measurements and the fraction with a profile velocity
+        (coverage), the time-mean of the profiles at the glider (profile_east/north), the
+        depth-averaged current (dac_east/north), and their difference (profile minus
+        depth-averaged current, difference_east/north), in m s-1. With ds, also the mean
+        flight model minus dead-reckoning velocity through the water
+        (flight_minus_dead_reckoning_east/north) and the depth-averaged current
+        recalculated with the flight model's speed (dac_flight_east/north).
+    """
+    surfacings = surfacings.sort_values("surface_time").reset_index(drop=True)
+    start = pd.to_datetime(surfacings["dive_start_time"]).values.astype("datetime64[ns]")
+    end = pd.to_datetime(surfacings["surface_time"]).values.astype("datetime64[ns]")
+    time = ground["time"].values.astype("datetime64[ns]")
+
+    # The surfacing at the end of the segment of dives each DVL measurement is in
+    interval = np.searchsorted(end, time, side="left")
+    in_interval = interval < end.size
+    in_interval[in_interval] = time[in_interval] >= start[interval[in_interval]]
+
+    velocity = pd.DataFrame(
+        {
+            "interval": np.where(in_interval, interval, -1),
+            "east": ground["eastward_velocity_at_glider"].values,
+            "north": ground["northward_velocity_at_glider"].values,
+        }
+    )
+    if ds is not None:
+        if steady is None:
+            from ooicgsn_glider_dvl.flight import calibration_mask
+
+            steady = calibration_mask(ds)
+        # The flight model minus the glider's own velocity through the water, along its heading
+        heading = np.deg2rad(ds["vehicle_heading"].values)
+        speed = np.hypot(
+            ds["glider_eastward_velocity_through_water"].values,
+            ds["glider_northward_velocity_through_water"].values,
+        )
+        difference = np.where(steady, speed - ds["dead_reckoning_speed"].values, np.nan)
+        velocity["speed_east"] = difference * np.sin(heading)
+        velocity["speed_north"] = difference * np.cos(heading)
+    velocity = velocity[velocity["interval"] >= 0]
+    grouped = velocity.groupby("interval")
+    stats = (
+        grouped[["east", "north"]]
+        .mean()
+        .rename(columns={"east": "profile_east", "north": "profile_north"})
+    )
+    stats["n_measurements"] = grouped.size()
+    stats["coverage"] = grouped["east"].count() / stats["n_measurements"]
+
+    comparison = surfacings.loc[stats.index, ["dive_start_time", "surface_time"]].join(stats)
+    comparison["dac_east"] = surfacings.loc[stats.index, "current_east"]
+    comparison["dac_north"] = surfacings.loc[stats.index, "current_north"]
+    comparison["difference_east"] = comparison["profile_east"] - comparison["dac_east"]
+    comparison["difference_north"] = comparison["profile_north"] - comparison["dac_north"]
+    if ds is not None:
+        speed = grouped[["speed_east", "speed_north"]].mean()
+        for direction in ["east", "north"]:
+            comparison[f"flight_minus_dead_reckoning_{direction}"] = speed[f"speed_{direction}"]
+            comparison[f"dac_flight_{direction}"] = (
+                comparison[f"dac_{direction}"] - speed[f"speed_{direction}"]
+            )
+    comparison = comparison[comparison["coverage"] >= min_coverage]
+    return comparison.reset_index(drop=True)
 
 
 def _solve_profile(
@@ -323,9 +534,12 @@ def _solve_profile(
     relative,
     through_water,
     dac,
+    bt_e,
+    over_ground,
     n,
     flight_weight,
     dac_weight,
+    bottom_track_weight,
     smoothness,
 ):
     """Solve the least squares equations of one profile
@@ -333,7 +547,9 @@ def _solve_profile(
     The unknowns are the water velocities u in the n depth bins with ADCP cells, and the
     glider velocity g of each ensemble with cells. For each ADCP equation, cell and e are
     its depth bin and ensemble; at_glider is the depth bin of the glider in each ensemble,
-    and mean the depth bins of the glider in every measurement of the profile. The glider
+    and mean the depth bins of the glider in every measurement of the profile. bt_e are
+    the ensembles with bottom tracking, and over_ground their glider velocity over the
+    ground from bottom tracking. The glider
     velocities only appear in the equations of their own ensemble, so they are eliminated
     from the normal equations (by the Schur complement) to solve for u, then calculated
     from u. Returns u on the (bin, component) dimensions and g on the (ensemble,
@@ -359,6 +575,11 @@ def _solve_profile(
     bg = np.zeros((n_ensembles, 2))
     np.add.at(bg, e, -relative)
     bg += weight * through_water
+
+    # The bottom-track equations g(bt_e) = over_ground
+    gg = gg.astype(float)
+    gg[bt_e] += bottom_track_weight**2
+    bg[bt_e] += bottom_track_weight**2 * over_ground
 
     # The depth-averaged current: the mean of u at the glider's depths
     mean = np.bincount(mean, minlength=n) / mean.size

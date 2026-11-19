@@ -14,8 +14,16 @@ from ooicgsn_glider_dvl.binning import good_velocity_cells
 from ooicgsn_glider_dvl.merge import interp_1d
 
 # Glider engineering variables needed by the flight model. m_de_oil_vol is the buoyancy change
-# of deep (1000 m) gliders and m_ballast_pumped that of shallow (200 m) gliders.
-FLIGHT_VARIABLES = ["time", "m_pitch", "m_heading", "m_de_oil_vol", "m_ballast_pumped"]
+# of deep (1000 m) gliders and m_ballast_pumped that of shallow (200 m) gliders. m_speed is the
+# glider's own estimate of its speed through the water, which it dead reckons with.
+FLIGHT_VARIABLES = [
+    "time",
+    "m_pitch",
+    "m_heading",
+    "m_de_oil_vol",
+    "m_ballast_pumped",
+    "m_speed",
+]
 
 # Flight model output added to the dataset by solve_flight_model
 FLIGHT_MODEL_VARIABLES = (
@@ -31,7 +39,7 @@ FLIGHT_MODEL_VARIABLES = (
 def add_flight_variables(
     ds: xr.Dataset,
     eng: pd.DataFrame,
-    declination: float,
+    declination: float = 0,
     buoyancy: str = "m_de_oil_vol",
     max_gap: float | None = 60,
 ) -> xr.Dataset:
@@ -41,11 +49,13 @@ def add_flight_variables(
     turn the modeled speed into eastward and northward velocities. These are taken from
     the glider engineering data and linearly interpolated to the DVL times, each from
     its own non-missing values. DVL times inside a gap in a variable longer than
-    max_gap are NaN.
+    max_gap are NaN. The glider's own estimate of its speed through the water (m_speed),
+    which it dead reckons with, is also added where it is in the engineering data.
 
-    The glider's heading (m_heading) is relative to magnetic north. It is rotated by the
-    magnetic declination to relative to true north, the same rotation OOI applies to the
-    DVL water velocities (see utils.magnetic_declination).
+    The glider's heading (m_heading) is already relative to true north: the glider
+    dead reckons with it directly in its true north local mission coordinates
+    (m_vx_lmc = m_speed * sin(m_heading) + m_water_vx). It is only rotated by the
+    declination, if one is given.
 
     Parameters
     ----------
@@ -53,10 +63,11 @@ def add_flight_variables(
         The glider DVL dataset
     eng: pandas.DataFrame
         The glider engineering data with the time, m_pitch (rad), m_heading (rad), and
-        buoyancy (cc) columns, e.g. read with pd.read_csv(eng_file,
-        usecols=FLIGHT_VARIABLES)
-    declination: float
-        The magnetic declination (degrees, positive east of north)
+        buoyancy (cc) columns, and optionally m_speed (m s-1), e.g. read with
+        pd.read_csv(eng_file, usecols=FLIGHT_VARIABLES)
+    declination: float, Default = 0
+        A magnetic declination (degrees, positive east of north) to rotate the heading
+        by, for a glider whose heading is relative to magnetic north
     buoyancy: str, Default = "m_de_oil_vol"
         The buoyancy change variable: m_de_oil_vol for deep gliders or
         m_ballast_pumped for shallow gliders
@@ -67,8 +78,9 @@ def add_flight_variables(
     Returns
     -------
     ds: xarray.Dataset
-        The dataset with vehicle_pitch (degrees), vehicle_heading (degrees true), and
-        buoyancy_change (cc) on the time dimension
+        The dataset with vehicle_pitch (degrees), vehicle_heading (degrees true),
+        buoyancy_change (cc), and dead_reckoning_speed (m s-1, where m_speed is in the
+        engineering data) on the time dimension
     """
     eng = eng.assign(time=pd.to_datetime(eng["time"])).sort_values("time")
     eng = eng.drop_duplicates(subset="time")
@@ -104,12 +116,30 @@ def add_flight_variables(
             "long_name": "Glider Heading",
             "units": "degrees",
             "comment": (
-                "Glider heading (m_heading) rotated from relative to magnetic north to relative "
-                f"to true north by the magnetic declination of {declination:.2f} degrees"
+                "Glider heading (m_heading), relative to true north"
+                + (
+                    f", rotated by a declination of {declination:.2f} degrees"
+                    if declination
+                    else ""
+                )
             ),
             "source_sensor": "m_heading",
         },
     )
+    if "m_speed" in eng:
+        ds["dead_reckoning_speed"] = (
+            "time",
+            interp(eng["m_speed"]),
+            {
+                "long_name": "Glider Dead-Reckoning Speed",
+                "units": "m s-1",
+                "comment": (
+                    "The glider's own estimate of its horizontal speed through the water "
+                    "(m_speed), which it dead reckons with"
+                ),
+                "source_sensor": "m_speed",
+            },
+        )
     ds["buoyancy_change"] = (
         "time",
         interp(eng[buoyancy]),
