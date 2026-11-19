@@ -44,6 +44,7 @@ This project will use autonomous glider DVL (doppler velocity log) water velocit
     ├── __init__.py
     ├── binning.py              <- Bin the ADCP velocities and science data of each profile by depth
     ├── bottom_track.py         <- Remove glider motion using bottom tracking, and check the inversion with it
+    ├── corrections.py          <- DVL time offset and sound speed corrections
     ├── currents.py             <- Depth-averaged currents from the glider's dead-reckoned and GPS positions
     ├── flight.py               <- Glider velocity through the water from the gliderflight flight model
     ├── inversion.py            <- Absolute velocity profiles from the DVL and flight model, referenced to the

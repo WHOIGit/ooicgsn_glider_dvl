@@ -11,6 +11,7 @@ currents.
 | --- | --- |
 | `binning` | Bin the ADCP velocities and science data of each profile by depth |
 | `bottom_track` | Remove glider motion from DVL water velocities using bottom tracking, and check the inversion with it |
+| `corrections` | Correct the DVL time offset from the glider clock and the DVL vertical velocity for the sound speed |
 | `currents` | Depth-averaged currents from the glider's dead-reckoned and GPS positions |
 | `flight` | Glider velocity through the water from the gliderflight steady-state flight model |
 | `inversion` | Absolute velocity profiles from the DVL and flight model by least squares, referenced to the depth-averaged current or bottom tracking |
