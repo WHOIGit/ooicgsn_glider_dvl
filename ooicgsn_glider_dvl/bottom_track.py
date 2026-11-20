@@ -178,6 +178,51 @@ def compare_glider_velocity(ds: xr.Dataset, ground: xr.Dataset) -> pd.DataFrame:
     )
 
 
+def split_by_depth(
+    ds: xr.Dataset,
+    use: np.ndarray,
+    span: float = 20,
+    depth: str = "depth_from_pressure",
+    profile: str = "profile_id",
+) -> tuple[np.ndarray, np.ndarray]:
+    """Split each dive's bottom tracking into a deep reference part and the part above it
+
+    The DVL only tracks the bottom near the end of each dive (within about 60 m of the
+    bottom), so profiles referenced to bottom tracking carry the reference up the water
+    column with the DVL shear and the flight model. To test how well, each dive's bottom
+    track is split by the glider's depth: the reference is the bottom tracking within span
+    of the deepest glider depth with bottom tracking, and the rest is held out, at a
+    distance above the shallowest reference depth.
+
+    Parameters
+    ----------
+    ds: xarray.Dataset
+        The glider DVL dataset with the profile and depth variables
+    use: numpy.ndarray[bool]
+        The ensembles with bottom tracking to split, e.g. those in steady flight
+    span: float, Default = 20
+        The depth range (m) of the reference at the bottom of each dive's bottom tracking
+    depth, profile: str
+        The glider depth (m) and profile variables
+
+    Returns
+    -------
+    reference: numpy.ndarray[bool]
+        The ensembles of the reference
+    distance: numpy.ndarray[float]
+        The height (m) of each ensemble of use above its dive's reference (the shallowest
+        reference depth minus its depth), NaN where use is False
+    """
+    z = ds[depth].values.astype(float)
+    frame = pd.DataFrame({"profile": ds[profile].values, "z": np.where(use, z, np.nan)})
+    deepest = frame.groupby("profile")["z"].transform("max").to_numpy()
+    reference = use & (z >= deepest - span)
+    frame["reference_z"] = np.where(reference, z, np.nan)
+    top = frame.groupby("profile")["reference_z"].transform("min").to_numpy()
+    distance = np.where(use, top - z, np.nan)
+    return reference, distance
+
+
 def through_water_velocity(ds: xr.Dataset, ground: xr.Dataset) -> pd.DataFrame:
     """The glider's velocity through the water from bottom tracking and the velocity profile
 
