@@ -178,6 +178,55 @@ def compare_glider_velocity(ds: xr.Dataset, ground: xr.Dataset) -> pd.DataFrame:
     )
 
 
+def through_water_velocity(ds: xr.Dataset, ground: xr.Dataset) -> pd.DataFrame:
+    """The glider's velocity through the water from bottom tracking and the velocity profile
+
+    The glider's velocity through the water is its velocity over the ground minus the
+    absolute water velocity at its depth. With the profiles solved from the DVL and
+    bottom tracking alone (inversion.invert_profiles with dac_weight=0 and
+    flight_weight=0), the velocity over the ground of the ensembles with bottom tracking is
+    the bottom-track velocity, and the water velocity at the glider's depth comes from the
+    cells of earlier ensembles, which measured the water below the glider before it
+    descended into it (Merckelbach et al., 2019). This is independent of the flight model
+    and of the DVL cell nearest the glider, so it can check both.
+
+    Parameters
+    ----------
+    ds: xarray.Dataset
+        The glider DVL dataset with vehicle_heading and the bottom-track velocities (see
+        add_bottom_track)
+    ground: xarray.Dataset
+        The ground velocity output of invert_profiles, on the same times as ds
+
+    Returns
+    -------
+    velocity: pandas.DataFrame
+        For each ensemble with bottom tracking and a solved profile, the time, the
+        eastward and northward velocity through the water, and its components along the
+        glider's heading (forward) and to its starboard (sideways), in m s-1
+    """
+    east = (
+        ground["glider_eastward_ground_velocity"].values
+        - ground["eastward_velocity_at_glider"].values
+    )
+    north = (
+        ground["glider_northward_ground_velocity"].values
+        - ground["northward_velocity_at_glider"].values
+    )
+    heading = np.deg2rad(ds["vehicle_heading"].values)
+    has_bottom_track = np.isfinite(ds["bottom_track_eastward_velocity"].values)
+    valid = has_bottom_track & np.isfinite(east) & np.isfinite(north)
+    return pd.DataFrame(
+        {
+            "time": ds["time"].values[valid],
+            "eastward": east[valid],
+            "northward": north[valid],
+            "forward": (east * np.sin(heading) + north * np.cos(heading))[valid],
+            "sideways": (east * np.cos(heading) - north * np.sin(heading))[valid],
+        }
+    )
+
+
 def compare_profiles(
     model: xr.Dataset,
     bottom_tracked: xr.Dataset,

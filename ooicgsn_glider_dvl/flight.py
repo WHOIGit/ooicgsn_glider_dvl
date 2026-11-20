@@ -25,6 +25,15 @@ FLIGHT_VARIABLES = [
     "m_speed",
 ]
 
+# Variables of the glider DVL or glider dataset that the flight model needs
+_INPUT_VARIABLES = [
+    "ctd_pressure",
+    "ctd_density",
+    "vehicle_pitch",
+    "vehicle_heading",
+    "buoyancy_change",
+]
+
 # Flight model output added to the dataset by solve_flight_model
 FLIGHT_MODEL_VARIABLES = (
     "glider_speed_through_water",
@@ -160,6 +169,7 @@ def calibration_mask(
     min_pitch: float = 15,
     max_buoyancy_rate: float = 0.5,
     depth: str = "depth_from_pressure",
+    profile: str = "profile_id",
 ) -> np.ndarray:
     """Find the measurements where the glider is in steady flight
 
@@ -167,13 +177,15 @@ def calibration_mask(
     which is not the case while the glider accelerates: near the surface, near the
     bottom of a dive where the glider pumps oil and changes its pitch to turn around,
     and while it changes its buoyancy. Only the steady flight is used to calibrate the
-    model or to compare it with the DVL.
+    model or to compare it with the DVL. Measurements outside of a profile (a NaN
+    profile id, e.g. at the surface in the glider dataset) are not steady.
 
     Parameters
     ----------
     ds: xarray.Dataset
-        The glider DVL dataset with profile_id, the depth variable, vehicle_pitch, and
-        buoyancy_change (see add_flight_variables)
+        The glider DVL dataset, or the glider dataset (merge.glider_dataset), with the
+        profile and depth variables, vehicle_pitch, and buoyancy_change (see
+        add_flight_variables)
     min_depth: float, Default = 10
         Exclude the measurements shallower than this depth (m)
     turn_margin: float, Default = 5
@@ -186,6 +198,9 @@ def calibration_mask(
         rate (cm3 s-1)
     depth: str, Default = "depth_from_pressure"
         The depth (m) of the glider
+    profile: str, Default = "profile_id"
+        The profile of each measurement, e.g. science_profile_id for the glider dataset,
+        whose dives and climbs are separate profiles
 
     Returns
     -------
@@ -193,7 +208,7 @@ def calibration_mask(
         Whether the glider is in steady flight, on the time dimension
     """
     z = ds[depth].values
-    deepest = pd.Series(z).groupby(ds["profile_id"].values).transform("max").to_numpy()
+    deepest = pd.Series(z).groupby(ds[profile].values).transform("max").to_numpy()
     seconds = ds["time"].values.astype("datetime64[ns]").astype("int64") / 1e9
     with np.errstate(invalid="ignore"):
         buoyancy_rate = np.abs(np.gradient(ds["buoyancy_change"].values, seconds))
@@ -289,6 +304,7 @@ def calibrate_flight_model(
     min_points: int = 1000,
     rho0: float = 1025,
     initial: dict | None = None,
+    pitch_offset: float = 0,
     **coefficients,
 ) -> pd.DataFrame:
     """Calibrate the steady-state glider flight model
@@ -338,6 +354,9 @@ def calibrate_flight_model(
     initial: dict, Optional
         The initial values of the calibrated parameters. Default is Vg = mass / rho0 and
         Cd0 = 0.15.
+    pitch_offset: float, Default = 0
+        An offset (degrees) added to the glider's reported pitch (vehicle_pitch) for the
+        model, to correct an offset of its attitude sensor (see calibrate_pitch_offset)
     coefficients:
         Other model coefficients to set, e.g. ah, Cd1, or epsilon. The others take the
         gliderflight defaults.
@@ -347,15 +366,17 @@ def calibrate_flight_model(
     calibration: pandas.DataFrame
         One row for the whole deployment ("deployment") and one for each time window,
         with the window start and end, the number of measurements calibrated with, the
-        calibrated parameters, and rms_dhdt, the rms difference (m s-1) between the
-        modeled vertical velocity and the depth rate
+        calibrated parameters, the pitch offset, and rms_dhdt, the rms difference (m s-1)
+        between the modeled vertical velocity and the depth rate
     """
     if steady is None:
         steady = calibration_mask(ds)
     initial = {"Vg": mass / rho0, "Cd0": 0.15, **(initial or {})}
     # The initial values of the parameters that are not calibrated stay fixed
     coefficients = {**{k: v for k, v in initial.items() if k not in parameters}, **coefficients}
-    data, valid = _model_input(ds, u_relative="u_relative" in constraints)
+    data, valid = _model_input(
+        ds, u_relative="u_relative" in constraints, pitch_offset=pitch_offset
+    )
     use = steady[valid]
     time = ds["time"].values[valid]
 
@@ -380,7 +401,14 @@ def calibrate_flight_model(
             "n_points": n_points,
         }
         if n_points < min_points:
-            rows.append({**row, **dict.fromkeys(parameters, np.nan), "rms_dhdt": np.nan})
+            rows.append(
+                {
+                    **row,
+                    **dict.fromkeys(parameters, np.nan),
+                    "pitch_offset": pitch_offset,
+                    "rms_dhdt": np.nan,
+                }
+            )
             continue
         subset = {k: (v[in_window] if v is not None else None) for k, v in data.items()}
         model = gliderflight.SteadyStateCalibrate(rho0=rho0)
@@ -399,7 +427,7 @@ def calibrate_flight_model(
         model.solve(model.input_data)
         error = model.modelresult.w - model.input_data["dhdt"]
         rms = float(np.sqrt(np.nanmean(error[use[in_window]] ** 2)))
-        rows.append({**row, **result, "rms_dhdt": rms})
+        rows.append({**row, **result, "pitch_offset": pitch_offset, "rms_dhdt": rms})
 
     calibration = pd.DataFrame(rows)
     calibration.attrs = {"mass": mass, "rho0": rho0, **coefficients}
@@ -412,7 +440,8 @@ def solve_flight_model(ds: xr.Dataset, calibration: pd.DataFrame) -> xr.Dataset:
     The steady-state flight model is solved with the calibrated parameters for the whole
     deployment, then with those of each calibrated time window over its time window.
     The glider's horizontal speed through the water is in the direction of its heading
-    (vehicle_heading), so the model neglects sideslip.
+    (vehicle_heading), so the model neglects sideslip. The pitch offset of the calibration
+    (pitch_offset) is added to the glider's reported pitch.
 
     Parameters
     ----------
@@ -442,9 +471,12 @@ def solve_flight_model(ds: xr.Dataset, calibration: pd.DataFrame) -> xr.Dataset:
     parameters = [
         c
         for c in calibration.columns
-        if c not in ("window", "start", "end", "n_points", "rms_dhdt")
+        if c not in ("window", "start", "end", "n_points", "pitch_offset", "rms_dhdt")
     ]
-    data, valid = _model_input(ds)
+    pitch_offset = (
+        float(calibration["pitch_offset"].iloc[0]) if "pitch_offset" in calibration else 0.0
+    )
+    data, valid = _model_input(ds, pitch_offset=pitch_offset)
     time = ds["time"].values[valid]
 
     output = {name: np.full(time.shape, np.nan) for name in ("U", "alpha", "u", "w", "ww")}
@@ -514,6 +546,103 @@ def solve_flight_model(ds: xr.Dataset, calibration: pd.DataFrame) -> xr.Dataset:
     return ds
 
 
+def calibrate_pitch_offset(
+    ds: xr.Dataset,
+    glider: xr.Dataset,
+    mass: float,
+    steady: np.ndarray | None = None,
+    glider_steady: np.ndarray | None = None,
+    cell: int = 1,
+    offsets: np.ndarray | None = None,
+    **kwargs,
+) -> tuple[float, pd.DataFrame]:
+    """Calibrate an offset of the glider's reported pitch with the DVL horizontal speed
+
+    The depth rate alone constrains the glider's vertical velocity through the water, not
+    its horizontal velocity, which depends on its glide angle: its pitch plus the angle of
+    attack. An offset of the glider's attitude sensor changes the glide angle the other
+    way on the dives and the climbs, so the volume and drag calibrated against the depth
+    rate on both can't fit the horizontal speed too. For each trial offset, the volume and
+    drag are calibrated against the depth rate on the dives and the climbs of the glider
+    dataset (calibrate_flight_model), and the model is solved on the DVL dataset. The
+    calibrated offset is the one where the model's mean horizontal speed along the
+    glider's heading on the dives equals that measured by the DVL (the opposite of the
+    relative velocity in the cell; see dvl_glider_velocity), found by linear
+    interpolation between the trial offsets.
+
+    The second cell (cell=1) is used by default: the cell nearest the glider reads
+    slightly low, and the speed from the second cell matches the speed through the water
+    from bottom tracking (see bottom_track.through_water_velocity), which can then check
+    the calibration independently. The DVL rotated its velocities with the same reported
+    pitch, so a pitch offset also changes its horizontal velocities slightly (by the
+    vertical velocity times the offset, in radians).
+
+    Parameters
+    ----------
+    ds: xarray.Dataset
+        The glider DVL dataset with the flight variables (add_flight_variables)
+    glider: xarray.Dataset
+        The glider dataset (merge.glider_dataset) with the flight variables, through the
+        dives and the climbs
+    mass: float
+        The glider's mass (kg)
+    steady, glider_steady: numpy.ndarray[bool], Optional
+        The steady flight measurements of ds and glider. Default is calibration_mask of
+        each (with the science_profile_id and m_depth of the glider dataset).
+    cell: int, Default = 1
+        The DVL cell (counting from 0) to measure the glider's speed through the water with
+    offsets: numpy.ndarray, Optional
+        The trial offsets (degrees). Default is -6 to 4 degrees in 1 degree steps.
+    kwargs:
+        Passed to calibrate_flight_model, e.g. parameters or other coefficients
+
+    Returns
+    -------
+    pitch_offset: float
+        The calibrated pitch offset (degrees), added to the reported pitch
+    trials: pandas.DataFrame
+        For each trial offset, the calibrated parameters and the mean model minus DVL
+        horizontal speed on the dives (m s-1)
+    """
+    if steady is None:
+        steady = calibration_mask(ds)
+    if glider_steady is None:
+        glider_steady = calibration_mask(glider, depth="m_depth", profile="science_profile_id")
+    if offsets is None:
+        offsets = np.arange(-6.0, 4.5, 1.0)
+    dvl = dvl_glider_velocity(ds.copy(), cell=cell)["dvl_glider_forward_speed"].values
+    heading = np.deg2rad(ds["vehicle_heading"].values)
+
+    def trial(offset):
+        calibration = calibrate_flight_model(
+            glider, mass=mass, steady=glider_steady, pitch_offset=offset, **kwargs
+        )
+        model = solve_flight_model(ds[_INPUT_VARIABLES].copy(), calibration)
+        forward = model["glider_eastward_velocity_through_water"].values * np.sin(heading) + model[
+            "glider_northward_velocity_through_water"
+        ].values * np.cos(heading)
+        valid = steady & np.isfinite(forward) & np.isfinite(dvl)
+        row = calibration.iloc[0].drop(["window", "start", "end"]).to_dict()
+        return {**row, "forward_bias": float((forward[valid] - dvl[valid]).mean())}
+
+    trials = pd.DataFrame([trial(offset) for offset in offsets])
+    bias = trials["forward_bias"].to_numpy()
+    crossing = np.flatnonzero(np.diff(np.sign(bias)) != 0)
+    if crossing.size == 0:
+        raise ValueError(
+            "The model minus DVL horizontal speed doesn't change sign over the trial offsets"
+        )
+    i = crossing[0]
+    offset = float(
+        trials["pitch_offset"][i]
+        - bias[i]
+        * (trials["pitch_offset"][i + 1] - trials["pitch_offset"][i])
+        / (bias[i + 1] - bias[i])
+    )
+    trials = pd.concat([trials, pd.DataFrame([trial(offset)])], ignore_index=True)
+    return offset, trials.sort_values("pitch_offset").reset_index(drop=True)
+
+
 def flight_model_skill(ds: xr.Dataset, steady: np.ndarray | None = None) -> pd.DataFrame:
     """Compare the glider velocity from the flight model with that measured by the DVL
 
@@ -570,12 +699,57 @@ def flight_model_skill(ds: xr.Dataset, steady: np.ndarray | None = None) -> pd.D
     return pd.DataFrame(rows).set_index("component")
 
 
-def _model_input(ds, u_relative=False, pressure="ctd_pressure", density="ctd_density"):
+def depth_rate_residuals(ds: xr.Dataset, steady: np.ndarray, phase: str = "phase") -> pd.DataFrame:
+    """Summarize the flight model's misfit to the depth rate for each phase (dive, climb)
+
+    The misfit is upward_water_velocity (see solve_flight_model): the depth rate minus the
+    modeled vertical velocity of the glider. Its mean is the model's bias, which should be
+    near zero for the dives and the climbs alike: the volume and drag of the glider trade
+    off against each other on dives alone, and calibrating with only dives can fit them
+    with a large bias on the climbs.
+
+    Parameters
+    ----------
+    ds: xarray.Dataset
+        The glider dataset (merge.glider_dataset) with the flight model solved and the
+        phase of each measurement (profiles.add_phases)
+    steady: numpy.ndarray[bool]
+        The measurements in steady flight (see calibration_mask)
+    phase: str, Default = "phase"
+        The phase variable, with the flag_values and flag_meanings attributes
+
+    Returns
+    -------
+    residuals: pandas.DataFrame
+        For the dives and climbs, the number of steady measurements, and the mean (bias)
+        and rms of the misfit (m s-1)
+    """
+    meanings = dict(zip(ds[phase].attrs["flag_values"], ds[phase].attrs["flag_meanings"].split()))
+    misfit = ds["upward_water_velocity"].values
+    rows = []
+    for value, name in meanings.items():
+        if name not in ("dive", "climb"):
+            continue
+        valid = steady & (ds[phase].values == value) & np.isfinite(misfit)
+        rows.append(
+            {
+                "phase": name,
+                "n": int(valid.sum()),
+                "bias": misfit[valid].mean(),
+                "rms": np.sqrt((misfit[valid] ** 2).mean()),
+            }
+        )
+    return pd.DataFrame(rows).set_index("phase")
+
+
+def _model_input(
+    ds, u_relative=False, pressure="ctd_pressure", density="ctd_density", pitch_offset=0.0
+):
     """The flight model input data (in the gliderflight units) where it is all valid"""
     data = {
         "time": ds["time"].values.astype("datetime64[ns]").astype("int64") / 1e9,
         "pressure": ds[pressure].values / 10,  # dbar to bar
-        "pitch": np.deg2rad(ds["vehicle_pitch"].values),
+        "pitch": np.deg2rad(ds["vehicle_pitch"].values + pitch_offset),
         "buoyancy_change": ds["buoyancy_change"].values.astype(float),
         "density": ds[density].values.astype(float),
     }

@@ -436,7 +436,11 @@ def compare_depth_averaged_current(
     goes straight into it. With ds, the mean difference between the flight model's and
     the glider's horizontal velocity through the water during steady flight is also
     returned, and the depth-averaged current recalculated with the flight model's speed
-    instead of m_speed. Like the profiles, this is only over the dives.
+    instead of m_speed. The mean is time-weighted, over the measurements of ds in the
+    segment, on the time base of ds: with the glider dataset (merge.glider_dataset), it is
+    over the dives and the climbs, as the depth-averaged current is; with the DVL dataset,
+    over the dives only. The flight model is only valid in steady flight, so the mean over
+    the steady flight is taken to be the mean over the whole segment.
 
     Parameters
     ----------
@@ -450,12 +454,13 @@ def compare_depth_averaged_current(
         The smallest fraction of the DVL measurements between the surfacings that must
         have a profile velocity at the glider for the surfacing to be compared
     ds: xarray.Dataset, Optional
-        The glider DVL dataset (on the same times as ground) with vehicle_heading,
-        dead_reckoning_speed (flight.add_flight_variables), and the flight model glider
-        velocities (flight.solve_flight_model), to compare the speeds
+        The glider dataset (merge.glider_dataset) or the glider DVL dataset, on any time
+        base, with vehicle_heading, dead_reckoning_speed (flight.add_flight_variables), and
+        the flight model glider velocities (flight.solve_flight_model), to compare the
+        speeds
     steady: numpy.ndarray[bool], Optional
-        The measurements where the glider is in steady flight, to compare the speeds.
-        Default is flight.calibration_mask(ds).
+        The measurements of ds where the glider is in steady flight, to compare the
+        speeds. Default is flight.calibration_mask(ds).
 
     Returns
     -------
@@ -466,40 +471,21 @@ def compare_depth_averaged_current(
         depth-averaged current (dac_east/north), and their difference (profile minus
         depth-averaged current, difference_east/north), in m s-1. With ds, also the mean
         flight model minus dead-reckoning velocity through the water
-        (flight_minus_dead_reckoning_east/north) and the depth-averaged current
+        (flight_minus_dead_reckoning_east/north), the fraction of the time of the segment
+        in ds in steady flight (steady_fraction), and the depth-averaged current
         recalculated with the flight model's speed (dac_flight_east/north).
     """
     surfacings = surfacings.sort_values("surface_time").reset_index(drop=True)
     start = pd.to_datetime(surfacings["dive_start_time"]).values.astype("datetime64[ns]")
     end = pd.to_datetime(surfacings["surface_time"]).values.astype("datetime64[ns]")
-    time = ground["time"].values.astype("datetime64[ns]")
-
-    # The surfacing at the end of the segment of dives each DVL measurement is in
-    interval = np.searchsorted(end, time, side="left")
-    in_interval = interval < end.size
-    in_interval[in_interval] = time[in_interval] >= start[interval[in_interval]]
 
     velocity = pd.DataFrame(
         {
-            "interval": np.where(in_interval, interval, -1),
+            "interval": _segment(ground["time"].values, start, end),
             "east": ground["eastward_velocity_at_glider"].values,
             "north": ground["northward_velocity_at_glider"].values,
         }
     )
-    if ds is not None:
-        if steady is None:
-            from ooicgsn_glider_dvl.flight import calibration_mask
-
-            steady = calibration_mask(ds)
-        # The flight model minus the glider's own velocity through the water, along its heading
-        heading = np.deg2rad(ds["vehicle_heading"].values)
-        speed = np.hypot(
-            ds["glider_eastward_velocity_through_water"].values,
-            ds["glider_northward_velocity_through_water"].values,
-        )
-        difference = np.where(steady, speed - ds["dead_reckoning_speed"].values, np.nan)
-        velocity["speed_east"] = difference * np.sin(heading)
-        velocity["speed_north"] = difference * np.cos(heading)
     velocity = velocity[velocity["interval"] >= 0]
     grouped = velocity.groupby("interval")
     stats = (
@@ -516,14 +502,55 @@ def compare_depth_averaged_current(
     comparison["difference_east"] = comparison["profile_east"] - comparison["dac_east"]
     comparison["difference_north"] = comparison["profile_north"] - comparison["dac_north"]
     if ds is not None:
-        speed = grouped[["speed_east", "speed_north"]].mean()
+        if steady is None:
+            from ooicgsn_glider_dvl.flight import calibration_mask
+
+            steady = calibration_mask(ds)
+        # The flight model minus the glider's own velocity through the water, along its
+        # heading, time-weighted over the steady flight of each segment
+        seconds = ds["time"].values.astype("datetime64[ns]").astype("int64") / 1e9
+        # Each measurement stands for the time around it, but not across a gap in the data
+        weight = np.gradient(seconds) if seconds.size > 1 else np.ones(seconds.shape)
+        weight = (
+            np.minimum(weight, 3 * np.median(np.diff(seconds))) if seconds.size > 1 else weight
+        )
+        heading = np.deg2rad(ds["vehicle_heading"].values)
+        speed = np.hypot(
+            ds["glider_eastward_velocity_through_water"].values,
+            ds["glider_northward_velocity_through_water"].values,
+        )
+        difference = speed - ds["dead_reckoning_speed"].values
+        use = steady & np.isfinite(difference) & np.isfinite(heading)
+        segment = _segment(ds["time"].values, start, end)
+        frame = pd.DataFrame(
+            {
+                "interval": segment,
+                "weight": weight,
+                "steady_weight": np.where(use, weight, 0),
+                "east": np.where(use, weight * difference * np.sin(heading), 0),
+                "north": np.where(use, weight * difference * np.cos(heading), 0),
+            }
+        )
+        sums = frame[frame["interval"] >= 0].groupby("interval").sum()
+        steady_time = sums["steady_weight"].where(sums["steady_weight"] > 0)
         for direction in ["east", "north"]:
-            comparison[f"flight_minus_dead_reckoning_{direction}"] = speed[f"speed_{direction}"]
-            comparison[f"dac_flight_{direction}"] = (
-                comparison[f"dac_{direction}"] - speed[f"speed_{direction}"]
-            )
+            mean = (sums[direction] / steady_time).reindex(comparison.index)
+            comparison[f"flight_minus_dead_reckoning_{direction}"] = mean
+            comparison[f"dac_flight_{direction}"] = comparison[f"dac_{direction}"] - mean
+        comparison["steady_fraction"] = (sums["steady_weight"] / sums["weight"]).reindex(
+            comparison.index
+        )
     comparison = comparison[comparison["coverage"] >= min_coverage]
     return comparison.reset_index(drop=True)
+
+
+def _segment(time, start, end):
+    """The index of the segment (start to end) each time is in, or -1 if it is in none"""
+    time = np.asarray(time).astype("datetime64[ns]")
+    interval = np.searchsorted(end, time, side="left")
+    inside = interval < end.size
+    inside[inside] = time[inside] >= start[interval[inside]]
+    return np.where(inside, interval, -1)
 
 
 def _solve_profile(
