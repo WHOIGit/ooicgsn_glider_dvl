@@ -1,0 +1,736 @@
+<mxfile host="Electron" type="device">
+  <diagram id="page0" name="Overview">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ove1" value="&lt;b&gt;Data flow between the notebooks&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="20" y="-40" width="900" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="ove2" value="&lt;b style=&quot;font-size:14px&quot;&gt;1 · Data access and download&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;OOINet M2M · THREDDS · IOOS GDAC ERDDAP&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="16" width="320" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="ove3" value="DATA/RAW" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="20" y="97" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ove4" value="&lt;font face=&quot;Courier New&quot;&gt;adcp_data.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL water track&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="20" y="123" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove5" value="&lt;font face=&quot;Courier New&quot;&gt;adcp_bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL bottom track&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="210" y="123" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove6" value="&lt;font face=&quot;Courier New&quot;&gt;science.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;GDAC CTD, profiles&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="400" y="123" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove7" value="&lt;font face=&quot;Courier New&quot;&gt;eng_recovered.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;glider engineering&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="590" y="123" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove8" value="&lt;font face=&quot;Courier New&quot;&gt;mooring_locations.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Pioneer moorings&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="780" y="123" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove14" value="&lt;b style=&quot;font-size:14px&quot;&gt;2 · Process and merge&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;corrections, merge, profiles, links&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="241" width="320" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="ove15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove4" target="ove14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove5" target="ove14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove6" target="ove14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove7" target="ove14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove19" value="DATA/PROCESSED" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="20" y="322" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ove20" value="&lt;font face=&quot;Courier New&quot;&gt;merged.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP times · dives&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="20" y="348" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove21" value="&lt;font face=&quot;Courier New&quot;&gt;glider.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;eng times · dives+climbs&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="210" y="348" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove22" value="&lt;font face=&quot;Courier New&quot;&gt;depth_averaged_&lt;br&gt;current.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;201 surfacings&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="400" y="348" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove23" value="&lt;font face=&quot;Courier New&quot;&gt;science_profiles.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;1385 dives, 1385 climbs&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="590" y="348" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove24" value="&lt;font face=&quot;Courier New&quot;&gt;profile_links.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP ↔ science&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="780" y="348" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove30" value="&lt;b style=&quot;font-size:14px&quot;&gt;3 · 3.1 · Data analysis&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;exploratory: track maps, QC, simple bins&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="466" width="300" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="ove31" value="&lt;b style=&quot;font-size:14px&quot;&gt;4 · Remove the glider motion&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;flight model, bottom track, inversion, checks&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;also reads the raw bottom track and eng data&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="400" y="466" width="420" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="ove32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove20" target="ove30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove20" target="ove31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove21" target="ove31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove22" target="ove31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove36" value="DATA/PROCESSED" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="20" y="564" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ove37" value="&lt;font face=&quot;Courier New&quot;&gt;velocity_&lt;br&gt;profiles_dac.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 1&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="20" y="590" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove38" value="&lt;font face=&quot;Courier New&quot;&gt;velocity_profiles_&lt;br&gt;bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 2&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="210" y="590" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove39" value="&lt;font face=&quot;Courier New&quot;&gt;bottom_track_&lt;br&gt;profiles.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;BT-referenced, binned&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="400" y="590" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove40" value="&lt;font face=&quot;Courier New&quot;&gt;flight_calibration.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Vg, Cd0, pitch offset&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="590" y="590" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove41" value="&lt;font face=&quot;Courier New&quot;&gt;depth_averaged_&lt;br&gt;current_check.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;per surfacing&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="780" y="590" width="178" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="ove42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove43" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove44" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove46" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove47" value="&lt;b&gt;Next · objective mapping of sections&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;not built yet&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=none;strokeColor=#0a6f7d;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="702" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ove48" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="1" source="ove37" target="ove47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove49" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="1" source="ove38" target="ove47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ove50" value="LEGEND" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="16" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ove51" value="" style="rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="46" width="36" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove52" value="processing step, with its function" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1056" y="47" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove53" value="" style="rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="80" width="36" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove54" value="decision" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1056" y="81" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove55" value="" style="rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="114" width="36" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove56" value="branch taken" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1056" y="115" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove57" value="" style="rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="148" width="36" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove58" value="stop or skip" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1056" y="149" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove59" value="" style="rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="182" width="36" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove60" value="files read or written" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1056" y="183" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove61" value="" style="rounded=1;arcSize=6;fillColor=none;strokeColor=#0a6f7d;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="216" width="36" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ove62" value="not built yet" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1056" y="217" width="220" height="22" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page1" name="Notebook 1">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="not1" value="&lt;b&gt;1 · Data access and download&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="40" y="-40" width="720" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="not2" value="&lt;b&gt;Inputs&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;CP05MOAS ADCP datasets (M2M search)&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;asset-management deployment sheets → FZ line&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="16" width="360" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="not3" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="124" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not4" value="FOR EACH GLIDER DEPLOYMENT" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="131" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not5" value="&lt;b&gt;Download the DVL streams&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;load_kdata(…, &amp;#x27;recovered_host&amp;#x27;, stream)&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;adcp_data, bottom_track, config, engineering&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="159" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not6" value="load_kdata works only on the OOI JupyterHub" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="159" width="330" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="not7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not2" target="not5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not8" value="&lt;b&gt;Any DVL stream&lt;br&gt;with data?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="265" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not9" value="&lt;b&gt;Log: missing&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;some missing → partial&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="440" y="282" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not10" value="none" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.37037037037037035;" edge="1" parent="1" source="not8" target="not9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not5" target="not8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not12" value="&lt;b&gt;Download the engineering data&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;THREDDS catalog → CSV&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;NTP seconds → datetime&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="375" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not8" target="not12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not14" value="&lt;b&gt;Recovered (host)&lt;br&gt;data available?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="481" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not15" value="&lt;b&gt;Use telemetered data&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;log: partial, telemetered only&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="498" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not16" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.37037037037037035;" edge="1" parent="1" source="not14" target="not15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not12" target="not14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not18" value="&lt;b&gt;Find and download the GDAC dataset&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;ERDDAP tabledap · cp_&amp;lt;glider&amp;gt;-&amp;lt;start&amp;gt;&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;start within 1 day of the deployment&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;prefer the -delayed dataset&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;time ← precise_time&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="591" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not19" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not14" target="not18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not20" value="&lt;b&gt;Download&lt;br&gt;succeeded?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="727" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not21" value="&lt;b&gt;Log: failed&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;error message kept, retried later&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="440" y="744" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not22" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.37037037037037035;" edge="1" parent="1" source="not20" target="not21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not18" target="not20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not24" value="&lt;b&gt;Saved to data/raw&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;&amp;lt;refdes&amp;gt;.deployment&amp;lt;NNNN&amp;gt;.adcp_*.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;deployment&amp;lt;NNNN&amp;gt;_&amp;lt;eng&amp;gt;-recovered_host….csv&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;&amp;lt;glider&amp;gt;.deployment&amp;lt;NNNN&amp;gt;.science.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;download_log.csv&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="837" width="360" height="97" as="geometry" />
+        </mxCell>
+        <mxCell id="not25" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not20" target="not24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not26" value="&lt;b&gt;Mooring locations&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;asset-management *_Deploy.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;→ data/external/mooring_locations.csv&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="970" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not24" target="not26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not28" value="The engineering data falls back to the telemetered stream when the recovered stream is missing; a failed GDAC download is logged and retried on the next run." style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#566872;fontSize=12;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1076" width="720" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page2" name="Notebook 2">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="not1" value="&lt;b&gt;2 · Process and merge&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="40" y="-40" width="720" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="not2" value="&lt;b&gt;Load (data/raw)&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;adcp_data.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;adcp_bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;science.nc (GDAC)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="16" width="360" height="81" as="geometry" />
+        </mxCell>
+        <mxCell id="not3" value="604,054 DVL ensembles, 30 cells × 2 m&lt;br&gt;GDAC: 2770 profiles, 3.8 M times" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="16" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not4" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="140" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not5" value="CORRECTIONS TO THE OOINET ADCP DATA" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="147" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not6" value="&lt;b&gt;Attitude &amp;gt; 360° / &amp;gt; 90°?&lt;br&gt;(hundredths of a degree)&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="175" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not7" value="&lt;b&gt;Divide heading, pitch, roll&lt;/b&gt;&lt;br&gt;&lt;b&gt;by 100&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;adcp_attitude_to_degrees&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="192" width="330" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="not8" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2777777777777778;" edge="1" parent="1" source="not6" target="not7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not2" target="not6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not10" value="&lt;b&gt;OOINet velocities already&lt;br&gt;kept as ooi_*?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="300" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not11" value="&lt;b&gt;Rebuild east/north velocities&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;true_north_velocities&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;= water_velocity_east/north ÷ 1000&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;OOINet&amp;#x27;s −14.21° rotation kept as ooi_*&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;(heading is already true north)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="317" width="330" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not12" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2;" edge="1" parent="1" source="not10" target="not11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not13" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not6" target="not10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not14" value="&lt;b&gt;Estimate the DVL clock offset&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;estimate_time_offset&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;per dive: bottom range ~ CTD depth(t + lag) + time&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;trial lags ±15 s in 0.25 s steps&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="453" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not15" value="offset +3.75 s from 1186 dives&lt;br&gt;per-dive IQR 2.25 to 5.25 s&lt;br&gt;re-estimate after the shift: 0 s" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="453" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not16" value="yes: skip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not10" target="not14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not17" value="&lt;b&gt;Shift the ADCP and bottom-track times&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;shift_time&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;recompute CTD pressure and depth (gsw) at new times&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;move bin_depths by the depth change&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="574" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not18" value="depth change median +0.56 m&lt;br&gt;1st–99th percentile −0.04 to +0.87 m" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="574" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not14" target="not17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not20" value="&lt;b&gt;GDAC CTD gap&lt;br&gt;&amp;gt; 60 s at the new time?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="695" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not21" value="&lt;b&gt;Use OOINet&amp;#x27;s CTD pressure&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;interpolated to the new time&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;199 ensembles: dive starts at the surface&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="712" width="330" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="not22" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2898550724637681;" edge="1" parent="1" source="not20" target="not21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not17" target="not20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not24" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="824" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not25" value="MERGE THE SCIENCE DATA ONTO THE ADCP TIMES" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="831" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not26" value="&lt;b&gt;Interpolate each GDAC variable&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;merge_datasets&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;split by sensor: ctd_, oxy_, flbbcd_, par_, glider_&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;each from its own non-missing values&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="859" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not27" value="use ctd_temperature/salinity/pressure:&lt;br&gt;ADCP salinity is a constant 35,&lt;br&gt;its temperature reads +2.7 °C warm" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="859" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not28" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not20" target="not26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not29" value="&lt;b&gt;Gap in the variable&lt;br&gt;&amp;gt; 60 s?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="980" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not30" value="&lt;b&gt;Leave NaN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;no interpolation across the gap&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="997" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not31" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.37037037037037035;" edge="1" parent="1" source="not29" target="not30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not26" target="not29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not33" value="&lt;b&gt;Correct w for the sound speed&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;sound_speed_factor · correct_vertical_velocity&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;phased array: only the DVL-axis component scales&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;axis = glider attitude + 11° forward mount&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;u, v unchanged; rebuilt from water_velocity_up&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1090" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not34" value="DVL c − CTD c: median +8.3 m/s&lt;br&gt;factor median 0.9927&lt;br&gt;Δw cell 1: median −0.54 mm/s" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1090" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not35" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not29" target="not33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not36" value="&lt;b&gt;Split the ADCP dives&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;add_profiles&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;new dive where |Δz| &amp;gt; 2 m and Δt &amp;gt; 4 s&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1226" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not37" value="1388 ADCP profiles" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1226" width="330" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="not38" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not33" target="not36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not39" value="&lt;b&gt;Vendor QC flag per cell&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;qc.percent_good · correlation · error_velocity&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;percent good ≥ 63 good, &amp;lt; 50 fail&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;correlation ≥ 115 good, &amp;lt; 63 fail&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;error velocity ≤ 6.3 good, ≥ 12.6 cm/s fail&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1332" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not40" value="merged → vendor_qc_flag (1, 3, 4, 9)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1332" width="330" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="not41" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not36" target="not39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not42" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1475" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not43" value="ENGINEERING DATA AND DEPTH-AVERAGED CURRENT" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="1482" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not44" value="&lt;b&gt;Recovered engineering&lt;br&gt;CSV exists?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1510" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not45" value="&lt;b&gt;Use the telemetered CSV&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1527" width="330" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="not46" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5128205128205128;" edge="1" parent="1" source="not44" target="not45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not47" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not39" target="not44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not48" value="&lt;b&gt;Add the waypoints&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;add_waypoints&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;each applies until the next is set&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;(0, 0) placeholder → NaN&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1620" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not49" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not44" target="not48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not50" value="&lt;b&gt;Depth-averaged current per surfacing&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;surfacing_currents · add_depth_averaged_current&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;(GPS fix − dead-reckoned position) / time&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;+ current used in the dead reckoning&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;given to every time from dive start to surfacing&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1741" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not51" value="201 surfacings&lt;br&gt;depends on m_speed" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1741" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not52" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not48" target="not50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not53" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1884" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not54" value="GLIDER DATASET: DIVES, CLIMBS, SURFACINGS" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="1891" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not55" value="&lt;b&gt;Build on the engineering time base&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;glider_dataset · add_flight_variables&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;~4 s, 646,483 times; GDAC interpolated as above&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;pitch, heading, buoyancy change, m_speed, m_depth&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;+ waypoints, depth-averaged current&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1919" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not56" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not50" target="not55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not57" value="&lt;b&gt;List the science profiles&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;science_profiles&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;dive if the CTD pressure ends deeper than it starts&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2055" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not58" value="1385 dives, 1385 climbs" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2055" width="330" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="not59" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not55" target="not57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not60" value="&lt;b&gt;Time inside a&lt;br&gt;science profile?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2161" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not61" value="&lt;b&gt;phase = dive or climb&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;add_phases&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;science_profile_id from the GDAC&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2178" width="330" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not62" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2857142857142857;" edge="1" parent="1" source="not60" target="not61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not63" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not57" target="not60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not64" value="&lt;b&gt;Gap between profiles&lt;br&gt;≥ 60 s?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2284" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not65" value="&lt;b&gt;phase = surface&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;200 surfacings, median 22 s from&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;the dead-reckoned surfacing time&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2301" width="330" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="not66" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2898550724637681;" edge="1" parent="1" source="not64" target="not65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not67" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not60" target="not64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not68" value="&lt;b&gt;phase = unlabeled&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;~1 s inflections; before the first or after&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;the last profile (incl. the recovery surfacing)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2406" width="360" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="not69" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not64" target="not68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not70" value="&lt;b&gt;Link ADCP to science profiles&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;link_profiles · add_profile_links&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;largest overlap in time&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP gets science_profile_id, phase&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;glider gets adcp_profile_id (whole dive)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2511" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not71" value="1385 dives: one ADCP profile each&lt;br&gt;median overlap 99.4%&lt;br&gt;ADCP 80, 401, 759 → climbs (6–10 samples)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2511" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not72" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not68" target="not70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not73" value="&lt;b&gt;Saved to data/processed&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;merged.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;glider.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;depth_averaged_current.csv&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;science_profiles.csv&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;profile_links.csv&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2647" width="360" height="113" as="geometry" />
+        </mxCell>
+        <mxCell id="not74" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not70" target="not73">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not75" value="The order matters: the clock offset is corrected before the merge, so the CTD is interpolated at the corrected DVL times, and the sound-speed correction needs the merged CTD." style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#566872;fontSize=12;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2796" width="720" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page3" name="Notebook 4">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="not1" value="&lt;b&gt;4 · Remove the glider motion&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="40" y="-40" width="720" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="not2" value="&lt;b&gt;Load&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;merged.nc (glider), glider.nc (glider_ts)&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;depth_averaged_current.csv&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;adcp_bottom_track.nc, shifted +3.75 s&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;eng: pitch, heading, buoyancy, m_speed&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="16" width="360" height="97" as="geometry" />
+        </mxCell>
+        <mxCell id="not3" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="156" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not4" value="FLIGHT MODEL (GLIDERFLIGHT, STEADY STATE)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="163" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not5" value="&lt;b&gt;Steady-flight mask (both datasets)&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;calibration_mask&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;depth ≥ 10 m and ≥ 5 m above the profile&amp;#x27;s deepest&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;|pitch| ≥ 15°, |d buoyancy / dt| ≤ 0.5 cm³/s&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="191" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not6" value="90% of DVL ensembles&lt;br&gt;glider: 91% of dives, 70% of climbs" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="191" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not2" target="not5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not8" value="&lt;b&gt;For each trial pitch offset (−6° to +4°)&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;calibrate_pitch_offset&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;fit Vg, Cd0 to the depth rate on dives + climbs&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;solve on the DVL times&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;model − DVL cell 2 horizontal speed on dives&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="312" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not9" value="mass 65.480 kg, lift at default (ah 3.8)&lt;br&gt;depth rate alone prefers ≈ +1°" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="312" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not5" target="not8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not11" value="&lt;b&gt;Speed difference&lt;br&gt;changes sign?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="448" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not12" value="&lt;b&gt;Stop: ValueError&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;widen the trial offsets&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="440" y="465" width="330" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not13" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.37037037037037035;" edge="1" parent="1" source="not11" target="not12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not8" target="not11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not15" value="&lt;b&gt;Interpolate the zero crossing&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="558" width="360" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="not16" value="pitch offset −2.00°" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="558" width="330" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="not17" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not11" target="not15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not18" value="&lt;b&gt;Calibrate weekly, solve on both datasets&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;calibrate_flight_model · solve_flight_model&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;whole deployment + each 7-day window&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;windows &amp;lt; 1000 points use the deployment fit&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="633" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not19" value="Vg 0.0639 m³, Cd0 0.134 (weekly 0.131–0.136)&lt;br&gt;depth-rate bias: dives −0.03, climbs +0.93 cm/s&lt;br&gt;dives-only fit for comparison: climbs +9.2 cm/s" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="633" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not15" target="not18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not21" value="&lt;b&gt;Check 1: model vs DVL cell 2&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;dvl_glider_velocity · flight_model_skill&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;forward speed agrees by construction&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="754" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not22" value="east/north r 0.97 / 0.93, rms ≈ 6 cm/s&lt;br&gt;m_speed 0.308 vs model 0.284 m/s" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="754" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not18" target="not21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not24" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="867" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not25" value="BOTTOM TRACKING" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="874" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not26" value="&lt;b&gt;Add, correct, remove, bin&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;add_/remove_bottom_track · bin_profiles&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;nearest ensemble within 1 s, mm/s → m/s&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;w sound-speed corrected like the water track&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL relative + BT → absolute cells, 2 m bins&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="902" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not27" value="BT only near the bottom: 1292 of 1388 dives,&lt;br&gt;the deepest ~64 m (median), from 53% of&lt;br&gt;the dive&amp;#x27;s depth; 23% of all ensembles" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="902" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not21" target="not26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not29" value="&lt;b&gt;Check 2: speed through water from BT&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;through_water_velocity&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 2 with flight_weight = 0&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;BT ground velocity − profile at the glider&amp;#x27;s depth&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;(water measured earlier by deeper cells)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1038" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not30" value="99,225 ensembles: BT speed 0.256 m/s&lt;br&gt;model +1.0, m_speed +2.2 cm/s&lt;br&gt;cell 1 −1.2; cells 2–4 within 0.7 cm/s&lt;br&gt;(lower part of the dives only)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1038" width="330" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not26" target="not29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not32" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1181" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not33" value="INVERSION, FOR EACH DIVE (LADCP-STYLE LEAST SQUARES)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="1188" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not34" value="&lt;b&gt;Equations&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;invert_profiles&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL: u(cell) − g(t) = relative velocity&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;flight: g(t) − u(z_glider) = model (weight 1)&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;smoothness 0.1 · unknowns u(2 m bins), g(t)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1216" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="not35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not29" target="not34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not36" value="&lt;b&gt;Which reference?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1352" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not37" value="&lt;b&gt;Bottom track only&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;g(t) = −BT (weight 10), dac_weight 0&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;only dives with bottom tracking&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1369" width="330" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="not38" value="Method 2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2898550724637681;" edge="1" parent="1" source="not36" target="not37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not39" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not34" target="not36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not40" value="&lt;b&gt;Depth-averaged current&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;mean u at the glider = DAC (weight 1000)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1474" width="360" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not41" value="Method 1: DAC" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not36" target="not40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not42" value="&lt;b&gt;Cells and a reference&lt;br&gt;in this dive?&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1564" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not43" value="&lt;b&gt;Skip the dive&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1581" width="330" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="not44" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5128205128205128;" edge="1" parent="1" source="not42" target="not43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not40" target="not42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not46" value="&lt;b&gt;Cells link every bin?&lt;br&gt;(n_segments = 1)&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=center;verticalAlign=middle;rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1674" width="360" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="not47" value="&lt;b&gt;Skip the dive&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;only the flight model would link the&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;segments; its errors add up with depth&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1691" width="330" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="not48" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.2898550724637681;" edge="1" parent="1" source="not46" target="not47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not49" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not42" target="not46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not50" value="&lt;b&gt;Solve (Schur complement on g)&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;glider bins without cells → nearest observed bin&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1796" width="360" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="not51" value="Method 1: 1015 of 1388 dives&lt;br&gt;Method 2: 981 of 1388 dives" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1796" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not52" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not46" target="not50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not53" value="" style="line;strokeColor=#b3c2ca;dashed=1;dashPattern=2 4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1893" width="760" height="2" as="geometry" />
+        </mxCell>
+        <mxCell id="not54" value="CHECKS OF THE PROFILES" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
+          <mxGeometry x="234" y="1900" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="not55" value="&lt;b&gt;Check 3: frame vs GPS&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;compare_depth_averaged_current&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;rotation from Method 2 to the DAC&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1928" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not56" value="median −2.4°, IQR −10.4 to +5.2°&lt;br&gt;(OOINet&amp;#x27;s rotation would give ≈ −14°)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1928" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="not57" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not50" target="not55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not58" value="&lt;b&gt;Check 4: Method 2 vs DAC&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;each surfacing, ≥ 90% coverage&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DAC also redone with the model speed&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;over dives + climbs (glider dataset)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2034" width="360" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="not59" value="74 surfacings: median 2.2 cm/s&lt;br&gt;with the model speed: 2.1 cm/s&lt;br&gt;mean east bias 2.8 cm/s (open)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2034" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not60" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not55" target="not58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not61" value="&lt;b&gt;Check 5: Method 1 vs bottom track&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;compare_profiles&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;offset (reference) + shape (rms)&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2154" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not62" value="976 dives: offset median 5.6 cm/s&lt;br&gt;shape rms 2.4 E / 2.3 N cm/s&lt;br&gt;(only where BT profiles exist: near bottom)" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2154" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="not63" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not58" target="not61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not64" value="&lt;b&gt;Check 6: carrying the reference up&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; color=&quot;#0a6f7d&quot; style=&quot;font-size:11px&quot;&gt;split_by_depth&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 2 referenced to the deepest 20 m of BT&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;tested on the BT above, by height above it&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2260" width="360" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="not65" value="968 dives, median error by height:&lt;br&gt;0–10 m 3.2 · 10–20 m 4.6 · 20–30 m 5.4 cm/s&lt;br&gt;30–40 m 6.1 · 40–50 m 6.9 cm/s&lt;br&gt;mean east/north within ±0.6 cm/s" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="2260" width="330" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="not66" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not61" target="not64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not67" value="&lt;b&gt;Saved to data/processed&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;velocity_profiles_dac.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;velocity_profiles_bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;bottom_track_profiles.nc&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;flight_calibration.csv&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size:11px&quot;&gt;depth_averaged_current_check.csv&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;align=left;verticalAlign=top;spacingLeft=8;spacingTop=2;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2381" width="360" height="113" as="geometry" />
+        </mxCell>
+        <mxCell id="not68" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="not64" target="not67">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="not69" value="Checks 1 and 2 test the flight model; checks 3 to 6 test the profiles. Bottom tracking only covers the deepest part of each dive, so checks 2, 5, and 6 describe the lower water column; only check 4 covers the whole dive, and only on average." style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#566872;fontSize=12;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2530" width="720" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
