@@ -1,194 +1,191 @@
-<mxfile host="Electron" type="device">
+<mxfile host="Electron" pages="4">
   <diagram id="page0" name="Overview">
-    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+    <mxGraphModel dx="1241" dy="1270" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="ove1" value="&lt;b&gt;Data flow between the notebooks&lt;/b&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontSize=18;" vertex="1" parent="1">
-          <mxGeometry x="20" y="-40" width="900" height="28" as="geometry" />
+        <mxCell id="ove1" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontSize=18;" value="&lt;b&gt;Data flow between the notebooks&lt;/b&gt;" vertex="1">
+          <mxGeometry height="28" width="900" x="20" y="-40" as="geometry" />
         </mxCell>
-        <mxCell id="ove2" value="&lt;b style=&quot;font-size:14px&quot;&gt;1 · Data access and download&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;OOINet M2M · THREDDS · IOOS GDAC ERDDAP&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="330" y="16" width="320" height="51" as="geometry" />
+        <mxCell id="ove2" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" value="&lt;b style=&quot;font-size:14px&quot;&gt;1 · Data access and download&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size: 11px;&quot;&gt;OOI GoldCopy Datasets · IOOS GDAC ERDDAP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="51" width="320" x="330" y="16" as="geometry" />
         </mxCell>
-        <mxCell id="ove3" value="DATA/RAW" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
-          <mxGeometry x="20" y="97" width="400" height="20" as="geometry" />
+        <mxCell id="ove4" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;adcp_data.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL water track&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="20" y="123" as="geometry" />
         </mxCell>
-        <mxCell id="ove4" value="&lt;font face=&quot;Courier New&quot;&gt;adcp_data.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL water track&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="20" y="123" width="178" height="62" as="geometry" />
+        <mxCell id="ove5" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;adcp_bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL bottom track&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="210" y="123" as="geometry" />
         </mxCell>
-        <mxCell id="ove5" value="&lt;font face=&quot;Courier New&quot;&gt;adcp_bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;DVL bottom track&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="210" y="123" width="178" height="62" as="geometry" />
+        <mxCell id="ove6" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;science.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size: 11px;&quot;&gt;GDAC CTD, science instruments, profiles&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="400" y="123" as="geometry" />
         </mxCell>
-        <mxCell id="ove6" value="&lt;font face=&quot;Courier New&quot;&gt;science.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;GDAC CTD, profiles&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="400" y="123" width="178" height="62" as="geometry" />
+        <mxCell id="ove7" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;eng_recovered.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;glider engineering&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="590" y="123" as="geometry" />
         </mxCell>
-        <mxCell id="ove7" value="&lt;font face=&quot;Courier New&quot;&gt;eng_recovered.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;glider engineering&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="590" y="123" width="178" height="62" as="geometry" />
+        <mxCell id="ove8" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;mooring_locations.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Pioneer moorings&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="780" y="123" as="geometry" />
         </mxCell>
-        <mxCell id="ove8" value="&lt;font face=&quot;Courier New&quot;&gt;mooring_locations.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Pioneer moorings&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="780" y="123" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove4">
+        <mxCell id="ove9" edge="1" parent="1" source="ove2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove4" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove5">
+        <mxCell id="ove10" edge="1" parent="1" source="ove2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove5" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove6">
+        <mxCell id="ove11" edge="1" parent="1" source="ove2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove6" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove7">
+        <mxCell id="ove12" edge="1" parent="1" source="ove2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove7" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove2" target="ove8">
+        <mxCell id="ove13" edge="1" parent="1" source="ove2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove8" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove14" value="&lt;b style=&quot;font-size:14px&quot;&gt;2 · Process and merge&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;corrections, merge, profiles, links&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="330" y="241" width="320" height="51" as="geometry" />
+        <mxCell id="ove14" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" value="&lt;b style=&quot;font-size:14px&quot;&gt;2 · Process and merge datasets&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size: 11px;&quot;&gt;corrections, merge, profiles, links&lt;/font&gt;" vertex="1">
+          <mxGeometry height="51" width="320" x="329" y="239" as="geometry" />
         </mxCell>
-        <mxCell id="ove15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove4" target="ove14">
+        <mxCell id="ove15" edge="1" parent="1" source="ove4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove14" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove5" target="ove14">
+        <mxCell id="ove16" edge="1" parent="1" source="ove5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove14" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove6" target="ove14">
+        <mxCell id="ove17" edge="1" parent="1" source="ove6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove14" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove7" target="ove14">
+        <mxCell id="ove18" edge="1" parent="1" source="ove7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove14" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove19" value="DATA/PROCESSED" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
-          <mxGeometry x="20" y="322" width="400" height="20" as="geometry" />
+        <mxCell id="ove20" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;merged.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP times · dives&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="20" y="348" as="geometry" />
         </mxCell>
-        <mxCell id="ove20" value="&lt;font face=&quot;Courier New&quot;&gt;merged.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP times · dives&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="20" y="348" width="178" height="62" as="geometry" />
+        <mxCell id="ove21" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;glider.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;eng times · dives+climbs&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="210" y="348" as="geometry" />
         </mxCell>
-        <mxCell id="ove21" value="&lt;font face=&quot;Courier New&quot;&gt;glider.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;eng times · dives+climbs&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="210" y="348" width="178" height="62" as="geometry" />
+        <mxCell id="ove22" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;depth_averaged_&lt;br&gt;current.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size: 11px;&quot;&gt;per surfacings&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="400" y="348" as="geometry" />
         </mxCell>
-        <mxCell id="ove22" value="&lt;font face=&quot;Courier New&quot;&gt;depth_averaged_&lt;br&gt;current.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;201 surfacings&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="400" y="348" width="178" height="62" as="geometry" />
+        <mxCell id="ove23" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;science_profiles.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size: 11px;&quot;&gt;partitioned dives, climbs&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="590" y="348" as="geometry" />
         </mxCell>
-        <mxCell id="ove23" value="&lt;font face=&quot;Courier New&quot;&gt;science_profiles.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;1385 dives, 1385 climbs&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="590" y="348" width="178" height="62" as="geometry" />
+        <mxCell id="ove24" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;profile_links.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP ↔ science&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="780" y="348" as="geometry" />
         </mxCell>
-        <mxCell id="ove24" value="&lt;font face=&quot;Courier New&quot;&gt;profile_links.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;ADCP ↔ science&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="780" y="348" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove20">
+        <mxCell id="ove25" edge="1" parent="1" source="ove14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove20" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove21">
+        <mxCell id="ove26" edge="1" parent="1" source="ove14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove21" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove22">
+        <mxCell id="ove27" edge="1" parent="1" source="ove14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove22" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove23">
+        <mxCell id="ove28" edge="1" parent="1" source="ove14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove23" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove14" target="ove24">
+        <mxCell id="ove29" edge="1" parent="1" source="ove14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove24" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove30" value="&lt;b style=&quot;font-size:14px&quot;&gt;3 · 3.1 · Data analysis&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;exploratory: track maps, QC, simple bins&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="20" y="466" width="300" height="51" as="geometry" />
+        <mxCell id="ove31" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" value="&lt;b style=&quot;font-size:14px&quot;&gt;3 · Remove the glider motion&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size: 11px;&quot;&gt;flight model, bottom track, inversion, checks&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="420" x="279" y="480" as="geometry" />
         </mxCell>
-        <mxCell id="ove31" value="&lt;b style=&quot;font-size:14px&quot;&gt;4 · Remove the glider motion&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;flight model, bottom track, inversion, checks&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;also reads the raw bottom track and eng data&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="400" y="466" width="420" height="68" as="geometry" />
+        <mxCell id="ove32" edge="1" parent="1" source="ove20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;entryDx=0;entryDy=0;" target="ove31" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="466" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="ove32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove20" target="ove30">
+        <mxCell id="ove33" edge="1" parent="1" source="ove20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove31" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove20" target="ove31">
+        <mxCell id="ove34" edge="1" parent="1" source="ove21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove31" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove21" target="ove31">
+        <mxCell id="ove35" edge="1" parent="1" source="ove22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove31" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove22" target="ove31">
+        <mxCell id="ove36" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" value="DATA/PROCESSED" vertex="1">
+          <mxGeometry height="20" width="400" x="21" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="ove37" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;velocity_&lt;br&gt;profiles_dac.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="21" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="ove38" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;velocity_profiles_&lt;br&gt;bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 2&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="211" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="ove39" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;bottom_track_&lt;br&gt;profiles.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;BT-referenced, binned&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="401" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="ove40" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;flight_calibration.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Vg, Cd0, pitch offset&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="591" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="ove41" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="&lt;font face=&quot;Courier New&quot;&gt;depth_averaged_&lt;br&gt;current_check.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;per surfacing&lt;/font&gt;" vertex="1">
+          <mxGeometry height="62" width="178" x="781" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="ove42" edge="1" parent="1" source="ove31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove37" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove36" value="DATA/PROCESSED" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
-          <mxGeometry x="20" y="564" width="400" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="ove37" value="&lt;font face=&quot;Courier New&quot;&gt;velocity_&lt;br&gt;profiles_dac.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 1&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="20" y="590" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove38" value="&lt;font face=&quot;Courier New&quot;&gt;velocity_profiles_&lt;br&gt;bottom_track.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Method 2&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="210" y="590" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove39" value="&lt;font face=&quot;Courier New&quot;&gt;bottom_track_&lt;br&gt;profiles.nc&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;BT-referenced, binned&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="400" y="590" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove40" value="&lt;font face=&quot;Courier New&quot;&gt;flight_calibration.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;Vg, Cd0, pitch offset&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="590" y="590" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove41" value="&lt;font face=&quot;Courier New&quot;&gt;depth_averaged_&lt;br&gt;current_check.csv&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;per surfacing&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="780" y="590" width="178" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="ove42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove37">
+        <mxCell id="ove43" edge="1" parent="1" source="ove31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove38" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove43" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove38">
+        <mxCell id="ove44" edge="1" parent="1" source="ove31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove39" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove44" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove39">
+        <mxCell id="ove45" edge="1" parent="1" source="ove31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove40" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove40">
+        <mxCell id="ove46" edge="1" parent="1" source="ove31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" target="ove41" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ove46" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#b3c2ca;" edge="1" parent="1" source="ove31" target="ove41">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="ove48" edge="1" parent="1" source="ove37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490.9999999999998" y="678" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="ove47" value="&lt;b&gt;Next · objective mapping of sections&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot; style=&quot;font-size:11px&quot;&gt;not built yet&lt;/font&gt;" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=none;strokeColor=#0a6f7d;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="330" y="702" width="320" height="50" as="geometry" />
+        <mxCell id="ove49" edge="1" parent="1" source="ove38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490.9999999999998" y="678" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="ove48" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="1" source="ove37" target="ove47">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="ove50" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" value="LEGEND" vertex="1">
+          <mxGeometry height="20" width="400" x="1010" y="16" as="geometry" />
         </mxCell>
-        <mxCell id="ove49" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;endSize=5;strokeColor=#566872;fontColor=#0a6f7d;fontFamily=Courier New;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" edge="1" parent="1" source="ove38" target="ove47">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="ove51" parent="1" style="rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="22" width="36" x="1010" y="46" as="geometry" />
         </mxCell>
-        <mxCell id="ove50" value="LEGEND" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;fontFamily=Courier New;fontSize=11;fontStyle=1;fontColor=#0a6f7d;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="16" width="400" height="20" as="geometry" />
+        <mxCell id="ove52" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" value="processing step, with its function" vertex="1">
+          <mxGeometry height="22" width="220" x="1056" y="47" as="geometry" />
         </mxCell>
-        <mxCell id="ove51" value="" style="rounded=1;arcSize=4;fillColor=#ffffff;strokeColor=#b3c2ca;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="46" width="36" height="22" as="geometry" />
+        <mxCell id="ove53" parent="1" style="rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" value="" vertex="1">
+          <mxGeometry height="22" width="36" x="1010" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="ove52" value="processing step, with its function" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1056" y="47" width="220" height="22" as="geometry" />
+        <mxCell id="ove54" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" value="decision" vertex="1">
+          <mxGeometry height="22" width="220" x="1056" y="81" as="geometry" />
         </mxCell>
-        <mxCell id="ove53" value="" style="rhombus;fillColor=#e3f2f3;strokeColor=#0a6f7d;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="80" width="36" height="22" as="geometry" />
+        <mxCell id="ove55" parent="1" style="rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" value="" vertex="1">
+          <mxGeometry height="22" width="36" x="1010" y="114" as="geometry" />
         </mxCell>
-        <mxCell id="ove54" value="decision" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1056" y="81" width="220" height="22" as="geometry" />
+        <mxCell id="ove56" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" value="branch taken" vertex="1">
+          <mxGeometry height="22" width="220" x="1056" y="115" as="geometry" />
         </mxCell>
-        <mxCell id="ove55" value="" style="rounded=1;arcSize=4;fillColor=#f7fafb;strokeColor=#b3c2ca;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="114" width="36" height="22" as="geometry" />
+        <mxCell id="ove57" parent="1" style="rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" value="" vertex="1">
+          <mxGeometry height="22" width="36" x="1010" y="148" as="geometry" />
         </mxCell>
-        <mxCell id="ove56" value="branch taken" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1056" y="115" width="220" height="22" as="geometry" />
+        <mxCell id="ove58" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" value="stop or skip" vertex="1">
+          <mxGeometry height="22" width="220" x="1056" y="149" as="geometry" />
         </mxCell>
-        <mxCell id="ove57" value="" style="rounded=1;arcSize=4;fillColor=#fbeee7;strokeColor=#b0491a;strokeWidth=1.4;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="148" width="36" height="22" as="geometry" />
+        <mxCell id="ove59" parent="1" style="rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" value="" vertex="1">
+          <mxGeometry height="22" width="36" x="1010" y="182" as="geometry" />
         </mxCell>
-        <mxCell id="ove58" value="stop or skip" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1056" y="149" width="220" height="22" as="geometry" />
+        <mxCell id="ove60" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" value="files read or written" vertex="1">
+          <mxGeometry height="22" width="220" x="1056" y="183" as="geometry" />
         </mxCell>
-        <mxCell id="ove59" value="" style="rounded=1;arcSize=20;fillColor=#e8eef8;strokeColor=#4a6a9c;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="182" width="36" height="22" as="geometry" />
+        <mxCell id="ove61" parent="1" style="rounded=1;arcSize=6;fillColor=none;strokeColor=#0a6f7d;dashed=1;" value="" vertex="1">
+          <mxGeometry height="22" width="36" x="1010" y="216" as="geometry" />
         </mxCell>
-        <mxCell id="ove60" value="files read or written" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1056" y="183" width="220" height="22" as="geometry" />
+        <mxCell id="ove62" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" value="not built yet" vertex="1">
+          <mxGeometry height="22" width="220" x="1056" y="217" as="geometry" />
         </mxCell>
-        <mxCell id="ove61" value="" style="rounded=1;arcSize=6;fillColor=none;strokeColor=#0a6f7d;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="216" width="36" height="22" as="geometry" />
-        </mxCell>
-        <mxCell id="ove62" value="not built yet" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;text;align=left;verticalAlign=top;fontColor=#566872;fontSize=11;fontColor=#13212a;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1056" y="217" width="220" height="22" as="geometry" />
+        <mxCell id="pYIxdRxH-WAydg0lYoxQ-1" parent="1" style="html=1;whiteSpace=wrap;fontColor=#13212a;fontSize=12;rounded=1;arcSize=6;fillColor=#ffffff;strokeColor=#0a6f7d;strokeWidth=2;" value="&lt;b style=&quot;font-size:14px&quot;&gt;4 · Create transects&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#566872&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;index by distance from waypoints,&amp;nbsp;&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="420" x="279" y="680" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
